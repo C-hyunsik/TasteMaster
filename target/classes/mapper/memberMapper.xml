@@ -5,6 +5,36 @@
 
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="member.dao.MemberDAO">
-
-
+	<insert id="apiMemberJoin" parameterType="member">
+		insert into member(name
+						   login_id
+						   pwd
+						   gender
+						   email
+						   tel1
+						   tel2
+						   tel3
+						   report_count
+						   blocked
+						   role
+						   logtime)
+						   values(#{name}
+								  #{login_id}
+								  #{pwd}
+								  #{gender}
+								  #{email}
+								  #{tel1}
+								  #{tel2}
+								  #{tel3}
+								  #{report_count}
+								  #{blocked}
+								  #{role}
+								  #{logtime})
+	</insert>
+	<select id="apiMemberLogin" parameterType="Map">
+		select * from member where login_id = #{login_id}, pwd = #{pwd}
+	</select>
+	<delete id="apiMemberDelete" parameterType="Map">
+		delete from member where login_id = #{login_id}, pwd = #{pwd}
+	</delete>
 </mapper>
