@@ -49,5 +49,13 @@ public class MemberDTO {
 	        this.tel3 = tel3;
 	        this.role = role;
 	    }
+	 
+	 @JsonCreator
+	    public MemberDTO(
+	        @JsonProperty("loginId") String loginId,
+	        @JsonProperty("pwd") String pwd) {
+	        this.loginId = loginId;
+	        this.pwd = pwd;
+	    }
 
 }

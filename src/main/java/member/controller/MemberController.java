@@ -24,7 +24,16 @@ public class MemberController {
 	
 	@RequestMapping(value="/page/member/join")
 	public String pageMemberJoin() {
+		
 		return "/member/join";
+		
+	}
+	
+	@RequestMapping(value="/page/member/login")
+	public String pageMemberLogin(){
+		
+		return "/member/login";
+		
 	}
 	
 	@RequestMapping(value="/api/member/join", method = RequestMethod.POST)
@@ -46,32 +55,24 @@ public class MemberController {
             return;
 		}
 	}
-	
-	
-	@RequestMapping(value="/page/member/login")
-	public String pageMemberLogin(){
-		
-		return "/member/login";
-	}
-	
-	
+
 	@RequestMapping(value="/api/member/login", method = RequestMethod.POST)
 	@ResponseBody
-	public void apiMemberLogin(@RequestParam String loginId, @RequestParam String pwd){
+	public void apiMemberLogin(@RequestBody  MemberDTO memberDTO, HttpServletResponse response) {
 		Map<String, String> map = new HashMap<>();
-		map.put("loginId", loginId);
-		map.put("pwd", pwd);
+		map.put("loginId", memberDTO.getLoginId());
+		map.put("pwd", memberDTO.getPwd());
 		
 		memberService.apiMemberLogin(map);
 	}
 	
 	
-	@RequestMapping(value="/api/member/delete",method = RequestMethod.POST)
+	@RequestMapping(value="/api/member/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public void apiMemberDelete(@RequestParam String loginId, @RequestParam String pwd) {
+	public void apiMemberDelete(@RequestBody  MemberDTO memberDTO) {
 		Map<String, String> map = new HashMap<>();
-		map.put("loginId", loginId);
-		map.put("pwd", pwd);
+		map.put("loginId", memberDTO.getLoginId());
+		map.put("pwd", memberDTO.getPwd());
 		memberService.apiMemberDelete(map);
 	}
 }
