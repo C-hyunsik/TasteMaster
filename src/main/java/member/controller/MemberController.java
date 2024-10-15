@@ -36,7 +36,7 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value="/api/member/join", method = RequestMethod.POST)
+	@RequestMapping(value="/api/member/join", method = RequestMethod.POST,consumes = "application/json")
 	@ResponseBody
 	public void apiMemberJoin(@RequestBody  MemberDTO memberDTO, HttpServletResponse response) {
 		
@@ -74,6 +74,13 @@ public class MemberController {
 		map.put("loginId", memberDTO.getLoginId());
 		map.put("pwd", memberDTO.getPwd());
 		memberService.apiMemberDelete(map);
+	}
+	
+	@RequestMapping(value="/page/member/mypage")
+	public String pageMemberMypage() {
+		
+		return "/member/mypage";
+		
 	}
 }
 

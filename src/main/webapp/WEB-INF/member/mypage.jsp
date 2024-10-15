@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인</title>
+<title>회원정보</title>
 <style type="text/css">
 * {
     margin: 0;
@@ -86,17 +86,10 @@ nav.active {
     text-decoration: none;
 }
 
-.banner {
-    background-color: #f2f2f2;
-    text-align: center;
-    padding: 20px;
-    margin: 20px 0;
-    height: 150px;
-}
-
 .form-container {
     width: 60%;
-    margin: 10% auto; /* 중앙 배치 */
+    margin: 20px auto;
+    margin-top: 10%;
     padding: 20px;
     border: 1px solid black;
     border-radius: 5px;
@@ -124,6 +117,10 @@ nav.active {
     border-radius: 4px;
 }
 
+.underline {
+    text-decoration: underline;
+}
+
 .button-group {
     display: flex;
     justify-content: space-between;
@@ -142,36 +139,6 @@ button {
 
 button:hover {
     background-color: #333;
-}
-.sns-login {
-    text-align: center;
-    margin-top: 5%;
-}
-
-.sns-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10%; /* 버튼 간 간격 */
-    margin: 2% 0;
-}
-
-.sns-button {
-    width: 50px; /* 버튼의 너비 */
-    height: 50px; /* 버튼의 높이 */
-    border-radius: 50%; /* 동그란 모양 */
-    overflow: hidden; /* 이미지가 버튼을 넘지 않도록 */
-    cursor: pointer;
-    border: 1px solid #ccc; /* 테두리 색상 */
-    transition: transform 0.3s; /* 호버 효과 */
-}
-
-.sns-button:hover {
-    transform: scale(1.1); /* 호버 시 버튼 확대 효과 */
-}
-
-.sns-button img {
-    width: 100%; /* 이미지가 버튼 크기에 맞게 조정 */
-    height: auto; /* 비율 유지 */
 }
 
 /* 반응형 디자인 */
@@ -204,47 +171,48 @@ button:hover {
         </div>
         <nav>
             <ul>
-				<li><a href="#">셰프 목록</a></li>
-				<li><a href="/TasteMasters/page/member/login">로그인</a></li>
-				<li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-				<li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-			</ul>
+                <li><a href="#">셰프 목록</a></li>
+                <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                <li><a href="#">마이페이지</a></li>
+            </ul>
         </nav>
     </header>
-
     <div class="form-container">
-	    <h2>로그인</h2>
-	    <form action="loginAction.jsp" method="post">
-	        <div class="form-group">
-	            <label for="loginId">아이디</label>
-	            <input type="text" id="loginId" name="loginId" required>
-	        </div>
-	        <div class="form-group">
-	            <label for="pwd">비밀번호</label>
-	            <input type="password" id="pwd" name="pwd" required>
-	        </div>
-	        <div class="button-group">
-	            <button type="submit">로그인</button>
-	            <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
-	        </div>
-	    </form>
-	
-	    <div class="sns-login">
-	        <h3>SNS로 로그인</h3>
-	        <div class="sns-buttons">
-	            <div class="sns-button" id="kakao-login">
-	                <img src="../image/kakao.jpg" alt="카카오톡 로그인" />
-	            </div>
-	            <div class="sns-button" id="naver-login">
-	                <img src="../image/naver.jpg" alt="네이버 로그인" />
-	            </div>
-	            <div class="sns-button" id="google-login">
-	                <img src="../image/google.jpg" alt="구글 로그인" />
-	            </div>
-	        </div>
-	    </div>
-	</div>
-
+        <h2>회원정보</h2>
+        <form action="updateAction.jsp" method="post">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="loginId">아이디</label>
+                <input type="text" id="loginId" name="loginId" readonly class="underline">
+            </div>
+            <div class="form-group">
+                <label for="pwd">비밀번호</label>
+                <input type="password" id="pwd" name="pwd" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" readonly class="underline">
+            </div>
+            <div class="form-group">
+                <label for="gender">성별</label>
+                <input type="text" id="gender" name="gender" readonly class="underline">
+            </div>
+            <div class="form-group">
+                <label for="tel">전화번호</label>
+                <input type="text" id="tel1" name="tel1" placeholder="010" required style="width: 30%;">-
+                <input type="text" id="tel2" name="tel2" placeholder="0000" required style="width: 30%;">-
+                <input type="text" id="tel3" name="tel3" placeholder="0000" required style="width: 30%;">
+            </div>
+            <div class="button-group">
+                <button type="submit">정보 수정</button>
+                <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+            </div>
+        </form>
+    </div>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
