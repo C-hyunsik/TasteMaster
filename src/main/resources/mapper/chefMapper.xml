@@ -27,4 +27,16 @@
 	<select id="apiChefGetImageFileName" parameterType="int" resultType="String">
 		select image_fileName from chef where chef_id =#{chefId}
 	</select>
+
+	<update id="apiChefUpdate" parameterType="userUploadDTO">
+    	update chef set chef_name =#{imageName},
+    	                      image_fileName =#{imageFileName},
+    	                      image_original_fileName =#{imageOriginalFileName}
+    	where chef_id =#{chefId }
+    </update>
+    
+    <delete id="apiChefDelete" parameterType="int">
+    	DELETE FROM chef WHERE chef_id  = #{chefId}
+	</delete>
+
 </mapper>

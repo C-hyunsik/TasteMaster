@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import chef.bean.ChefDTO;
 import chef.dao.ChefDAO;
@@ -38,4 +39,16 @@ public class ChefServiceImpl implements ChefService {
         // 특정 chefId에 대한 이미지 파일 이름을 DB에서 조회하여 반환
         return chefDAO.apiChefGetImageFileName(chefId);
     }
+
+	@Override
+	public int apiChefUpdate(ChefDTO chefDTO, MultipartFile img) {
+		// TODO Auto-generated method stub
+		 return chefDAO.apiChefUpdate(chefDTO, img);
+	}
+
+	@Override
+	public int apiChefDelete(int chefId) {
+		// TODO Auto-generated method stub
+		 return chefDAO.apiChefDelete(chefId);
+	}
 }
