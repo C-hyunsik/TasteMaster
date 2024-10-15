@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="memberSQL"> -->
+<mapper namespace="dish.dao.DishDAO">
+
+	<insert id="apiDishUpload">
+		insert into dish(dish_name, chef_id , image_fileName, image_original_fileName)
+		values (#{dishName}, #{chefId}, #{imageFileName}, #{imageOriginalFileName})
+	</insert>
+	
+	<!-- 목록 -->
+	<select id="apiDishList" resultType="dish.dao.DishDTO">
+		SELECT * 
+        FROM dish 
+        ORDER BY dish_id DESC
+	</select>
+	
+	<!-- 1개의 정보 -->
+	<select id="apiDishGetDTO" parameterType="int" resultType="dish.dao.DishDTO">
+		select * from dish where dish_id =#{dishId}
+	</select>
+	
+	<!-- imageFileName 얻기 -->
+	<select id="apiDishGetImageFileName" parameterType="int" resultType="String">
+		select image_fileName from dish where dish_id =#{dishId}
+	</select>
+</mapper>
