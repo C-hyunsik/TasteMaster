@@ -5,6 +5,10 @@
 
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="post.dao.PostDAO">
-
-	
+	<select id="getTotalA" resultType="Integer">
+		select count(*) from post
+	</select>
+	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
+		select * from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
+	</select>
 </mapper>

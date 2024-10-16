@@ -22,6 +22,9 @@
         
 
         <div class="login">
+     	   <c:if test="${sessionScope.role == 'ADMIN'}">
+	                 <a href="/TasteMasters/page/member/admin">관리자 페이지</a> |
+	       </c:if>
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
                      <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
@@ -39,9 +42,11 @@
     
         <nav>
             <ul>
+     	   <c:if test="${sessionScope.role == 'ADMIN'}">
+	                 <li><a href="/TasteMasters/page/member/admin">관리자 페이지</a></li> 
+	       	  </c:if>
                 <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
                 <c:choose>
-                 
                     <c:when test="${not empty sessionScope.loginId}">
                         <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
                         <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
@@ -69,6 +74,7 @@
 	        </div>
 	    </c:forEach>
     </section>
+
 
 
     <%--<section class="chef-list scroll">
