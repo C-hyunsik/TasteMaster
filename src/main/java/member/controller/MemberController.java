@@ -38,6 +38,10 @@ public class MemberController {
 		return "/member/login";
 
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd7270da94e80a74e8241d0179a8bfb56e493fca
 	
 	@RequestMapping(value = "/api/member/join", method = RequestMethod.POST)
 	@ResponseBody
