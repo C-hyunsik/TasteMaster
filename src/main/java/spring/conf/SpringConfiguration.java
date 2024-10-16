@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:spring/db.properties")
+
 @MapperScan("member.dao")
 @MapperScan("chef.dao")
 @MapperScan("dish.dao")
