@@ -56,10 +56,10 @@ public class MemberController {
 
 	@RequestMapping(value="/api/member/login", method = RequestMethod.POST)
 	@ResponseBody
-	public void apiMemberLogin(@ModelAttribute  MemberDTO memberDTO, HttpServletResponse response, HttpSession httpSession) {
+	public void apiMemberLogin(@RequestParam String loginId, @RequestParam String pwd, HttpServletResponse response, HttpSession httpSession) {
 		Map<String, String> map = new HashMap<>();
-		map.put("loginId", memberDTO.getLoginId());
-		map.put("pwd", memberDTO.getPwd());
+		map.put("loginId", loginId);
+		map.put("pwd", pwd);
 		
 		MemberDTO dto = memberService.apiMemberLogin(map);
 		if(dto != null) {
@@ -96,7 +96,7 @@ public class MemberController {
 	@RequestMapping(value = "/page/member/mypage")
 	public String pageMemberMypage(Model model, HttpServletResponse response, HttpSession httpSession) throws IOException {
 		String loginId = (String) httpSession.getAttribute("loginId");
-
+		System.out.println("loginId : " + loginId);
 	    // 회원 정보 조회
 	    MemberDTO memberDTO = memberService.apiMemberInfo(loginId);
 	    
@@ -111,7 +111,7 @@ public class MemberController {
 		return "/member/mypage";
 
 	}
-	
+		
 
 	@RequestMapping(value = "/api/member/idcheck", method = RequestMethod.POST)
 	@ResponseBody
@@ -130,7 +130,7 @@ public class MemberController {
 		
 	}
 
-	@RequestMapping(value = "/api/member/mypage")
+	@RequestMapping(value = "/api/member/update")
 	public void apiMemberUpdate(@ModelAttribute MemberDTO memberDTO, HttpServletResponse response, HttpSession httpSession) {
 		int result = memberService.apiMemberUpdate(memberDTO);
 		

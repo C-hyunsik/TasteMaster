@@ -24,8 +24,7 @@
         <div class="login">
            <c:choose>
                 <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">마이페이지</a> | 
-                    <a href="/TasteMasters/api/member/logout">로그아웃</a>
+                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
                 </c:when>
                
                 <c:otherwise>
@@ -39,11 +38,12 @@
     
         <nav>
             <ul>
-                <li><a href="#">셰프 목록</a></li>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
                 <c:choose>
                  
                     <c:when test="${not empty sessionScope.loginId}">
                         <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a></li>
                     </c:when>
           
                     <c:otherwise>

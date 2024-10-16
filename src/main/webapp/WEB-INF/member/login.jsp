@@ -199,16 +199,39 @@ button:hover {
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
-            <a href="#">로그인/닉네임</a>
+           <c:choose>
+                <c:when test="${not empty sessionScope.loginId}">
+                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
+                </c:when>
+               
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                </c:otherwise>
+            </c:choose>
+          
         </div>
+        
+    
         <nav>
             <ul>
-				<li><a href="#">셰프 목록</a></li>
-				<li><a href="/TasteMasters/page/member/login">로그인</a></li>
-				<li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-				<li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-			</ul>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                 
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a></li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
         </nav>
     </header>
 
@@ -218,10 +241,12 @@ button:hover {
 	        <div class="form-group">
 	            <label for="loginId">아이디</label>
 	            <input type="text" id="loginId" name="loginId" required>
+	            <div id=idDiv></div>
 	        </div>
 	        <div class="form-group">
 	            <label for="pwd">비밀번호</label>
 	            <input type="password" id="pwd" name="pwd" required>
+	            <div id=pwdDiv></div>
 	        </div>
 	        <div class="button-group">
 	            <button type="button" id="loginBtn">로그인</button>
@@ -256,7 +281,36 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-$('#loginBtn')
+$('#loginBtn').click(function(){
+	loginId = $('#loginId').val();
+	pwd = $('#pwd').val();
+	$('#idDiv').empty();
+	$('#pwdDiv').empty();
+	
+	if(!loginId){
+		$('#idDiv').html('아이디를 입력해주세요').css('color','red');
+	}
+	else if(!pwd){
+		$('#pwdDiv').html('아이디를 입력해주세요').css('color','red');
+	}
+	else{
+		$.ajax({
+			type:'post',
+			url:'/TasteMasters/api/member/login',
+			data:{
+				'loginId':loginId,
+				'pwd':pwd
+			},
+			success:function(){
+				alert(loginId + '님 로그인');
+				location.href = '/TasteMasters/page/index';
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
+});
 </script>
 </body>
 </html>
