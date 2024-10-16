@@ -12,14 +12,14 @@
 	</insert>
 	
 	<!-- 목록 -->
-	<select id="apiChefList" resultType="chef.dao.ChefDTO">
+	<select id="apiChefList" resultType="chef.bean.ChefDTO">
 		SELECT * 
         FROM chef 
         ORDER BY chef_id DESC
 	</select>
 	
 	<!-- 1개의 정보 -->
-	<select id="apiChefGetDTO" parameterType="int" resultType="chef.dao.ChefDTO">
+	<select id="apiChefGetDTO" parameterType="int" resultType="chef.bean.ChefDTO">
 		select * from chef where chef_id =#{chefId}
 	</select>
 	
