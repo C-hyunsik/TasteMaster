@@ -91,6 +91,10 @@ nav.active {
 	height: 100%;
 }
 
+#chefUpload {
+	position: absolute;
+}
+
 .chef-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 한 줄에 3명 배치 */
