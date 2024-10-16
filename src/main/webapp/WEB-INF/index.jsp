@@ -62,34 +62,16 @@
 
 	<section class="chef-list">
 
-		<div class="chef">
-			<img src="./image/choi.jpg" alt="최현석">
-			<p>셰프 이름</p>
-		</div>
-		<div class="chef">
-			<img src="./image/gangrok.png" alt="최강록">
-			<p>셰프 이름</p>
-		</div>
-		<div class="chef">
-			<img src="./image/choi.jpg" alt="셰프 사진">
-			<p>셰프 이름</p>
-		</div>
-		<div class="chef">
-			<img src="./image/choi.jpg" alt="셰프 사진">
-			<p>셰프 이름</p>
-		</div>
-		<div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
+		<c:forEach var="chef" items="${chefList}">
+	        <div class="chef">
+	            <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
+	            <p>${chef.chefName}</p>
+	        </div>
+	    </c:forEach>
     </section>
 
 
-    <section class="chef-list scroll">
+    <%--<section class="chef-list scroll">
         <div class="chef">
             <img src="./image/choi.jpg" alt="셰프 사진">
             <p>셰프 이름</p>
@@ -102,7 +84,7 @@
             <img src="./image/choi.jpg" alt="셰프 사진">
             <p>셰프 이름</p>
         </div>
-    </section>
+    </section> --%>
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
 document.addEventListener("DOMContentLoaded", function() {
