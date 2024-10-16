@@ -131,7 +131,7 @@ nav.active {
 }
 
 button {
-    width: 48%; /* 버튼이 가로로 나란히 배열되도록 설정 */
+    width: 32%; /* 버튼이 가로로 나란히 배열되도록 설정 */
     padding: 10px;
     background-color: black;
     color: white;
@@ -192,23 +192,46 @@ button:hover {
 </style>
 </head>
 <body>
-    <header>
+     <header>
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
-            <a href="#">로그인/닉네임</a>
+           <c:choose>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
+                </c:when>
+               
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a>
+                </c:otherwise>
+            </c:choose>
+          
         </div>
+        
+    
         <nav>
             <ul>
-				<li><a href="#">셰프 목록</a></li>
-				<li><a href="/TasteMasters/page/member/login">로그인</a></li>
-				<li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-				<li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-			</ul>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                 
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
         </nav>
     </header>
 
@@ -218,13 +241,16 @@ button:hover {
 	        <div class="form-group">
 	            <label for="loginId">아이디</label>
 	            <input type="text" id="loginId" name="loginId" required>
+	            <div id=idDiv></div>
 	        </div>
 	        <div class="form-group">
 	            <label for="pwd">비밀번호</label>
 	            <input type="password" id="pwd" name="pwd" required>
+	            <div id=pwdDiv></div>
 	        </div>
 	        <div class="button-group">
-	            <button type="submit">로그인</button>
+	            <button type="button" id="loginBtn">로그인</button>
+	            <button type="button" onclick="location.href='/TasteMasters/page/member/join'">회원가입</button>
 	            <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
 	        </div>
 	    </form>
@@ -244,7 +270,7 @@ button:hover {
 	        </div>
 	    </div>
 	</div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -254,6 +280,37 @@ document.addEventListener("DOMContentLoaded", function() {
     menuIcon.addEventListener('click', function() {
         navMenu.classList.toggle('active');
     });
+});
+
+$('#loginBtn').click(function(){
+	loginId = $('#loginId').val();
+	pwd = $('#pwd').val();
+	$('#idDiv').empty();
+	$('#pwdDiv').empty();
+	
+	if(!loginId){
+		$('#idDiv').html('아이디를 입력해주세요').css('color','red');
+	}
+	else if(!pwd){
+		$('#pwdDiv').html('아이디를 입력해주세요').css('color','red');
+	}
+	else{
+		$.ajax({
+			type:'post',
+			url:'/TasteMasters/api/member/login',
+			data:{
+				'loginId':loginId,
+				'pwd':pwd
+			},
+			success:function(){
+				alert(loginId + '님 로그인');
+				location.href = '/TasteMasters/page/index';
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
 });
 </script>
 </body>

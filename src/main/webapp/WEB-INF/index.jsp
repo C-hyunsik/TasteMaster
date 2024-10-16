@@ -23,12 +23,9 @@
 
         <div class="login">
            <c:choose>
-                <c:when test="${not empty sessionScope.loginId}">
-                    <c:if test="${sessionScope.loginId == 'admin'}">
-						<a href="/TasteMasters/page/admin/adminmain">관리자 페이지</a>
-					</c:if>
-                    <a href="/TasteMasters/page/member/mypage">마이페이지</a> | 
-                    <a href="/TasteMasters/api/member/logout">로그아웃</a>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                
                 <c:otherwise>
@@ -42,11 +39,12 @@
     
         <nav>
             <ul>
-                <li><a href="#">셰프 목록</a></li>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
                 <c:choose>
                  
                     <c:when test="${not empty sessionScope.loginId}">
                         <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
                     </c:when>
           
                     <c:otherwise>
@@ -63,15 +61,31 @@
 	</section>
 
 	<section class="chef-list">
+
 		<c:forEach var="chef" items="${chefList}">
-			<div class="chef">
-				<a href="/TasteMasters/page/chef/dishes?chefId=${chef.chefId}">
-					<img src="${chef.imageFileName}" alt="${chef.chefName}">
-					<p>${chef.chefName}</p>
-				</a>
-			</div>
-		</c:forEach>
+	        <div class="chef">
+	            <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
+	            <p>${chef.chefName}</p>
+	        </div>
+	    </c:forEach>
     </section>
+
+
+    <%--<section class="chef-list scroll">
+        <div class="chef">
+            <img src="./image/choi.jpg" alt="셰프 사진">
+            <p>셰프 이름</p>
+        </div>
+        <div class="chef">
+            <img src="./image/choi.jpg" alt="셰프 사진">
+            <p>셰프 이름</p>
+        </div>
+        <div class="chef">
+            <img src="./image/choi.jpg" alt="셰프 사진">
+            <p>셰프 이름</p>
+        </div>
+    </section> --%>
+
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
 document.addEventListener("DOMContentLoaded", function() {
@@ -82,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active'); // 메뉴 보이기/숨기기
     });
 });
+
 </script>
 </body>
 </html>

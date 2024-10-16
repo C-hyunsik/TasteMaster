@@ -14,7 +14,6 @@
 						   tel1,
 						   tel2,
 						   tel3,
-						   report_count,
 						   role)
 						   values(#{name},
 								  #{loginId},
@@ -24,7 +23,6 @@
 								  #{tel1},
 								  #{tel2},
 								  #{tel3},
-								  #{reportCount},
 								  #{role})
 	</insert>
 	<select id="apiMemberLogin" parameterType="Map" resultType = "member.bean.MemberDTO">
@@ -40,7 +38,7 @@
 	</select>
 	
 	<select id="apiMemberInfo" parameterType="String" resultType="member.bean.MemberDTO">
-	    select login_id as loginId, name, pwd, email, gender, tel1, tel2, tel3
+	    select login_id as loginId, name, pwd, email, gender, tel1, tel2, tel3, role
 	    from member
 	    where login_id = #{loginId}
 	</select>

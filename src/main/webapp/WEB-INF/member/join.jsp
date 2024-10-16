@@ -184,6 +184,13 @@ button:hover {
 .tel-group input {
     width: 30%;
 }
+#adminInput{
+	display: flex;
+	float:right;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	padding: 5px;
+}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
@@ -215,32 +222,66 @@ button:hover {
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
-            <a href="#">로그인/닉네임</a>
+           <c:choose>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
+                </c:when>
+               
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a>
+                </c:otherwise>
+            </c:choose>
+          
         </div>
+        
+    
         <nav>
             <ul>
-				<li><a href="#">셰프 목록</a></li>
-				<li><a href="/TasteMasters/page/member/login">로그인</a></li>
-				<li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-				<li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-			</ul>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                 
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
         </nav>
     </header>
     <div class="form-container">
-        <h2>회원가입</h2>
-        <form id="memberJoinForm" method="post">
+        <form id="memberJoinForm">
+        	<div>
+			    <h2 style="display: inline-block; margin-right: 10px;">회원가입</h2>
+			    <div id="adminInput">
+			        관리자 인증번호<input id="admin" type="text" style="border: none; outline: none; background: transparent;"/>
+			    </div>
+			    <input type="hidden" id="adminCode" value="1234"/>
+			    <input type="hidden" id="role" name="role"/>
+			</div>
             <div class="form-group">
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" required>
+                <div id="nameDiv"></div>
             </div>
             <div class="form-group">
                 <label for="loginId">아이디</label>
                 <input type="text" id="loginId" name="loginId" required>
+                <div id="idDiv"></div>
+                <input type="hidden" id="idCheck"/>
             </div>
             <div class="form-group">
                 <label for="pwd">비밀번호</label>
                 <input type="password" id="pwd" name="pwd" required>
+                <div id="pwdDiv"></div>
             </div>
             <div class="form-group">
                 <label>성별</label>
@@ -249,6 +290,7 @@ button:hover {
                     <div class="gender-option" data-value="M">남성</div>
                     <div class="gender-option" data-value="F">여성</div>
                 </div>
+                <div id="genderDiv"></div>
             </div>
             <div class="form-group">
 				<label for="email">이메일</label>
@@ -256,6 +298,7 @@ button:hover {
 					<input type="email" id="email" name="email" placeholder="example@example.com" required style="flex: 1;">
 					<button type="button" id="sendVerification" style="margin-left: 10px;">인증번호 전송</button>
 				</div>
+				<div id="emailDiv"></div>
 			</div>
 			<div class="form-group">
 			    <label for="verificationCode">인증번호</label>
@@ -263,20 +306,24 @@ button:hover {
 					<input type="text" id="verificationCode" name="verificationCode" placeholder="인증번호 입력" required style="flex: 1;">
 					<button type="button" id="verifyCode" style="margin-left: 10px;">확인</button>
 			    </div>
+			    <div id="verificationCodeDiv"></div>
 			</div>
 
             <div class="form-group">
                 <label for="tel">전화번호</label>
                 <div class="tel-group">
-                    <input type="text" id="tel1" name="tel1" placeholder="010" required>-
-                    <input type="text" id="tel2" name="tel2" placeholder="0000" required>-
-                    <input type="text" id="tel3" name="tel3" placeholder="0000" required>
+                    <input type="text" id="tel1" name="tel1" placeholder="010" maxlength="3" required>-
+                    <input type="text" id="tel2" name="tel2" placeholder="0000" maxlength="4" required>-
+                    <input type="text" id="tel3" name="tel3" placeholder="0000" maxlength="4" required>
                 </div>
+                <div id="telDiv"></div>
             </div>
             <div class="button-group">
-                <button id="joinBtn">회원가입</button>
+                <button type="button" id="joinBtn">회원가입</button>
                 <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
             </div>
+            <input type="hidden" name="memberId" value="0"/>
+            <input type="hidden" name="reportCount" value="0"/>
         </form>
     </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -300,19 +347,109 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	});
 });
+//아이디 중복체크
+$('#loginId').blur(function() {
+    var loginId = $('#loginId').val();
+    $('#idDiv').empty();
+	if(!loginId){
+		$('#idDiv').html('아이디를 입력해주세요').css('color','red');
+	}
+	else{
+	    $.ajax({
+	        type: 'post',
+	        url: '/TasteMasters/api/member/idcheck',
+	        data: { 'loginId': loginId },
+	        success: function(response) {
+	            // 성공적으로 응답을 받았을 때
+	            $('#idDiv').text('사용 가능한 아이디입니다.').css('color', 'green');
+	            $('#idCheck').val(loginId);
+	        },
+	        error: function(xhr) {
+	            // 에러 발생 시 처리
+	            if (xhr.status === 409) {
+	                $('#idDiv').text('이미 사용 중인 아이디입니다.').css('color', 'red');
+	            } else {
+	                $('#idDiv').text('오류가 발생했습니다.').css('color', 'red');
+	            }
+	        }
+	    });
+	}
+});
+
 $('#joinBtn').click(function(){
-	$.ajax({
-		type:'post',
-		url:'/TasteMasters/api/member/join',
-		data:$('#memberJoinForm').serialize(),
-		success:function(){
-			alert('회원가입이 완료되었습니다.')
-			location.href='/TasteMasters/page/index';
-		},
-		error:function(e){
-			console.log(e);
+	name = $('#name').val();
+	pwd = $('#pwd').val();
+	gender = $('#gender').val();
+	email = $('#email').val();
+	verificationCode = $('#verificationCode').val();
+	tel1 = $('#tel1').val();
+	tel2 = $('#tel2').val();
+	tel3 = $('#tel3').val();
+
+	$('#nameDiv').empty();
+	$('#pwdDiv').empty();
+	$('#genderDiv').empty();
+	$('#emailDiv').empty();
+	$('#verificationCodeDiv').empty();
+	$('#telDiv').empty();
+	
+	admin = $('#admin').val();			//내가 입력한 코드
+	adminCode = $('#adminCode').val();	//1234
+
+	//관리자 권한 요청
+	if(admin != adminCode){
+		//코드가 틀리면 role=USER
+		$('#role').val('USER');
+		//입력하지 않았으면 alert창 띄우지 않기
+		if(!admin){
+			$('#role').val('USER');
 		}
-	});
+		else{
+			alert('코드가 틀립니다');
+		}
+	}
+	else{
+		//코드가 맞으면 role=ADMIN
+		$('#role').val('ADMIN');
+	}
+	
+	if(!name){
+		$('#nameDiv').html('이름을 입력하세요').css('color','red');
+	}
+	else if(!pwd){
+		$('#pwdDiv').html('비밀번호를 입력하세요').css('color','red');
+	}
+	else if(!gender){
+		$('#genderDiv').html('성별을 선택하세요').css('color','red');
+	}
+	else if(!email){
+		$('#emailDiv').html('이메일을 입력하세요').css('color','red');
+	}
+	else if(!verificationCode){
+		$('#verificationCodeDiv').html('인증번호를 입력하세요').css('color','red');
+	}
+	else if(!tel1 || !tel2 || !tel3){
+		$('#telDiv').html('전화번호를 입력하세요').css('color','red');
+	}
+	else{
+		$.ajax({
+			type:'post',
+			url:'/TasteMasters/api/member/join',
+			data:$('#memberJoinForm').serialize(),
+			success:function(){
+				if($('#role').val() == 'ADMIN'){
+					alert('관리자로 회원가입합니다.');
+				}
+				else{
+					alert('회원가입이 완료되었습니다.')					
+				}
+				location.href='/TasteMasters/page/index';
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
 });
 </script>
 </body>

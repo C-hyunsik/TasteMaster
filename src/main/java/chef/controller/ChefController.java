@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import chef.bean.ChefDTO;
 import chef.bean.ChefUploadDTO;
+import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
-import chef.service.ChefService;
 import naver.objectstorage.ObjectStorageService;
 
 @Controller
@@ -29,6 +29,7 @@ public class ChefController {
     private ChefService chefService;
     @Autowired
     private DishService dishService;
+
 
     @Autowired
     private ObjectStorageService objectStorageService;
@@ -43,6 +44,7 @@ public class ChefController {
         mav.addObject("chefList", chefList);
         return mav;
     }
+
 
     // 쉐프와 요리를 업로드하는 메서드
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")

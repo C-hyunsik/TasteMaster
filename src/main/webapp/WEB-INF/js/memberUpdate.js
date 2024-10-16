@@ -5,12 +5,12 @@ $(document).ready(function () {
         var formData = $(this).serialize(); 
 
         $.ajax({
-            url: '/api/member/update',
+            url: '/TasteMasters/api/member/update',
             type: 'POST',
             data: formData,
             success: function (response) {
                 alert('회원정보가 수정되었습니다.');
-                location.href = 'api/member/mypage';
+                location.href = '/TasteMasters/page/member/mypage';
             },
             error: function (xhr, status, error) {
                 if (xhr.status === 400) {
