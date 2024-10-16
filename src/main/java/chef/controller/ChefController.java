@@ -44,6 +44,13 @@ public class ChefController {
         mav.addObject("chefList", chefList);
         return mav;
     }
+    
+    @RequestMapping(value = "/page/chef/upload")
+	public String pageChefUpload() {
+
+		return "/admin/chefUpload";
+
+	}
 
 
     // 쉐프와 요리를 업로드하는 메서드

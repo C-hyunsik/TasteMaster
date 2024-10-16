@@ -152,4 +152,12 @@ public class MemberController {
 		response.sendRedirect("/TasteMasters/page/index"); // 로그인 페이지로 리다이렉트
 		return null;
 	}
+	
+	@RequestMapping(value = "/page/member/admin")
+	public String pageMemberAdmin() {
+
+		return "/admin/adminMain";
+
+	}
+	
 }

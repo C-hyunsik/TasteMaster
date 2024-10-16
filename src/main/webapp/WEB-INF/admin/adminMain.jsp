@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Chef List</title>
-<link rel="stylesheet" href="./css/index.css">
+<link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
 <header>

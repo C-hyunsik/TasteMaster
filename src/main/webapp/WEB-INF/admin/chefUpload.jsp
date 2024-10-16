@@ -59,6 +59,13 @@
     .dish-container input[type="text"] {
         margin-right: 10px;
     }
+
+    /* 작은 이미지 버튼을 위한 스타일 */
+    .add-dish-image {
+        position: absolute;
+        bottom: 5px; /* 네모박스 아래 */
+        right: 5px; /* 네모박스 오른쪽 */
+    }
 </style>
 </head>
 <body>
@@ -68,7 +75,7 @@
 
 <main>
     <h2>쉐프 등록</h2>
-    <form id=chefForm>
+    <form action="/TasteMasters/api/chef/upload" method="post" enctype="multipart/form-data">
         <table border="1">
             <tr>
                 <th>쉐프 이름</th>
@@ -79,9 +86,9 @@
             <tr>
                 <th>쉐프 사진</th>
                 <td>
-                    <div class="chef-image-box" id="chefImgBox">
+                    <div class="dish-image-box" id="chefImgBox">
                         <span id="showChefImg"></span>
-                        <input type="file" name="chefimg" id="chefImg" class="chefImg" required>
+                        <input type="file" name="chefimg" id="chefImg" class="dish-image-input" required>
                     </div>
                 </td>
             </tr>
@@ -96,13 +103,14 @@
                 <td id="dishImageContainer">
                     <div class="dish-image-box">
                         <span class="showDishImg"></span>
-                        <input type="file" name="dishImg" class="dishImg">
+                        <input type="file" name="dishImg" class="dish-image-input dishImg">
+                        <img alt="요리사진 추가" src="../image/addImage.png" width="30" height="30" class="add-dish-image">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="등록하기" id="chefUploadBtn">
+                    <input type="submit" value="등록하기">
                     <input type="reset" value="취소">
                 </td>
             </tr>
@@ -118,8 +126,25 @@ $('#chefImgBox').on('click', function() {
     $('#chefImg').click(); // 파일 선택창 열기
 });
 
-$('.dish-image-box').on('click', function() {
-    $(this).find('.dishImg').click(); // 파일 선택창 열기
+// 요리 사진 추가 버튼 클릭 시 새로운 요리 입력란 및 이미지 박스 추가
+$(document).on('click', '.add-dish-image', function() {
+    var currentDishBox = $(this).parent(); // 현재 요리 박스
+
+    // 새로운 요리 이름 입력란 및 요리 사진 업로드 박스 추가
+    if (!currentDishBox.next('.dish-container').length) { // 중복 방지
+        var newDishInput = `
+            <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요">
+        `;
+        var newDishImageBox = `
+            <div class="dish-image-box">
+                <span class="showDishImg"></span>
+                <input type="file" name="dishImg" class="dish-image-input dishImg">
+                <img alt="요리사진 추가" src="../image/addImage.png" width="30" height="30" class="add-dish-image">
+            </div>
+        `;
+        $('#dishNameContainer').append(newDishInput); // 요리 이름 추가
+        $('#dishImageContainer').append(newDishImageBox); // 요리 이미지 박스 추가
+    }
 });
 
 // 쉐프 이미지 미리보기
@@ -136,33 +161,17 @@ $('#chefImg').change(function(){
     reader.readAsDataURL(this.files[0]);
 });
 
-// 요리 이미지 미리보기 및 자동 추가 (쉐프 이미지와 분리)
+// 요리 이미지 미리보기
 $(document).on('change', '.dishImg', function(){
     var showDishImg = $(this).siblings('.showDishImg');
     showDishImg.empty(); // 기존 이미지 제거
     var reader = new FileReader();
-    var currentDishBox = $(this).parent(); // 현재 요리 박스
     reader.onload = function(e) {
         var img = document.createElement('img');
         img.src = e.target.result;
         img.width = 100;  // 이미지 크기 조정
         img.height = 100;
         showDishImg.append(img);
-
-        // 새로운 요리 이름 입력란 및 요리 사진 업로드 박스 추가
-        if (!currentDishBox.next('.dish-container').length) { // 중복 방지
-            var newDishInput = `
-                <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요">
-            `;
-            var newDishImageBox = `
-                <div class="dish-image-box">
-                    <span class="showDishImg"></span>
-                    <input type="file" name="dishImg" class="dish-image-input dishImg">
-                </div>
-            `;
-            $('#dishNameContainer').append(newDishInput); // 요리 이름 추가
-            $('#dishImageContainer').append(newDishImageBox); // 요리 이미지 박스 추가
-        }
     }
     reader.readAsDataURL(this.files[0]);
 });
