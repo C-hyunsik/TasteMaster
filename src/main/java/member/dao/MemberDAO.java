@@ -19,7 +19,7 @@ public interface MemberDAO {
 
 	public int apiIdCheck(String loginId);
 
-	public MemberDTO apiGetMember(String loginId);
+	public MemberDTO apiMemberInfo(String loginId);
 
 	public int apiMemberUpdate(MemberDTO memberDTO);
 }

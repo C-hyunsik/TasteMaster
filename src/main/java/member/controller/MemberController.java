@@ -1,5 +1,6 @@
 package member.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,17 +104,18 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/page/member/mypage")
-	public String pageMemberMypage(@ModelAttribute Model model, HttpServletResponse response, HttpSession httpSession) {
+	public String pageMemberMypage(Model model, HttpServletResponse response, HttpSession httpSession) throws IOException {
 		String loginId = (String) httpSession.getAttribute("loginId");
 
 	    // 회원 정보 조회
 	    MemberDTO memberDTO = memberService.apiMemberInfo(loginId);
 	    
 	    if (memberDTO == null) {
-	        response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404 회원 정보 없음
-	    	return "/member/login"; // 적절한 에러 페이지로 리다이렉트
+	    	 response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404 회원 정보 없음
+	    	 response.sendRedirect("/TasteMasters/page/member/login"); // 로그인 페이지로 리다이렉트
+	    	 return null; // 리다이렉트 후 메서드를 종료
 	    }
-
+	    
 	    model.addAttribute("memberDTO", memberDTO);
 
 		return "/member/mypage";
