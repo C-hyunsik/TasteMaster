@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인</title>
+<title>글쓰기</title>
 <style type="text/css">
 * {
     margin: 0;
@@ -18,7 +18,7 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: white;
     color: black;
-    height: auto; /* 높이 자동 조정 */
+    height: auto;
 }
 
 header {
@@ -83,66 +83,38 @@ nav.active {
     width: 100%;
 }
 
-.table-container {
+.container {
     display: flex;
     margin: 20px auto;
     width: 80%;
-    height: auto; /* 높이 자동 조정 */
 }
 
-.image-container {
-    width: 50%; /* PC 화면에서 이미지 너비 */
-    padding-right: 20px;
-    padding-left: 20px;
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    margin:auto 0;
-    background-color: #f9f9f9;
-}
-
-.image-container img {
+.form-container {
     width: 100%;
-    border-radius: 5px;
-}
-
-.content-container {
-    width: 50%; /* PC 화면에서 콘텐츠 너비 */
     background-color: #f9f9f9;
     padding: 20px;
 }
 
-.content-container h2 {
+.form-container h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-#post_cardWrap {
-    width: 100%;
+.form-group {
+    margin-bottom: 15px;
 }
 
-.post-card {
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px; /* 카드 간 간격 */
-    transition: box-shadow 0.3s;
-}
-
-.post-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 효과 */
-}
-
-.post-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.post-meta {
-    font-size: 14px;
-    color: #666; /* 작성자 및 날짜 색상 */
 }
 
 .button-group {
@@ -165,85 +137,10 @@ button:hover {
     background-color: #333;
 }
 
-#pagingWrap {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#paging {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#paging:hover {
-    background-color: #f0f0f0;
-}
-
-#currentPaging {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-}
-
-#movepaging {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#movepaging:hover {
-    background-color: #f0f0f0;
-}
-
-#noContent {
-    color: #999;
-    font-style: italic;
-}
-@media (min-width: 769px) {
-	body{
-		height: 100vh;
-	}
-	.table-container{
-		height: 65%;
-	}
-	.image-container{
-		height: 100%;
-	}
-	#post_cardWrap{
-		height: 75%;
-	}
-	.content-container{
-		height: 100%;
-	}
-	
-}
 @media (max-width: 768px) {
-    .table-container {
-        flex-direction: column; /* 모바일에서 세로 방향으로 정렬 */
-        width: 90%; /* 모바일 화면에서 너비 조정 */
-    }
-
-    .image-container {
-        width: 100%; /* 모바일에서 전체 너비 사용 */
-        height: auto; /* 높이 자동 조정 */
-        padding-bottom: 20px; /* 이미지와 콘텐츠 간 간격 */
-    }
-
-    .content-container {
-        width: 100%; /* 모바일에서 전체 너비 사용 */
-        height: auto; /* 높이 자동 조정 */
+    .container {
+        flex-direction: column;
+        width: 90%;
     }
 }
 </style>
@@ -284,40 +181,30 @@ button:hover {
         </ul>
     </nav>
 
-    <div class="table-container">
-        <div class="image-container">
-        	<div id="h2Wrap">
-	        	<h2>무조림</h2>
-	        </div>
-	        <div id="imgWrap">
-	        	<img src="../image/moojorim.jpg" alt="음식 사진" />
+    <div class="container">
+        <div class="form-container">
+            <h2>글쓰기</h2>
+            <div class="form-group">
+                <label for="title">제목:</label>
+                <input type="text" id="title" name="title" required>
             </div>
-        </div>
-        <div class="content-container">
-        <br><br><br>
-            <div id="post_cardWrap">
-                <c:forEach var="list" items="${map2.list}">
-                    <div class="post-card">
-                        <div class="post-title">${list.title }</div>
-                        <div class="post-meta">작성자: ${list.memberId } | 작성일: ${list.createdAt }</div>
-                    </div>
-                </c:forEach>
+            <div class="form-group">
+                <label for="content">내용:</label>
+                <textarea id="content" name="content" rows="10" required></textarea>
             </div>
-            <div id="pagingWrap">
-                ${map2.postPaging.pagingHTML }
+            <div class="form-group">
+                <label for="image">사진 첨부:</label>
+                <input type="file" id="image" name="image">
             </div>
             <div class="button-group">
-                <button onclick="location.href='/TasteMasters/page/post/dishpostwrite'">글쓰기</button>
-                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+                <button type="submit">작성하기</button>
+                <button onclick="location.href='/TasteMasters/page/post/dishpostlist?dishId=1'">목록</button>
             </div>
         </div>
     </div>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
-//페이징 처리
-function postPaging(pg) {
-    location.href = '/TasteMasters/page/post/dishpostlist?pg=' + pg + "&dishId=1";
-}
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
     var menuIcon = document.querySelector('.menu-icon');

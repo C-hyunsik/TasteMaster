@@ -86,22 +86,6 @@
             <p>셰프 이름</p>
         </div>
     </section>
-
-
-    <section class="chef-list scroll">
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-    </section>
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
 document.addEventListener("DOMContentLoaded", function() {

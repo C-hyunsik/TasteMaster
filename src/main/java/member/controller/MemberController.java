@@ -60,14 +60,12 @@ public class MemberController {
 		Map<String, String> map = new HashMap<>();
 		map.put("loginId", loginId);
 		map.put("pwd", pwd);
-		
 		MemberDTO dto = memberService.apiMemberLogin(map);
 		if(dto != null) {
 		    httpSession.setAttribute("loginId", dto.getLoginId());
 		    //httpSession.setAttribute("memberDto", dto); //dto통째로 담기
 			response.setStatus(HttpServletResponse.SC_OK); // 200 로그인 성공
-			 
-		     return;
+			return;
 		}else {
 			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 권한없음
 		     return;
@@ -96,7 +94,6 @@ public class MemberController {
 	@RequestMapping(value = "/page/member/mypage")
 	public String pageMemberMypage(Model model, HttpServletResponse response, HttpSession httpSession) throws IOException {
 		String loginId = (String) httpSession.getAttribute("loginId");
-		System.out.println("loginId : " + loginId);
 	    // 회원 정보 조회
 	    MemberDTO memberDTO = memberService.apiMemberInfo(loginId);
 	    
