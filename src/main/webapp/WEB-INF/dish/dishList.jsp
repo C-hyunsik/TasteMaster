@@ -4,12 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>dish List</title>
+
 </head>
 <body>
-<h1>
-	Hello blackwhite~~~
-	Let's go!!! 
-</h1>
+
 </body>
 </html>

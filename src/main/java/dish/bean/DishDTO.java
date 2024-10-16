@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor // 기본 생성자 추가
 @AllArgsConstructor
-@NoArgsConstructor
 public class DishDTO {
 	
 	private int dishId;                     // 음식 ID (자동 증가)

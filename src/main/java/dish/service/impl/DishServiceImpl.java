@@ -1,8 +1,11 @@
 package dish.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dish.bean.DishDTO;
 import dish.dao.DishDAO;
 import dish.service.DishService;
 
@@ -10,6 +13,12 @@ import dish.service.DishService;
 public class DishServiceImpl implements DishService {
 	@Autowired
 	private DishDAO dishDAO;
+
+	@Override
+	public void uploadDishes(List<DishDTO> dishList) {
+		dishDAO.uploadDishes(dishList);
+		
+	}
 
 	
 	

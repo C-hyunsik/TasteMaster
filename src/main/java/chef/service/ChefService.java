@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import chef.bean.ChefDTO;
+import dish.bean.DishDTO;
 
 public interface ChefService {
-
-	public int apiChefUpload(ChefDTO chefDTO);
 
 	// 쉐프 목록 조회
 	public List<ChefDTO> apiChefList();
@@ -22,5 +21,8 @@ public interface ChefService {
 	public int apiChefUpdate(ChefDTO chefDTO, MultipartFile img);
 
 	public int apiChefDelete(int chefId);
+	
+	//쉐프 등록
+	public void apiUploadChef(ChefDTO chef);
 	
 }

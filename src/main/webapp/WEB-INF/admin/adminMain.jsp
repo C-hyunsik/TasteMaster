@@ -2,17 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>셰프 리뷰 사이트</title>
-<link rel="stylesheet" href="./css/index.css">
-<style type="text/css">
-</style>
+<title>Chef List</title>
+<link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-    <header>
+	 <header>
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
@@ -61,39 +58,26 @@
         </nav>
     </header>
 
-	<section class="banner">
-		<img src="./image/banner.jpg" alt="배너 이미지" class="banner-img" />
-	</section>
+<div>
+	<input type="button" id="chefUpload" name="chefUpload" value="등록하기" />
+</div>
 
-	<section class="chef-list">
+<section class="chef-list">
+	<c:forEach var="chef" items="${chefList}">
+		<div class="chef">
+			<a href="/TasteMasters/page/chef/dishes?chefId=${chef.chefId}">
+				<img src="${chef.imageFileName}" alt="${chef.chefName}">
+				<p>${chef.chefName}</p>
+			</a>
+			<input type="button" name="chefUpdate" id="chefUpdate" value="수정"/>
+			<input type="button" name="chefDelete" id="chefDelete" value="삭제"/>
+		</div>
+	</c:forEach>
+ </section>
 
-		<c:forEach var="chef" items="${chefList}">
-	        <div class="chef">
-	            <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
-	            <p>${chef.chefName}</p>
-	        </div>
-	    </c:forEach>
-    </section>
-<<<<<<< HEAD
-=======
-
-
-    <%--<section class="chef-list scroll">
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-    </section> --%>
-
->>>>>>> ebe9c3102c6643e675cc51ee1fb69f3e037658bd
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+<script type="text/javascript" src="../js/chefUpdate.js"></script>
+<script type="text/javascript" src="../js/chefDelete.js"></script>
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
 document.addEventListener("DOMContentLoaded", function() {
@@ -105,6 +89,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.getElementById('chefUpload').addEventListener('click', function() {
+    location.href = '/TasteMasters/page/chef/upload';
+});
 </script>
 </body>
 </html>

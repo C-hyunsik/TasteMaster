@@ -6,10 +6,10 @@
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="chef.dao.ChefDAO">
 
-	<insert id="apiChefUpload">
-		insert into chef(chef_name, image_fileName, image_original_fileName)
-		values (#{chefName}, #{imageFileName}, #{imageOriginalFileName})
-	</insert>
+	<insert id="apiUploadChef" parameterType="chef.bean.ChefDTO">
+        INSERT INTO chef (chef_name, image_fileName, image_original_fileName)
+        VALUES (#{chefName}, #{imageFileName}, #{imageOriginalFileName})
+    </insert>
 	
 	<!-- 목록 -->
 	<select id="apiChefList" resultType="chef.bean.ChefDTO">
