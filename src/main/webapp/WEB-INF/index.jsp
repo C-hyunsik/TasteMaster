@@ -74,8 +74,7 @@
 	        </div>
 	    </c:forEach>
     </section>
-<<<<<<< HEAD
-=======
+
 
 
     <%--<section class="chef-list scroll">
@@ -93,7 +92,6 @@
         </div>
     </section> --%>
 
->>>>>>> ebe9c3102c6643e675cc51ee1fb69f3e037658bd
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
 document.addEventListener("DOMContentLoaded", function() {

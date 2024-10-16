@@ -67,11 +67,8 @@ public class MemberController {
 		    //httpSession.setAttribute("memberDto", dto); //dto통째로 담기
 		    httpSession.setAttribute("role", dto.getRole());
 			response.setStatus(HttpServletResponse.SC_OK); // 200 로그인 성공
-<<<<<<< HEAD
 			return;
-=======
-		     return;
->>>>>>> ebe9c3102c6643e675cc51ee1fb69f3e037658bd
+
 		}else {
 			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 권한없음
 		     return;
