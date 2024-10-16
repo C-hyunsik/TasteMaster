@@ -131,6 +131,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/api/member/update")
+	@ResponseBody
 	public void apiMemberUpdate(@ModelAttribute MemberDTO memberDTO, HttpServletResponse response, HttpSession httpSession) {
 		int result = memberService.apiMemberUpdate(memberDTO);
 		
@@ -145,7 +146,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/api/member/logout")
+	@ResponseBody
 	public void apiMemberLogout(HttpSession httpSession) {
 		httpSession.invalidate();
+		return;
 	}
 }
