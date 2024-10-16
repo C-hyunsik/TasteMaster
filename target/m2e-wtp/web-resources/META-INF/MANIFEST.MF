@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: jaeye
+Built-By: ￬ﾠﾕ￪ﾱﾴ￬ﾚﾰ
 Build-Jdk: 11.0.24
 Created-By: Maven Integration for Eclipse
 

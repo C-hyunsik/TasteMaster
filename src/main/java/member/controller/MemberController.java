@@ -66,6 +66,7 @@ public class MemberController {
 		if(dto != null) {
 		    httpSession.setAttribute("loginId", loginId);
 		    //httpSession.setAttribute("memberDto", dto); //dto통째로 담기
+		    httpSession.setAttribute("role", dto.getRole());
 			response.setStatus(HttpServletResponse.SC_OK); // 200 로그인 성공
 		     return;
 		}else {
