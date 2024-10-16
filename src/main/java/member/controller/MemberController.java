@@ -1,5 +1,6 @@
 package member.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -76,7 +78,7 @@ public class MemberController {
 		MemberDTO dto = memberService.apiMemberLogin(map);
 		if(dto != null) {
 		    httpSession.setAttribute("loginId", dto.getLoginId());
-		    httpSession.setAttribute("memberDto", dto); //dto통째로 담기
+		    //httpSession.setAttribute("memberDto", dto); //dto통째로 담기
 			response.setStatus(HttpServletResponse.SC_OK); // 200 로그인 성공
 			 
 		     return;
@@ -106,9 +108,54 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/page/member/mypage")
-	public String pageMemberMypage() {
+	public String pageMemberMypage(Model model, HttpServletResponse response, HttpSession httpSession) throws IOException {
+		String loginId = (String) httpSession.getAttribute("loginId");
+
+	    // 회원 정보 조회
+	    MemberDTO memberDTO = memberService.apiMemberInfo(loginId);
+	    
+	    if (memberDTO == null) {
+	    	 response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404 회원 정보 없음
+	    	 response.sendRedirect("/TasteMasters/page/member/login"); // 로그인 페이지로 리다이렉트
+	    	 return null; // 리다이렉트 후 메서드를 종료
+	    }
+	    
+	    model.addAttribute("memberDTO", memberDTO);
 
 		return "/member/mypage";
 
 	}
+	
+
+	@RequestMapping(value = "/api/member/idcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public void apiMemberIdCheck(@RequestParam String loginId, HttpServletResponse response) {
+		
+		int idcheck = memberService.apiIdCheck(loginId);
+
+		if (idcheck == 1) { // 아이디가 중복
+			response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
+			return;
+		}
+		else {
+			response.setStatus(HttpServletResponse.SC_OK); // 200
+			return;
+		}
+		
+	}
+
+	@RequestMapping(value = "/api/member/mypage")
+	public void apiMemberUpdate(@ModelAttribute MemberDTO memberDTO, HttpServletResponse response, HttpSession httpSession) {
+		int result = memberService.apiMemberUpdate(memberDTO);
+		
+		if (result == 1) {
+	        response.setStatus(HttpServletResponse.SC_OK); // 200 수정 성공
+	        httpSession.setAttribute("loginId", memberDTO.getLoginId());
+	        return;
+	    } else {
+	        response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 수정 실패
+	        return;
+	    }
+	}
+
 }

@@ -13,7 +13,10 @@
 	
 	<!-- 목록 -->
 	<select id="apiChefList" resultType="chef.bean.ChefDTO">
-		SELECT * 
+		SELECT chef_id as chefId, 
+		chef_name as chefName ,  
+		image_fileName as imageFileName,
+		image_original_fileName as imageOriginalFileName
         FROM chef 
         ORDER BY chef_id DESC
 	</select>

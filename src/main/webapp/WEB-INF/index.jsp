@@ -19,26 +19,48 @@
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
-            <a href="#">로그인/닉네임</a>
+           <c:choose>
+                <c:when test="${not empty sessionScope.loginId}">
+                    <a href="/TasteMasters/page/member/mypage">마이페이지</a> | 
+                    <a href="/TasteMasters/api/member/logout">로그아웃</a>
+                </c:when>
+               
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                </c:otherwise>
+            </c:choose>
+          
         </div>
-        <!-- 숨겨진 네비게이션 메뉴 -->
-		<nav>
-			<ul>
-				<li><a href="#">셰프 목록</a></li>
-				<li><a href="/TasteMasters/page/member/login">로그인</a></li>
-				<li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-				<li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-			</ul>
-		</nav>
-	</header>
+        
+    
+        <nav>
+            <ul>
+                <li><a href="#">셰프 목록</a></li>
+                <c:choose>
+                 
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </nav>
+    </header>
 
 	<section class="banner">
 		<img src="./image/banner.jpg" alt="배너 이미지" class="banner-img" />
 	</section>
 
 	<section class="chef-list">
-		<!-- 셰프 사진과 이름 -->
+
 		<div class="chef">
 			<img src="./image/choi.jpg" alt="최현석">
 			<p>셰프 이름</p>
@@ -65,7 +87,7 @@
         </div>
     </section>
 
-    <!-- 스크롤 후 나오는 화면 -->
+
     <section class="chef-list scroll">
         <div class="chef">
             <img src="./image/choi.jpg" alt="셰프 사진">

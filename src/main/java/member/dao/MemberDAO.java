@@ -18,4 +18,8 @@ public interface MemberDAO {
 	public int apiMemberDelete(Map<String, String> map);
 
 	public int apiIdCheck(String loginId);
+
+	public MemberDTO apiMemberInfo(String loginId);
+
+	public int apiMemberUpdate(MemberDTO memberDTO);
 }

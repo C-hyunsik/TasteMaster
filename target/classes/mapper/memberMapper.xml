@@ -5,7 +5,7 @@
 
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="member.dao.MemberDAO">
-	<insert id="apiMemberJoin" parameterType="member">
+	<insert id="apiMemberJoin" parameterType="member.bean.MemberDTO">
 		insert into member(name,
 						   login_id,
 						   pwd,
@@ -34,4 +34,23 @@
 		resultType="int">
 		select count(*) from member where login_id=#{loginId}
 	</select>
+	
+	<select id="apiMemberInfo" parameterType="String" resultType="member.bean.MemberDTO">
+	    select login_id as loginId, name, pwd, email, gender, tel1, tel2, tel3
+	    from member
+	    where login_id = #{loginId}
+	</select>
+	
+	<update id="apiMemberUpdate" parameterType="member.bean.MemberDTO">
+		update member
+    	set name = #{name},
+        	pwd = #{pwd},
+        	email = #{email},
+        	gender = #{gender},
+        	tel1 = #{tel1},
+        	tel2 = #{tel2},
+        	tel3 = #{tel3}
+    	where login_id = #{loginId}
+	</update> 
+	
 </mapper>

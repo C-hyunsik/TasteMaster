@@ -32,6 +32,16 @@ public class MemberServiceImpl implements MemberService {
 	public int apiIdCheck(String loginId) {
 		return memberDAO.apiIdCheck(loginId);
 	}
+
+	@Override
+	public MemberDTO apiMemberInfo(String loginId) {		
+		return memberDAO.apiMemberInfo(loginId);
+	}
+
+	@Override
+	public int apiMemberUpdate(MemberDTO memberDTO) {
+		return memberDAO.apiMemberUpdate(memberDTO);
+	}
 	
 	
 }
