@@ -20,14 +20,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:spring/db.properties")
-<<<<<<< HEAD
-=======
-
-@MapperScan("user.dao")
-
+@MapperScan("member.dao")
 @MapperScan("chef.dao")
-
->>>>>>> fd7270da94e80a74e8241d0179a8bfb56e493fca
+@MapperScan("dish.dao")
+@MapperScan("post.dao")
+@MapperScan("comment.dao")
 public class SpringConfiguration {
 	private @Value("${jdbc.driver}") String driver;
 	private @Value("${jdbc.url}") String url;
