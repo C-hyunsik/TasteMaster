@@ -229,7 +229,7 @@ button:hover {
     </header>
     <div class="form-container">
         <h2>회원가입</h2>
-        <form action="joinAction.jsp" method="post">
+        <form id="memberJoinForm" method="post">
             <div class="form-group">
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" required>
@@ -274,11 +274,12 @@ button:hover {
                 </div>
             </div>
             <div class="button-group">
-                <button type="submit">회원가입</button>
+                <button id="joinBtn">회원가입</button>
                 <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
             </div>
         </form>
     </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -297,6 +298,20 @@ document.addEventListener("DOMContentLoaded", function() {
 			option.classList.add('selected'); // 현재 선택 추가
 			document.getElementById('gender').value = option.dataset.value; // hidden input에 값 설정
 		});
+	});
+});
+$('#joinBtn').click(function(){
+	$.ajax({
+		type:'post',
+		url:'/TasteMasters/api/member/join',
+		data:$('#memberJoinForm').serialize(),
+		success:function(){
+			alert('회원가입이 완료되었습니다.')
+			location.href='/TasteMasters/page/index';
+		},
+		error:function(e){
+			console.log(e);
+		}
 	});
 });
 </script>

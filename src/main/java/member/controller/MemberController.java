@@ -73,6 +73,7 @@ public class MemberController {
 		MemberDTO dto = memberService.apiMemberLogin(map);
 		if(dto != null) {
 		    httpSession.setAttribute("loginId", dto.getLoginId());
+		    httpSession.setAttribute("memberDto", dto); //dto통째로 담기
 			response.setStatus(HttpServletResponse.SC_OK); // 200 로그인 성공
 			 
 		     return;
