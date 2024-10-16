@@ -154,8 +154,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/page/member/admin")
-	public String pageMemberAdmin() {
-
+	public String pageMemberAdmin(HttpSession httpSession, HttpServletResponse response) throws IOException {
+		String role = (String) httpSession.getAttribute("role");
+	    if (role == null || role.equals("ADMIN") == false) {
+	    	 response.sendRedirect("/TasteMasters/page/index"); // 메인 페이지로 리다이렉트
+	    	 return null; // 리다이렉트 후 메서드를 종료
+	    }
+		  
 		return "/admin/adminMain";
 
 	}

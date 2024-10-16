@@ -1,8 +1,10 @@
 package chef.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +48,12 @@ public class ChefController {
     }
     
     @RequestMapping(value = "/page/chef/upload")
-	public String pageChefUpload() {
-
+	public String pageChefUpload(HttpSession httpSession, HttpServletResponse response) throws IOException {
+		String role = (String) httpSession.getAttribute("role");
+	    if (role == null || role.equals("ADMIN") == false) {
+	    	 response.sendRedirect("/TasteMasters/page/index"); // 메인 페이지로 리다이렉트
+	    	 return null; // 리다이렉트 후 메서드를 종료
+	    }
 		return "/admin/chefUpload";
 
 	}
