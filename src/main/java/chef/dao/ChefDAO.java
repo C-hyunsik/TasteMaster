@@ -9,8 +9,6 @@ import chef.bean.ChefDTO;
 
 @Mapper
 public interface ChefDAO {
-	
-	public int apiChefUpload(ChefDTO chefDTO);
 
 	// 쉐프 목록 조회
 	public List<ChefDTO> apiChefList();
@@ -24,6 +22,9 @@ public interface ChefDAO {
 	public int apiChefUpdate(ChefDTO chefDTO, MultipartFile img);
 
 	public int apiChefDelete(int chefId);
+
+	//쉐프 등록
+	public void apiUploadChef(ChefDTO chef);
 
 
 }

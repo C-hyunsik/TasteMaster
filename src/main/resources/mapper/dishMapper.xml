@@ -6,5 +6,12 @@
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="dish.dao.DishDAO">
 
+	<insert id="uploadDishes" parameterType="java.util.List">
+        insert into dish (chef_id, dish_name, image_fileName, image_original_fileName)
+        values 
+        <foreach collection="list" item="dish" separator=",">
+            (#{dish.chefId}, #{dish.dishName}, #{dish.imageFileName}, #{dish.imageOriginalFileName})
+        </foreach>
+    </insert>
 	
 </mapper>

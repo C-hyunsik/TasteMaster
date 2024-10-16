@@ -16,13 +16,6 @@ public class ChefServiceImpl implements ChefService {
     private ChefDAO chefDAO;
 
     @Override
-    public int apiChefUpload(ChefDTO chefDTO) {
-        // 쉐프 정보를 DB에 삽입하고, 영향을 받은 행의 수를 반환
-        
-        return chefDAO.apiChefUpload(chefDTO); // 성공적으로 추가되었음을 나타냄. 추가적으로 처리할 경우 영향을 받은 행 수를 반환할 수 있음.
-    }
-
-    @Override
     public List<ChefDTO> apiChefList() {
         // 쉐프 목록을 DB에서 조회하여 반환
         return chefDAO.apiChefList();
@@ -50,5 +43,11 @@ public class ChefServiceImpl implements ChefService {
 	public int apiChefDelete(int chefId) {
 		// TODO Auto-generated method stub
 		 return chefDAO.apiChefDelete(chefId);
+	}
+
+	
+	public void apiUploadChef(ChefDTO chef) {
+		chefDAO.apiUploadChef(chef);
+		
 	}
 }
