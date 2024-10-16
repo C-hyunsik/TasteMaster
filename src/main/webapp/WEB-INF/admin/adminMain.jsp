@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 document.getElementById('chefUpload').addEventListener('click', function() {
-    location.href = '/TasteMasters/page/admin/chefUpload';
+    location.href = '/TasteMasters/page/chef/upload';
 });
 </script>
 </body>
