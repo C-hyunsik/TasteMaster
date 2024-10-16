@@ -21,10 +21,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource("classpath:spring/db.properties")
 
-@MapperScan("user.dao")
-
+@MapperScan("member.dao")
 @MapperScan("chef.dao")
-
+@MapperScan("dish.dao")
+@MapperScan("post.dao")
+@MapperScan("comment.dao")
 public class SpringConfiguration {
 	private @Value("${jdbc.driver}") String driver;
 	private @Value("${jdbc.url}") String url;
