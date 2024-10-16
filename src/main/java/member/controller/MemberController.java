@@ -38,8 +38,6 @@ public class MemberController {
 		return "/member/login";
 
 	}
-
-	
 	@RequestMapping(value = "/api/member/join", method = RequestMethod.POST)
 	@ResponseBody
 	public void apiMemberJoin(@ModelAttribute MemberDTO memberDTO, HttpServletResponse response) {

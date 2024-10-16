@@ -184,6 +184,13 @@ button:hover {
 .tel-group input {
     width: 30%;
 }
+#adminInput{
+	display: flex;
+	float:right;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	padding: 5px;
+}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
@@ -228,8 +235,15 @@ button:hover {
         </nav>
     </header>
     <div class="form-container">
-        <h2>회원가입</h2>
         <form id="memberJoinForm">
+        	<div>
+			    <h2 style="display: inline-block; margin-right: 10px;">회원가입</h2>
+			    <div id="adminInput">
+			        관리자 인증번호<input id="admin" type="text" style="border: none; outline: none; background: transparent;"/>
+			    </div>
+			    <input type="hidden" id="adminCode" value="1234"/>
+			    <input type="hidden" id="role" name="role"/>
+			</div>
             <div class="form-group">
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" required>
@@ -275,9 +289,9 @@ button:hover {
             <div class="form-group">
                 <label for="tel">전화번호</label>
                 <div class="tel-group">
-                    <input type="text" id="tel1" name="tel1" placeholder="010" required>-
-                    <input type="text" id="tel2" name="tel2" placeholder="0000" required>-
-                    <input type="text" id="tel3" name="tel3" placeholder="0000" required>
+                    <input type="text" id="tel1" name="tel1" placeholder="010" maxlength="3" required>-
+                    <input type="text" id="tel2" name="tel2" placeholder="0000" maxlength="4" required>-
+                    <input type="text" id="tel3" name="tel3" placeholder="0000" maxlength="4" required>
                 </div>
                 <div id="telDiv"></div>
             </div>
@@ -335,8 +349,8 @@ $('#loginId').blur(function() {
 	                $('#idDiv').text('오류가 발생했습니다.').css('color', 'red');
 	            }
 	        }
-	    });	
-	}	
+	    });
+	}
 });
 
 $('#joinBtn').click(function(){
@@ -355,6 +369,26 @@ $('#joinBtn').click(function(){
 	$('#emailDiv').empty();
 	$('#verificationCodeDiv').empty();
 	$('#telDiv').empty();
+	
+	admin = $('#admin').val();			//내가 입력한 코드
+	adminCode = $('#adminCode').val();	//1234
+
+	//관리자 권한 요청
+	if(admin != adminCode){
+		//코드가 틀리면 role=USER
+		$('#role').val('USER');
+		//입력하지 않았으면 alert창 띄우지 않기
+		if(!admin){
+			$('#role').val('USER');
+		}
+		else{
+			alert('코드가 틀립니다');
+		}
+	}
+	else{
+		//코드가 맞으면 role=ADMIN
+		$('#role').val('ADMIN');
+	}
 	
 	if(!name){
 		$('#nameDiv').html('이름을 입력하세요').css('color','red');
@@ -380,7 +414,12 @@ $('#joinBtn').click(function(){
 			url:'/TasteMasters/api/member/join',
 			data:$('#memberJoinForm').serialize(),
 			success:function(){
-				alert('회원가입이 완료되었습니다.')
+				if($('#role').val() == 'ADMIN'){
+					alert('관리자로 회원가입합니다.');
+				}
+				else{
+					alert('회원가입이 완료되었습니다.')					
+				}
 				location.href='/TasteMasters/page/index';
 			},
 			error:function(e){
