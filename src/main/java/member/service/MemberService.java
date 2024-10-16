@@ -13,4 +13,8 @@ public interface MemberService {
 	public int apiMemberDelete(Map<String, String> map);
 	
 	public int apiIdCheck(String loginId);
+
+	public MemberDTO getMemberInfo(String loginId);
+
+	public int apiMemberUpdate(MemberDTO memberDTO);
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,10 +101,36 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping(value = "/page/member/mypage")
-	public String pageMemberMypage() {
+	@RequestMapping(value = "/api/member/mypage")
+	public String pageMemberMypage(@ModelAttribute Model model, HttpServletResponse response, HttpSession httpSession) {
+		String loginId = (String) httpSession.getAttribute("loginId");
+
+	    // 회원 정보 조회
+	    MemberDTO memberDTO = memberService.getMemberInfo(loginId);
+	    
+	    if (memberDTO == null) {
+	        response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404 회원 정보 없음
+	        return "errorPage"; // 적절한 에러 페이지로 리다이렉트
+	    }
+
+	    model.addAttribute("memberDTO", memberDTO);
 
 		return "/member/mypage";
 
 	}
+	
+	@RequestMapping(value = "/api/member/mypage")
+	public void apiMemberUpdate(@ModelAttribute MemberDTO memberDTO, HttpServletResponse response, HttpSession httpSession) {
+		int result = memberService.apiMemberUpdate(memberDTO);
+		
+		if (result == 1) {
+	        response.setStatus(HttpServletResponse.SC_OK); // 200 수정 성공
+	        httpSession.setAttribute("loginId", memberDTO.getLoginId());
+	        return;
+	    } else {
+	        response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 수정 실패
+	        return;
+	    }
+	}
+	
 }

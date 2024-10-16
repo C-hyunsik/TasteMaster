@@ -19,19 +19,41 @@
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+        <!-- 로그인 영역 -->
         <div class="login">
-            <a href="#">로그인/닉네임</a>
+            <c:choose>
+                <!-- 로그인 상태일 때 -->
+                <c:when test="${not empty sessionScope.loginId}">
+                    <a href="/TasteMasters/page/member/mypage">마이페이지</a> | 
+                    <a href="/TasteMasters/page/member/logout">로그아웃</a>
+                </c:when>
+                <!-- 비로그인 상태일 때 -->
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                </c:otherwise>
+            </c:choose>
         </div>
+        
         <!-- 숨겨진 네비게이션 메뉴 -->
-		<nav>
-			<ul>
-				<li><a href="#">셰프 목록</a></li>
-				<li><a href="/TasteMasters/page/member/login">로그인</a></li>
-				<li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-				<li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-			</ul>
-		</nav>
-	</header>
+        <nav>
+            <ul>
+                <li><a href="#">셰프 목록</a></li>
+                <c:choose>
+                    <!-- 로그인 상태일 때 마이페이지 추가 -->
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                    </c:when>
+                    <!-- 비로그인 상태일 때 로그인과 회원 가입만 -->
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </nav>
+    </header>
 
 	<section class="banner">
 		<img src="./image/banner.jpg" alt="배너 이미지" class="banner-img" />
