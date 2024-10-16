@@ -7,11 +7,11 @@ $(function(){
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            url: '/admin/chefUpload',
+            url: '/TasteMasters/api/chef/upload',
             data: formData,
             success: function(data) {
                 alert("쉐프와 요리가 등록되었습니다.");
-                location.href = "/admin/adminMain"; // 관리자 메인화면으로 이동
+                location.href = "/TasteMasters/page/member/admin"; // 관리자 메인화면으로 이동
             },
             error: function(e) {
                 console.log(e);

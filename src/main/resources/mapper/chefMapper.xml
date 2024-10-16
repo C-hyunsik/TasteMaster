@@ -26,6 +26,10 @@
 		select * from chef where chef_id =#{chefId}
 	</select>
 	
+	<select id="apiChefIdByName" parameterType="String" resultType="int">
+		select chef_id from chef where chef_name =#{chefName}
+	</select>
+	
 	<!-- imageFileName 얻기 -->
 	<select id="apiChefGetImageFileName" parameterType="int" resultType="String">
 		select image_fileName from chef where chef_id =#{chefId}
