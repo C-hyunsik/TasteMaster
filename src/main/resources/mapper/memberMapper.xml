@@ -5,7 +5,7 @@
 
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="member.dao.MemberDAO">
-	<insert id="apiMemberJoin" parameterType="member">
+	<insert id="apiMemberJoin" parameterType="member.bean.MemberDTO">
 		insert into member(name,
 						   login_id,
 						   pwd,
