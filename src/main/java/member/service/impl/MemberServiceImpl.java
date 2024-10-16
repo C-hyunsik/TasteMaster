@@ -20,11 +20,18 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public void apiMemberLogin(Map<String, String> map) {
-		memberDAO.apiMemberLogin(map);
+	public MemberDTO apiMemberLogin(Map<String, String> map) {
+		return memberDAO.apiMemberLogin(map);
 	}
 	@Override
 	public int apiMemberDelete(Map<String, String> map) {
 		return memberDAO.apiMemberDelete(map);
 	}
+
+	@Override
+	public int apiIdCheck(String loginId) {
+		return memberDAO.apiIdCheck(loginId);
+	}
+	
+	
 }

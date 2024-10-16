@@ -27,28 +27,5 @@ public class MemberDTO {
 	private String role;	//관리자 역할 USER or ADMIN
 	private Date logtime;	//회원가입시간
 	
-	 @JsonCreator
-	    public MemberDTO(
-	        @JsonProperty("name") String name,
-	        @JsonProperty("loginId") String loginId,
-	        @JsonProperty("pwd") String pwd,
-	        @JsonProperty("gender") String gender,
-	        @JsonProperty("email") String email,
-	        @JsonProperty("tel1") String tel1,
-	        @JsonProperty("tel2") String tel2,
-	        @JsonProperty("tel3") String tel3,
-	        @JsonProperty("role") String role) {
-	        
-	        this.name = name;
-	        this.loginId = loginId;
-	        this.pwd = pwd;
-	        this.gender = gender;
-	        this.email = email;
-	        this.tel1 = tel1;
-	        this.tel2 = tel2;
-	        this.tel3 = tel3;
-	        this.role = role;
-	    }
-	 
 
 }

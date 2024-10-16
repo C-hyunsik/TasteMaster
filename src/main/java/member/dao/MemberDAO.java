@@ -13,8 +13,9 @@ public interface MemberDAO {
 
 	public int apiMemberJoin(MemberDTO memberDTO);
 	
-	public void apiMemberLogin(Map<String, String> map);
+	public MemberDTO apiMemberLogin(Map<String, String> map);
 
 	public int apiMemberDelete(Map<String, String> map);
 
+	public int apiIdCheck(String loginId);
 }

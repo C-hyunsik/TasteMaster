@@ -33,4 +33,9 @@
 	<delete id="apiMemberDelete" parameterType="Map">
 		delete from member where login_id = #{loginId} and pwd = #{pwd}
 	</delete>
+	
+	<select id="apiIdCheck" parameterType="String"
+		resultType="int">
+		select count(*) from member where login_id=#{loginId}
+	</select>
 </mapper>
