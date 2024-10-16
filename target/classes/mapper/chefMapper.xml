@@ -31,8 +31,8 @@
 		select image_fileName from chef where chef_id =#{chefId}
 	</select>
 
-	<update id="apiChefUpdate" parameterType="userUploadDTO">
-    	update chef set chef_name =#{imageName},
+	<update id="apiChefUpdate" parameterType="chef.bean.ChefDTO">
+    	update chef set chef_name =#{chefName},
     	                      image_fileName =#{imageFileName},
     	                      image_original_fileName =#{imageOriginalFileName}
     	where chef_id =#{chefId }
