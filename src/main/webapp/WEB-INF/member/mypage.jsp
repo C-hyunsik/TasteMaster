@@ -182,8 +182,7 @@ button:hover {
                 </c:when>
                
                 <c:otherwise>
-                    <a href="/TasteMasters/page/member/login">로그인</a> | 
-                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                    <a href="/TasteMasters/page/member/login">로그인</a>
                 </c:otherwise>
             </c:choose>
           

@@ -131,7 +131,7 @@ nav.active {
 }
 
 button {
-    width: 48%; /* 버튼이 가로로 나란히 배열되도록 설정 */
+    width: 32%; /* 버튼이 가로로 나란히 배열되도록 설정 */
     padding: 10px;
     background-color: black;
     color: white;
@@ -209,8 +209,7 @@ button:hover {
                 </c:when>
                
                 <c:otherwise>
-                    <a href="/TasteMasters/page/member/login">로그인</a> | 
-                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                    <a href="/TasteMasters/page/member/login">로그인</a>
                 </c:otherwise>
             </c:choose>
           
@@ -251,6 +250,7 @@ button:hover {
 	        </div>
 	        <div class="button-group">
 	            <button type="button" id="loginBtn">로그인</button>
+	            <button type="button" onclick="location.href='/TasteMasters/page/member/join'">회원가입</button>
 	            <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
 	        </div>
 	    </form>
