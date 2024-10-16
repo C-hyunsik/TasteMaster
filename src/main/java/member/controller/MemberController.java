@@ -144,4 +144,8 @@ public class MemberController {
 	    }
 	}
 
+	@RequestMapping(value = "/api/member/logout")
+	public void apiMemberLogout(HttpSession httpSession) {
+		httpSession.invalidate();
+	}
 }

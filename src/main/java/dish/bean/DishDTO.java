@@ -2,11 +2,13 @@ package dish.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DishDTO {
 	
 	private int dishId;                     // 음식 ID (자동 증가)

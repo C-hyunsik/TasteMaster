@@ -2,11 +2,13 @@ package chef.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ChefDTO {
 	private int chefId; // 쉐프 ID (자동 증가)
 	private String chefName; // 쉐프 이름
