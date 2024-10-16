@@ -183,29 +183,29 @@ button:hover {
         <form action="updateAction.jsp" method="post">
             <div class="form-group">
                 <label for="name">이름</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" value="${memberDTO.name }" required>
             </div>
             <div class="form-group">
                 <label for="loginId">아이디</label>
-                <input type="text" id="loginId" name="loginId" readonly class="underline">
+                <input type="text" id="loginId" name="loginId" value="${memberDTO.loginId }" readonly class="underline">
             </div>
             <div class="form-group">
                 <label for="pwd">비밀번호</label>
-                <input type="password" id="pwd" name="pwd" required>
+                <input type="password" id="pwd" name="pwd" value="${memberDTO.pwd }" required>
             </div>
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" id="email" name="email" readonly class="underline">
+                <input type="email" id="email" name="email" value="${memberDTO.email }" readonly class="underline">
             </div>
             <div class="form-group">
                 <label for="gender">성별</label>
-                <input type="text" id="gender" name="gender" readonly class="underline">
+                <input type="text" id="gender" name="gender" value="${memberDTO.gender }" readonly class="underline">
             </div>
             <div class="form-group">
                 <label for="tel">전화번호</label>
-                <input type="text" id="tel1" name="tel1" placeholder="010" required style="width: 30%;">-
-                <input type="text" id="tel2" name="tel2" placeholder="0000" required style="width: 30%;">-
-                <input type="text" id="tel3" name="tel3" placeholder="0000" required style="width: 30%;">
+                <input type="text" id="tel1" name="tel1" value="${memberDTO.tel1 }" required style="width: 30%;">-
+                <input type="text" id="tel2" name="tel2" value="${memberDTO.tel2 }" required style="width: 30%;">-
+                <input type="text" id="tel3" name="tel3" value="${memberDTO.tel3 }" required style="width: 30%;">
             </div>
             <div class="button-group">
                 <button type="submit">정보 수정</button>
@@ -213,6 +213,9 @@ button:hover {
             </div>
         </form>
     </div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+<script type="text/javascript" src="../js/memberUpdate.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
