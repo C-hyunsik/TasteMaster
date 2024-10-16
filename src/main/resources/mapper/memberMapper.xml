@@ -13,9 +13,7 @@
 						   email,
 						   tel1,
 						   tel2,
-						   tel3,
-						   report_count,
-						   role)
+						   tel3)
 						   values(#{name},
 								  #{loginId},
 								  #{pwd},
@@ -23,9 +21,7 @@
 								  #{email},
 								  #{tel1},
 								  #{tel2},
-								  #{tel3},
-								  #{reportCount},
-								  #{role})
+								  #{tel3})
 	</insert>
 	<select id="apiMemberLogin" parameterType="Map" resultType = "member.bean.MemberDTO">
 		select * from member where login_id = #{loginId} and pwd = #{pwd}

@@ -224,7 +224,7 @@ button:hover {
 	            <input type="password" id="pwd" name="pwd" required>
 	        </div>
 	        <div class="button-group">
-	            <button type="submit">로그인</button>
+	            <button type="button" id="loginBtn">로그인</button>
 	            <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
 	        </div>
 	    </form>
@@ -244,7 +244,7 @@ button:hover {
 	        </div>
 	    </div>
 	</div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -255,6 +255,8 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active');
     });
 });
+
+$('#loginBtn')
 </script>
 </body>
 </html>

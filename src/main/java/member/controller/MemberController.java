@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,19 +36,24 @@ public class MemberController {
 		return "/member/login";
 
 	}
-
+	@RequestMapping(value = "/api/member/idcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public void apiMemberIdCheck(@RequestParam String loginId, HttpServletResponse response) {
+		int idcheck = memberService.apiIdCheck(loginId);
+		if(idcheck == 1) {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);	//409
+			return;
+		}
+		else {
+			response.setStatus(HttpServletResponse.SC_OK);	//200
+			return;
+		}
+	}
+	
 	@RequestMapping(value = "/api/member/join", method = RequestMethod.POST)
 	@ResponseBody
 	public void apiMemberJoin(@ModelAttribute MemberDTO memberDTO, HttpServletResponse response) {
 
-		// 먼저 아이디 중복체크 로직
-		int idcheck = memberService.apiIdCheck(memberDTO.getLoginId());
-
-		if (idcheck == 1) { // 아이디가 중복
-			response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
-			return;
-		}
-		//
 		int result = memberService.apiMemberJoin(memberDTO);
 		if (result == 1) {
 			// 응답 코드 설정: 201 Created
