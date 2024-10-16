@@ -140,7 +140,13 @@ button {
 button:hover {
     background-color: #333;
 }
-
+#adminInput{
+	display: flex;
+	float:right;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	padding: 5px;
+}
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .form-container {
@@ -166,21 +172,54 @@ button:hover {
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
-            <a href="#">로그인/닉네임</a>
+           <c:choose>
+                <c:when test="${not empty sessionScope.loginId}">
+                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
+                </c:when>
+               
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                </c:otherwise>
+            </c:choose>
+          
         </div>
+        
+    
         <nav>
             <ul>
-                <li><a href="#">셰프 목록</a></li>
-                <li><a href="/TasteMasters/page/member/login">로그인</a></li>
-                <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
-                <li><a href="#">마이페이지</a></li>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                 
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a></li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </nav>
     </header>
     <div class="form-container">
-        <h2>회원정보</h2>
-        <form action="updateAction.jsp" method="post">
+        <form id="memberUpdateForm">
+	        <div>
+			    <h2 style="display: inline-block; margin-right: 10px;">회원정보</h2>
+			    <div id="adminInput">
+			        <c:if test="${memberDTO.role == 'ADMIN' }">
+			        	관리자
+			        </c:if>
+			        <c:if test="${memberDTO.role == 'USER' }">
+			        	일반
+			        </c:if>
+			    </div>
+			</div>
             <div class="form-group">
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" value="${memberDTO.name }" required>
