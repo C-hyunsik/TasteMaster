@@ -107,4 +107,21 @@ public class MemberController {
 		return "/member/mypage";
 
 	}
+	
+	@RequestMapping(value = "/api/member/idcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public void apiMemberIdCheck(@RequestParam String loginId, HttpServletResponse response) {
+		
+		int idcheck = memberService.apiIdCheck(loginId);
+
+		if (idcheck == 1) { // 아이디가 중복
+			response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
+			return;
+		}
+		else {
+			response.setStatus(HttpServletResponse.SC_OK); // 200
+			return;
+		}
+		
+	}
 }
