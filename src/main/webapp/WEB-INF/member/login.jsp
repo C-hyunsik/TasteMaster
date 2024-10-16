@@ -192,7 +192,7 @@ button:hover {
 </style>
 </head>
 <body>
-    <header>
+     <header>
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
@@ -203,8 +203,9 @@ button:hover {
 
         <div class="login">
            <c:choose>
-                <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                
                 <c:otherwise>
@@ -223,7 +224,7 @@ button:hover {
                  
                     <c:when test="${not empty sessionScope.loginId}">
                         <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
                     </c:when>
           
                     <c:otherwise>

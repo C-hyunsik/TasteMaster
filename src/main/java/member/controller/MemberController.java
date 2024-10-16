@@ -62,11 +62,11 @@ public class MemberController {
 		map.put("pwd", pwd);
 		
 		MemberDTO dto = memberService.apiMemberLogin(map);
+
 		if(dto != null) {
-		    httpSession.setAttribute("loginId", dto.getLoginId());
+		    httpSession.setAttribute("loginId", loginId);
 		    //httpSession.setAttribute("memberDto", dto); //dto통째로 담기
 			response.setStatus(HttpServletResponse.SC_OK); // 200 로그인 성공
-			 
 		     return;
 		}else {
 			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 권한없음
@@ -146,9 +146,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/api/member/logout")
-	@ResponseBody
-	public void apiMemberLogout(HttpSession httpSession) {
+	public String apiMemberLogout(HttpSession httpSession, HttpServletResponse response) throws IOException {
 		httpSession.invalidate();
-		return;
+		response.sendRedirect("/TasteMasters/page/index"); // 로그인 페이지로 리다이렉트
+		return null;
 	}
 }

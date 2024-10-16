@@ -23,8 +23,9 @@
 
         <div class="login">
            <c:choose>
-                <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                
                 <c:otherwise>
@@ -43,7 +44,7 @@
                  
                     <c:when test="${not empty sessionScope.loginId}">
                         <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
-                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
                     </c:when>
           
                     <c:otherwise>
@@ -112,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active'); // 메뉴 보이기/숨기기
     });
 });
+
 </script>
 </body>
 </html>

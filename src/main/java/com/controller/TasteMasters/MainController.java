@@ -28,7 +28,7 @@ public class MainController {
 		//로그인 여부 true false
 		
 		model.addAttribute("isLogin", isLogin);//jsp에 띄우기
-		
+		model.addAttribute("loginId", loginId);//jsp에 띄우기
 		return "/index"; // 파일경로
 	}
 	
