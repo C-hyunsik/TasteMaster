@@ -206,7 +206,10 @@ button:hover {
     .button-group {
         flex-direction: column; /* 작은 화면에서는 세로로 배치 */
     }
-
+	.form-group button {
+        width: 100%; /* 버튼이 전체 너비를 차지하도록 설정 */
+        margin-top: 10px; /* 버튼과 입력 필드 간의 간격 추가 */
+    }
     button {
         width: 100%; /* 버튼이 세로로 쌓일 때 전체 너비 사용 */
         margin-bottom: 10px; /* 버튼 간 간격 추가 */
@@ -300,21 +303,21 @@ button:hover {
                 </div>
                 <div id="genderDiv"></div>
             </div>
+
             <div class="form-group">
-				<label for="email">이메일</label>
-				<div class="email-group" style="display: flex; align-items: center;">
-					<input type="email" id="email" name="email" placeholder="example@example.com" required style="flex: 1;">
-					<button type="button" id="sendVerification" style="margin-left: 10px;">인증번호 전송</button>
-				</div>
-				<div id="emailDiv"></div>
+			    <label for="email">이메일</label>
+			    <div class="email-group" style="display: flex; align-items: center;">
+			        <input type="email" id="email" name="email" placeholder="example@example.com" required style="flex: 1;">
+			    </div>
+			    <button type="button" id="sendVerification" style="margin-top: 10px;">인증번호 전송</button>
+			    <div id="emailDiv"></div>
 			</div>
 			<div class="form-group">
-			    <label for="verificationCode">인증번호</label>
-			    <div class="verification-group" style="display: flex; align-items: center;">
-					<input type="text" id="verificationCode" name="verificationCode" placeholder="인증번호 입력" required style="flex: 1;">
-					<button type="button" id="verifyCode" style="margin-left: 10px;">확인</button>
-			    </div>
-			    <div id="verificationCodeDiv"></div>
+			    <label for="authCode">인증번호</label>
+			    <input placeholder="인증 코드 6자리를 입력해주세요." maxlength="6" disabled="disabled" name="authCode" id="authCode" type="text" autofocus style="flex: 1;">
+			    <button type="button" id="verifyCode" style="margin-top: 10px;">인증번호 확인</button>
+			    <div id="authCodeDiv"></div>
+			    <input type="hidden" id="emailCheckCode"/>
 			</div>
 
             <div class="form-group">
@@ -327,7 +330,7 @@ button:hover {
                 <div id="telDiv"></div>
             </div>
             <div class="button-group">
-                <button type="button" id="joinBtn">회원가입</button>
+                <button type="button" id="joinBtn" disabled="disabled">회원가입</button>
                 <button type="button" onclick="location.href='/TasteMasters/page/index'">메인화면</button>
             </div>
             <input type="hidden" name="memberId" value="0"/>
@@ -384,12 +387,54 @@ $('#loginId').blur(function() {
 	}
 });
 
+//인증번호 전송 버튼을 눌렀을 때 동작
+$("#sendVerification").click(function() {
+	const email = $("#email").val(); //사용자가 입력한 이메일 값 얻어오기
+	alert(email);
+	//Ajax로 전송
+    $.ajax({
+    	type : 'POST',
+    	url : '/TasteMasters/api/member/EmailAuth',
+    	data : {
+    		'email' : email
+    	},
+    	dataType : 'json',
+    	success : function(result) {
+    		console.log("result : " + result);
+    		$("#authCode").attr("disabled", false);
+    		code = result;
+    		$('#emailCheckCode').val(code)
+    		alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
+   		}
+    }); //End Ajax
+});
+
+//인증 코드 비교
+$("#verifyCode").on("click", function() {
+	const inputCode = $("#authCode").val(); //인증번호 입력 칸에 작성한 내용 가져오기
+	
+	console.log("입력코드 : " + inputCode);
+	console.log("인증코드 : " + code);
+		
+	if(Number(inputCode) === code){
+    	$("#authCodeDiv").html('인증번호가 일치합니다.');
+    	$("#authCodeDiv").css('color', 'green');
+		$('#email').attr('readonly', true);
+		$("#joinBtn").attr("disabled", false);
+	}else{
+    	$("#authCodeDiv").html('인증번호가 불일치 합니다. 다시 확인해주세요!');
+    	$("#authCodeDiv").css('color', 'red');
+    	$("#joinBtn").attr("disabled", true);
+	}
+});
+
 $('#joinBtn').click(function(){
 	name = $('#name').val();
 	pwd = $('#pwd').val();
 	gender = $('#gender').val();
 	email = $('#email').val();
-	verificationCode = $('#verificationCode').val();
+	authCode = $('#authCode').val();
+	emailCheckCode = $('#emailCheckCode').val();
 	tel1 = $('#tel1').val();
 	tel2 = $('#tel2').val();
 	tel3 = $('#tel3').val();
@@ -398,7 +443,7 @@ $('#joinBtn').click(function(){
 	$('#pwdDiv').empty();
 	$('#genderDiv').empty();
 	$('#emailDiv').empty();
-	$('#verificationCodeDiv').empty();
+	$('#authCodeDiv').empty();
 	$('#telDiv').empty();
 	
 	admin = $('#admin').val();			//내가 입력한 코드
@@ -433,8 +478,8 @@ $('#joinBtn').click(function(){
 	else if(!email){
 		$('#emailDiv').html('이메일을 입력하세요').css('color','red');
 	}
-	else if(!verificationCode){
-		$('#verificationCodeDiv').html('인증번호를 입력하세요').css('color','red');
+	else if(emailCheckCode != authCode){
+		$('#authCodeDiv').html('이메일 인증이 필요합니다.').css('color','red');
 	}
 	else if(!tel1 || !tel2 || !tel3){
 		$('#telDiv').html('전화번호를 입력하세요').css('color','red');

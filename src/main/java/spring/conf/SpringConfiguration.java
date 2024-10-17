@@ -1,10 +1,11 @@
 package spring.conf;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.annotation.MapperScan;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +31,12 @@ public class SpringConfiguration {
 	
 	@Autowired
     private ApplicationContext context;
+	
+	@PostConstruct
+    public void init() {
+        // TLS 프로토콜 설정
+        System.setProperty("https.protocols", "TLSv1.2");
+    }
 	
 	@Bean
 	public BasicDataSource dataSource() {
