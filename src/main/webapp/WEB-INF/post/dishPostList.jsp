@@ -320,7 +320,7 @@ button:hover {
 	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo.imageFileName}" alt="${dishInfo.dishName}">
             </div>
             <div id="contentWrap">
-	        	<p>${dishInfo.dishContent }</p>
+	        	<pre>${dishInfo.dishContent }</pre>
             </div>
         </div>
         <div class="content-container">
