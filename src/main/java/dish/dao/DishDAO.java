@@ -15,5 +15,7 @@ public interface DishDAO {
 
 	public List<DishDTO> getDishByChefId(int chefId);
 
+	List<DishDTO> apiDishList(String chefId);
+
 	
 }

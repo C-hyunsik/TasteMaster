@@ -39,6 +39,7 @@
         
 
         <div class="login">
+
      	   <c:if test="${sessionScope.role == 'ADMIN'}">
 	                 <a href="/TasteMasters/page/member/admin">관리자 페이지</a>
 	       </c:if>

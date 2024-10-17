@@ -34,6 +34,7 @@ header {
     font-size: 24px;
     cursor: pointer;
     z-index: 1001;
+    position: relative;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
@@ -146,23 +147,50 @@ button:hover {
 </style>
 </head>
 <body>
-    <header>
-        <div class="menu">
+	<header>
+		<div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
            <c:choose>
-                <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
+               
                 <c:otherwise>
-                    <a href="/TasteMasters/page/member/login">로그인</a>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
                 </c:otherwise>
             </c:choose>
+          
         </div>
+        
+    
+        <nav>
+            <ul>
+     	   <c:if test="${sessionScope.role == 'ADMIN'}">
+	                 <li><a href="/TasteMasters/page/member/admin">관리자 페이지</a></li> 
+	       	  </c:if>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </nav>
     </header>
     
     <nav>
@@ -183,6 +211,7 @@ button:hover {
 
     <div class="container">
         <div class="form-container">
+         <form id="postForm" method="post">
             <h2>글쓰기</h2>
             <div class="form-group">
                 <label for="title">제목:</label>
@@ -197,9 +226,10 @@ button:hover {
                 <input type="file" id="image" name="image">
             </div>
             <div class="button-group">
-                <button type="submit">작성하기</button>
+                <button id = "postBtn">작성하기</button>
                 <button onclick="location.href='/TasteMasters/page/post/dishpostlist?dishId=1'">목록</button>
             </div>
+         </form>
         </div>
     </div>
 
@@ -214,6 +244,31 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active');
     });
 });
+
+
+$(function(){
+    $('#postBtn').click(function(){
+        let formData = new FormData($('#postForm')[0]);
+        
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            url: '/TasteMasters/api/post/upload',
+            data: formData,
+            success: function(data) {
+                alert("게시글이 등록되었습니다.");
+                location.href = "/TasteMasters/page/post/dishpostlist"; // 게시글 목록
+            },
+            error: function(e) {
+                console.log(e);
+                alert("등록 중 오류가 발생했습니다.");
+            }
+        }); //ajax
+    });
+});
+
 </script>
 </body>
 </html>

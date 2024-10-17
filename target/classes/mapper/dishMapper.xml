@@ -21,4 +21,15 @@
         where chef_id = #{chefId}
     </select>
 	
+	<select id="apiDishList" parameterType="String" resultType="dish.bean.DishDTO">
+		SELECT dish_id as dishId, 
+		chef_id as chefId ,  
+		image_fileName as imageFileName,
+		image_original_fileName as imageOriginalFileName,
+		delicious_count as deliciousCount,
+		makeEasy_count as makeEasyCount
+        FROM dish 
+        WHERE chef_id = #{chefId}
+        ORDER BY dish_id DESC
+	</select>
 </mapper>
