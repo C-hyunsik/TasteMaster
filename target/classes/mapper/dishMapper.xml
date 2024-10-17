@@ -16,7 +16,8 @@
 	
 	<select id="apiDishList" parameterType="String" resultType="dish.bean.DishDTO">
 		SELECT dish_id as dishId, 
-		chef_id as chefId ,  
+		chef_id as chefId,
+		dish_name as dishName,
 		image_fileName as imageFileName,
 		image_original_fileName as imageOriginalFileName,
 		delicious_count as deliciousCount,

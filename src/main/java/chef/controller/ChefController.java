@@ -145,7 +145,7 @@ public class ChefController {
     }
     
     
-    @RequestMapping(value = "/page/chef/dishList")
+    @RequestMapping(value = "/page/post/dishList")
   	public String pageChefDishLists(@RequestParam String chefId, Model model) throws IOException {
     	
     	List<DishDTO> dishList = dishService.apiDishList(chefId);

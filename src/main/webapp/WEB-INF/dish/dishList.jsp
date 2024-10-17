@@ -264,12 +264,12 @@ nav.active {
             <h2>음식 목록</h2>
             <div id="post_cardWrap">
                 <section class="chef-list">
-                    <%-- <c:forEach var="dish" items="${dishList}"> --%>
-                        <div class="dish">
-                            <img src="../image/moojorim.jpg" alt="">
-                            <p>무조림</p>
-                        </div>
-                    <%-- </c:forEach> --%>
+					<c:forEach var="dish" items="${dishList}">
+						<div class="dish">
+							<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}">
+							<p>${dish.dishName}</p>
+						</div>
+					</c:forEach>
                 </section>
             </div>
         </div>
