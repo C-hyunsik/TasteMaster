@@ -1,5 +1,7 @@
 package post.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,16 @@ public class PostServiceImpl implements PostService {
 		map.put("endnum", endnum);
 		map.put("dishId", dishId);
 		List<PostDTO> list = postDAO.dishPostList(map);
-		
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+
+        // 리스트에서 createdAt을 String으로 변환하여 set
+        for (PostDTO post : list) {
+            Date createdAt = post.getCreatedAt();
+            if (createdAt != null) {
+                String formattedDate = formatter.format(createdAt);
+                post.setCreatedAtToString(formattedDate);
+            }
+        }
 		//페이징 처리
 		int totalA = postDAO.getTotalA(dishId);
 		postPaging.setTotalA(totalA);

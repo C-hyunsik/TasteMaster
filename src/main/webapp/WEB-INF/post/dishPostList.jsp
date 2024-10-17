@@ -326,7 +326,7 @@ button:hover {
                 <c:forEach var="list" items="${map2.list}">
                     <div class="post-card">
                         <div class="post-title">${list.title }</div>
-                        <div class="post-meta">작성자: ${list.memberId } | 작성일: ${list.createdAt }</div>
+                        <div class="post-meta">작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
                     </div>
                 </c:forEach>
             	<div id="pagingWrap">
