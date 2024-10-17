@@ -45,7 +45,6 @@ public class PostServiceImpl implements PostService {
 		map2.put("pg",pg);
 		return map2;
 	}
-<<<<<<< HEAD
 	@Override
 	public List<DishDTO> apiDishInfo(int dishId) {
 		
@@ -55,7 +54,6 @@ public class PostServiceImpl implements PostService {
 	public void postWrite(PostDTO postDTO) {
 		postDAO.postWrite(postDTO);
 	}
-=======
 
 	@Override
 	public void apiUploadPost(PostDTO post) {
@@ -67,6 +65,4 @@ public class PostServiceImpl implements PostService {
 		List<PostDTO> postList = postDAO.getPostByChefId(chefId);
 		return postList;
 	}
-	
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
 }

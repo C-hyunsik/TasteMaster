@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD
 import dish.bean.DishDTO;
-=======
 import naver.objectstorage.ObjectStorageService;
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
 import post.bean.PostDTO;
 import post.service.PostService;
 
@@ -46,7 +43,6 @@ public class PostController {
 		return "/post/dishPostList";
 	}
 	
-<<<<<<< HEAD
 	@RequestMapping(value="/page/post/dishPostWrite", method = RequestMethod.GET)
 	public String dishPostList(@RequestParam(value = "dishId", required = false, defaultValue = "0") Integer dishId, Model model) {
 		model.addAttribute("dishId",dishId);
@@ -56,7 +52,6 @@ public class PostController {
 	public void apiPostPostWrite(@ModelAttribute PostDTO postDTO) {
 		postService.postWrite(postDTO);
 	}
-=======
 	@RequestMapping(value="/page/post/dishpostwrite")
 	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model){
 		model.addAttribute("dishId", dishId);
@@ -99,5 +94,4 @@ public class PostController {
         // 결과 메시지 구성
         return "게시글 등록";
     }
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
 }

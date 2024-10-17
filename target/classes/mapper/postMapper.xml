@@ -12,7 +12,6 @@
 	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
 		select * from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
 	</select>
-<<<<<<< HEAD
 	<select id="apiPostList" parameterType="String" resultType="dish.bean.DishDTO">
 		SELECT dish_id as dishId, 
 		chef_id as chefId,
@@ -32,7 +31,6 @@
 			   image_original_fileName as imageOriginalFileName
 		from dish where dish_id = #{dishId}
 	</select>
-=======
 	
 
 	<insert id="apiUploadPost" parameterType="post.bean.PostDTO">
@@ -50,5 +48,4 @@
 		where chef_id = #{chefId}
 	</select>
 
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
 </mapper>

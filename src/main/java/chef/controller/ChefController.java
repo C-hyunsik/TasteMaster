@@ -147,10 +147,6 @@ public class ChefController {
         // 결과 메시지 구성
         return "셰프와 요리 정보가 성공적으로 업로드되었습니다.";
     }
-<<<<<<< HEAD
-=======
-    
-
     @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
     @ResponseBody
     public String apiChefDelete(@RequestParam("chefId") int chefId) {
@@ -173,5 +169,4 @@ public class ChefController {
     	
     	return "탈락되었습니다...";
     }
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
 }

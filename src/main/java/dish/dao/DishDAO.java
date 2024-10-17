@@ -13,11 +13,9 @@ import dish.bean.DishDTO;
 public interface DishDAO {
 
 	public void uploadDishes(List<DishDTO> dishList);
-<<<<<<< HEAD
-=======
+
 
 	public List<DishDTO> getDishByChefId(int chefId);
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
 
 	public List<DishDTO> apiDishList(String chefId);
 

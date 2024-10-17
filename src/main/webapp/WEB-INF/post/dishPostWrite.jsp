@@ -264,27 +264,20 @@ $('#image').change(function(){
 $(function(){
     $('#postBtn').click(function(){
         let formData = new FormData($('#postForm')[0]);
-<<<<<<< HEAD
         dishId = $('#dishId').val();
-=======
         const queryString = window.location.search;
 
 	     // URLSearchParams 객체 생성
 	     const urlParams = new URLSearchParams(queryString);
 	
 	     // 파라미터 예: ?pg=2&name=john
-	     const dishId = urlParams.get('dishId');    
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
+	     const dishId = urlParams.get('dishId');
         $.ajax({
             type: 'post',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-<<<<<<< HEAD
-            url: '/TasteMasters/api/post/postWrite',
-=======
             url: '/TasteMasters/api/post/upload?dishId='+dishId,
->>>>>>> 8cd5e5732af9271e8e3f51f633ce12c580ae7483
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");
