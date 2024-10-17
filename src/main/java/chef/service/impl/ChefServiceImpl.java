@@ -40,9 +40,8 @@ public class ChefServiceImpl implements ChefService {
 	}
 
 	@Override
-	public int apiChefDelete(int chefId) {
-		// TODO Auto-generated method stub
-		 return chefDAO.apiChefDelete(chefId);
+	public void apiChefDelete(int chefId) {
+		 chefDAO.apiChefDelete(chefId);
 	}
 
 	

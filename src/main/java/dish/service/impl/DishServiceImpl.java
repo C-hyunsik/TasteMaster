@@ -22,6 +22,11 @@ public class DishServiceImpl implements DishService {
 	}
 
 	@Override
+	public List<DishDTO> getDishByChefId(int chefId) {
+		List<DishDTO> dishList = dishDAO.getDishByChefId(chefId);
+		return dishList;
+	}
+	
 	public List<DishDTO> apiDishList(String chefId) {
 		return dishDAO.apiDishList(chefId);
 	}

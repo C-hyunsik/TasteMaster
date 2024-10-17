@@ -21,7 +21,7 @@ public interface ChefDAO {
 	
 	public int apiChefUpdate(ChefDTO chefDTO, MultipartFile img);
 
-	public int apiChefDelete(int chefId);
+	public void apiChefDelete(int chefId);
 
 	//쉐프 등록
 	public void apiUploadChef(ChefDTO chef);

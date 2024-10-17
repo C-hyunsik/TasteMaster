@@ -13,6 +13,13 @@
             (#{dish.chefId}, #{dish.dishName}, #{dish.imageFileName}, #{dish.imageOriginalFileName})
         </foreach>
     </insert>
+    
+    <select id="getDishByChefId" parameterType="Integer" resultType="java.util.List">
+    	select dish_id, chef_id, dish_name, image_fileName, image_original_fileName, 
+               delicious_count, makeEasy_count
+        from dish
+        where chef_id = #{chefId}
+    </select>
 	
 	<select id="apiDishList" parameterType="String" resultType="dish.bean.DishDTO">
 		SELECT dish_id as dishId, 
