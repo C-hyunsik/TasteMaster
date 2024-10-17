@@ -35,9 +35,9 @@ public class PostController {
 	@RequestMapping(value="/page/post/dishPostList", method = RequestMethod.GET)
 	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam(defaultValue = "1") int dishId,  Model model) {
 		Map<String, Object> map2 = postService.dishPostList(pg, dishId);
-		List<DishDTO> dishInfo = postService.apiDishInfo(dishId);
+	//	List<DishDTO> dishInfo = postService.apiDishInfo(dishId);
 		model.addAttribute("map2",map2);
-		model.addAttribute("dishInfo",dishInfo);
+		//model.addAttribute("dishInfo",dishInfo);
 		model.addAttribute("pg",pg);
 		model.addAttribute("dishId", dishId);
 		return "/post/dishPostList";

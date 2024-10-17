@@ -92,10 +92,8 @@
 		<c:forEach var="chef" items="${chefList}">
 			<div class="chef">
 				<input type="hidden" class="chefId" value="${chef.chefId}">
-				<a href="/TasteMasters/page/chef/dishes?chefId=${chef.chefId}">
 					<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
 					<p>${chef.chefName}</p>
-				</a>
 				<input type="button" name="chefUpdate" id="chefUpdateBtn" onclick="location.href='/TasteMasters/page/admin/chefUpdate?chefId=${chef.chefId}'" value="수정"/>
 				<input type="button" name="chefDelete" id="chefDeleteBtn" value="삭제"/>
 			</div>
