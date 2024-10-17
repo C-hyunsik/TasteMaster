@@ -21,6 +21,8 @@ import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
+import post.bean.PostDTO;
+import post.service.PostService;
 
 @Controller
 public class ChefController {
@@ -29,6 +31,8 @@ public class ChefController {
     private ChefService chefService;
     @Autowired
     private DishService dishService;
+    @Autowired
+    private PostService postService;
 
 
     @Autowired
@@ -141,5 +145,28 @@ public class ChefController {
 		
         // 결과 메시지 구성
         return "쉐프와 요리 정보가 성공적으로 업로드되었습니다.";
+    }
+    
+    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @ResponseBody
+    public String apiChefDelete(@RequestParam("chefId") int chefId) {
+    	List<DishDTO> dishList = dishService.getDishByChefId(chefId);
+    	List<PostDTO> postList = postService.getPostByChefId(chefId);
+    	
+    	// 2. Naver Cloud에서 요리 및 게시물 이미지 삭제
+        for (DishDTO dish : dishList) {
+            if (dish.getImageFileName() != null) {
+                objectStorageService.deleteFile(bucketName, "storage/" , dish.getImageFileName());
+            }
+        }
+        for (PostDTO post : postList) {
+            if (post.getImageFileName() != null) {
+                objectStorageService.deleteFile(bucketName, "storage/" , post.getImageFileName());
+            }
+        }
+    	
+    	chefService.apiChefDelete(chefId);
+    	
+    	return "탈락되었습니다...";
     }
 }

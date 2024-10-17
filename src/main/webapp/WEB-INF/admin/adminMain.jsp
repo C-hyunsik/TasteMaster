@@ -40,16 +40,16 @@
 
         <div class="login">
      	   <c:if test="${sessionScope.role == 'ADMIN'}">
-	                 <a href="/TasteMasters/page/member/admin">관리자 페이지</a> |
+	                 <a href="/TasteMasters/page/member/admin">관리자 페이지</a>
 	       </c:if>
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
-                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a>
                      <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                
                 <c:otherwise>
-                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/login">로그인</a> 
                     <a href="/TasteMasters/page/member/join">회원 가입</a>
                 </c:otherwise>
             </c:choose>
@@ -90,12 +90,13 @@
 	<section class="chef-list">
 		<c:forEach var="chef" items="${chefList}">
 			<div class="chef">
+				<input type="hidden" class="chefId" value="${chef.chefId}">
 				<a href="/TasteMasters/page/chef/dishes?chefId=${chef.chefId}">
 					<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
 					<p>${chef.chefName}</p>
 				</a>
-				<input type="button" name="chefUpdate" id="chefUpdate" value="수정"/>
-				<input type="button" name="chefDelete" id="chefDelete" value="삭제"/>
+				<input type="button" name="chefUpdate" id="chefUpdateBtn" onclick="location.href='/TasteMasters/page/admin/chefUpdate?chefId=${chef.chefId}'" value="수정"/>
+				<input type="button" name="chefDelete" id="chefDeleteBtn" value="삭제"/>
 			</div>
 		</c:forEach>
 	</section>
@@ -118,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('chefUpload').addEventListener('click', function() {
     location.href = '/TasteMasters/page/chef/upload';
 });
+
 </script>
 </body>
 </html>

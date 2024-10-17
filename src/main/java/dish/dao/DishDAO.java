@@ -11,7 +11,9 @@ import dish.bean.DishDTO;
 @Mapper
 public interface DishDAO {
 
-	void uploadDishes(List<DishDTO> dishList);
+	public void uploadDishes(List<DishDTO> dishList);
+
+	public List<DishDTO> getDishByChefId(int chefId);
 
 	
 }
