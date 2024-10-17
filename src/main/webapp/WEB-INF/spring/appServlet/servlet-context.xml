@@ -29,7 +29,7 @@
 		mapping="/page/image/**"></resources>
 	<resources location="/WEB-INF/storage/"
 		mapping="/page/storage/**"></resources>
-		
+	<resources location="/WEB-INF/se2/" mapping="/page/se2/**"></resources>	
 	<context:component-scan
 		base-package="spring.conf" />
 	<context:component-scan

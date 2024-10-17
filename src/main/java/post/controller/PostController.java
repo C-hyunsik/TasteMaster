@@ -54,6 +54,7 @@ public class PostController {
 	@RequestMapping(value="/api/post/postWrite")
 	public void apiPostPostWrite(@ModelAttribute PostDTO postDTO) {
 		postService.postWrite(postDTO);
+		System.out.println("D"+postDTO.getContent());
 	}
 	@RequestMapping(value="/page/post/dishpostwrite")
 	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model){
@@ -77,7 +78,7 @@ public class PostController {
         String ImageOriginalFileName; // 원본 파일 이름을 저장할 변수
  
         PostDTO post = new PostDTO();
-
+        System.out.println("dd"+content);
        
         ImageOriginalFileName = image.getOriginalFilename();
         // Naver Cloud에 쉐프 이미지 업로드
