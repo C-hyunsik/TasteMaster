@@ -329,13 +329,13 @@ button:hover {
                         <div class="post-meta">작성자: ${list.memberId } | 작성일: ${list.createdAt }</div>
                     </div>
                 </c:forEach>
-            </div>
-            <div id="pagingWrap">
-                ${map2.postPaging.pagingHTML }
-            </div>
-            <div class="button-group">
-                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
-                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+            	<div id="pagingWrap">
+                	${map2.postPaging.pagingHTML }
+            	</div>
+            	<div class="button-group">
+	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
+	                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+	         	</div>
             </div>
         </div>
         <input type="hidden" id="dishId" value="${dishInfo.dishId}">
