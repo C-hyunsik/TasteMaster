@@ -211,6 +211,7 @@ button:hover {
 
     <div class="container">
         <div class="form-container">
+         <form id="postForm" method="post">
             <h2>글쓰기</h2>
             <div class="form-group">
                 <label for="title">제목:</label>
@@ -225,9 +226,10 @@ button:hover {
                 <input type="file" id="image" name="image">
             </div>
             <div class="button-group">
-                <button type="submit">작성하기</button>
+                <button id = "postBtn">작성하기</button>
                 <button onclick="location.href='/TasteMasters/page/post/dishpostlist?dishId=1'">목록</button>
             </div>
+         </form>
         </div>
     </div>
 
@@ -242,6 +244,31 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active');
     });
 });
+
+
+$(function(){
+    $('#postBtn').click(function(){
+        let formData = new FormData($('#postForm')[0]);
+        
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            url: '/TasteMasters/api/post/upload',
+            data: formData,
+            success: function(data) {
+                alert("게시글이 등록되었습니다.");
+                location.href = "/TasteMasters/page/post/dishpostlist"; // 게시글 목록
+            },
+            error: function(e) {
+                console.log(e);
+                alert("등록 중 오류가 발생했습니다.");
+            }
+        }); //ajax
+    });
+});
+
 </script>
 </body>
 </html>

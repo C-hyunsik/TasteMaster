@@ -145,6 +145,7 @@ public class ChefController {
     }
     
     
+<<<<<<< HEAD
     @RequestMapping(value = "/page/post/dishList")
   	public String pageChefDishLists(@RequestParam String chefId, Model model) throws IOException {
     	
@@ -153,4 +154,7 @@ public class ChefController {
   		return "/dish/dishList";
   	}
     
+=======
+
+>>>>>>> 974180cf05a1b27cf168b0b2118c58bca0103b81
 }
