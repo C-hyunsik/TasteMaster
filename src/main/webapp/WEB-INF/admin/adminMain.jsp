@@ -30,9 +30,14 @@
 </head>
 <body>
 	 <header>
+         <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
@@ -81,7 +86,7 @@
     
  
     <section class="banner">
-		<img src="../image/banner.jpg" alt="배너 이미지" class="banner-img" />
+		<img src="../image/adminbanner.png" alt="배너 이미지" class="banner-img" />
 	</section>
 	
 	<div class="chefUploadContainer">

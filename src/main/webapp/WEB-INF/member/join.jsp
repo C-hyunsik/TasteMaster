@@ -216,9 +216,14 @@ button:hover {
 </head>
 <body>
     <header>
+         <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>

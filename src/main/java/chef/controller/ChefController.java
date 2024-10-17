@@ -67,6 +67,7 @@ public class ChefController {
     @ResponseBody
     public String uploadChefAndDishes(@RequestParam String chefName,
     		 @RequestParam("dishName") List<String> dishNames, // 요리 이름 리스트
+    		 @RequestParam("dishContent") List<String> dishContents, // 요리 설명 리스트
     		 @RequestParam("dishImg") List<MultipartFile> dishImages,
     		 @RequestParam("chefImg") MultipartFile chefImg, HttpSession session) {
     	
@@ -124,6 +125,7 @@ public class ChefController {
                 // DishDTO 객체 생성 및 설정
                 DishDTO dish = new DishDTO();
                 dish.setDishName(dishNames.get(i)); // 요리 이름 설정
+                dish.setDishContent(dishContents.get(i)); // 요리 설명 설정
                 dish.setImageFileName(dishImageFileName); // UUID로 생성된 파일 이름
                 dish.setImageOriginalFileName(dishImageOriginalFileName); // 원본 파일 이름
                 dish.setChefId(chefId); // 쉐프 ID 설정
@@ -149,9 +151,10 @@ public class ChefController {
     }
     
 
-    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
     @ResponseBody
     public String apiChefDelete(@RequestParam("chefId") int chefId) {
+    	/*
     	List<DishDTO> dishList = dishService.getDishByChefId(chefId);
     	List<PostDTO> postList = postService.getPostByChefId(chefId);
     	
@@ -166,7 +169,7 @@ public class ChefController {
                 objectStorageService.deleteFile(bucketName, "storage/" , post.getImageFileName());
             }
         }
-    	
+    	*/
     	chefService.apiChefDelete(chefId);
     	
     	return "탈락되었습니다...";
