@@ -1,7 +1,9 @@
 package post.controller;
 
+import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,19 +48,21 @@ public class PostController {
 		return "/post/dishPostList";
 	}
 	
-	@RequestMapping(value="/page/post/dishPostWrite", method = RequestMethod.GET)
-	public String dishPostList(@RequestParam(value = "dishId", required = false, defaultValue = "1") int dishId, Model model) {
-		model.addAttribute("dishId",dishId);
-		return "/post/dishPostWrite";
-	}
 	@RequestMapping(value="/api/post/postWrite")
 	public void apiPostPostWrite(@ModelAttribute PostDTO postDTO) {
 		postService.postWrite(postDTO);
 		System.out.println("D"+postDTO.getContent());
 	}
-	@RequestMapping(value="/page/post/dishpostwrite")
-	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model){
+	
+	@RequestMapping(value="/page/post/dishPostWrite")
+	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model, HttpSession httpsession, HttpServletResponse response) throws IOException{
 		model.addAttribute("dishId", dishId);
+		String loginId = (String) httpsession.getAttribute("loginId");
+		 if (loginId == null ) {
+	    	 response.sendRedirect("/TasteMasters/page/member/login"); // 메인 페이지로 리다이렉트
+	    	 return null; // 리다이렉트 후 메서드를 종료
+	    }
+		 
 		return "/post/dishPostWrite";
 	}
 	
