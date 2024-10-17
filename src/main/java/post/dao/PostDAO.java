@@ -22,6 +22,8 @@ public interface PostDAO {
 
 	public List<PostDTO> getPostByChefId(int chefId);
 
+	public List<PostDTO> postInfo(int postId);
+
 
 	
 }

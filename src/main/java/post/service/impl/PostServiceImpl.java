@@ -60,4 +60,8 @@ public class PostServiceImpl implements PostService {
 		List<PostDTO> postList = postDAO.getPostByChefId(chefId);
 		return postList;
 	}
+	@Override
+	public List<PostDTO> postInfo(int postId) {
+		return postDAO.postInfo(postId);
+	}
 }

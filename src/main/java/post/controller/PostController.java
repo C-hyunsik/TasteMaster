@@ -1,5 +1,6 @@
 package post.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -97,5 +98,12 @@ public class PostController {
 
         // 결과 메시지 구성
         return "게시글 등록";
+    }
+    @RequestMapping(value = "/page/post/view")
+    public String pagePostView(@RequestParam int postId, @RequestParam int dishId, Model model) {
+    	List<PostDTO> postList = postService.postInfo(postId);
+    	model.addAttribute("postList",postList);
+    	model.addAttribute("dishId",dishId);
+    	return "/post/dishPostView";
     }
 }

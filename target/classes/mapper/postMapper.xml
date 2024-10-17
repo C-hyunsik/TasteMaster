@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
-		select title, member_id as memberId, created_at as createdAt from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
+		select post_id as postId, title, member_id as memberId, created_at as createdAt from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
 	</select>
  
 	<select id="apiDishInfo" parameterType="Integer" resultType="dish.bean.DishDTO">
@@ -36,5 +36,17 @@
 		from post
 		where chef_id = #{chefId}
 	</select>
-
+	<select id="postInfo" parameterType="Integer" resultType="post.bean.PostDTO">
+		select P.post_id as postId,
+			   P.dish_id as dishId,
+			   P.member_id as memberId,
+			   P.title,
+			   P.content,
+			   P.image_fileName as imageFileName,
+			   P.image_original_fileName as imageOriginalFileName,
+			   P.created_at as createdAt,
+			   M.name as name
+		from post as P, member as M
+		where P.member_id = M.member_id and P.post_id = #{postId}
+	</select>
 </mapper>
