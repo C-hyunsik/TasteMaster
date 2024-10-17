@@ -319,6 +319,9 @@ button:hover {
 	        <div id="imgWrap">
 	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo.imageFileName}" alt="${dishInfo.dishName}">
             </div>
+            <div id="contentWrap">
+	        	<p>${dishInfo.dishContent }</p>
+            </div>
         </div>
         <div class="content-container">
         <br><br><br>
