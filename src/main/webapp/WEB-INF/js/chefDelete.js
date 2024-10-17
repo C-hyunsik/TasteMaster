@@ -7,10 +7,10 @@ $(function(){
 			
 			$.ajax({
 				url: '/TasteMasters/api/chef/delete',
-				type: 'POST',
+				type: 'GET',
 				data: {chefId: chefId},
 				success: function(reponse) {
-					alert(reponse);
+					alert('셰프가 삭제되었습니다.');
 					location.href='/TasteMasters/page/member/admin'
 				},
 				error: function(e){

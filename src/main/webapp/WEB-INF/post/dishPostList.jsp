@@ -319,6 +319,9 @@ button:hover {
 	        <div id="imgWrap">
 	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo.imageFileName}" alt="${dishInfo.dishName}">
             </div>
+            <div id="contentWrap">
+	        	<pre>${dishInfo.dishContent }</pre>
+            </div>
         </div>
         <div class="content-container">
         <br><br><br>
@@ -326,7 +329,7 @@ button:hover {
                 <c:forEach var="list" items="${map2.list}">
                     <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
                         <div class="post-title">${list.title }</div>
-                        <div class="post-meta">작성자: ${list.memberId } | 작성일: ${list.createdAt }</div>
+                        <div class="post-meta">작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
                     </div>
                 </c:forEach>
             	<div id="pagingWrap">

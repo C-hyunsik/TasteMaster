@@ -10,7 +10,14 @@
 	</select>
 	
 	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
+<<<<<<< HEAD
 		select post_id as postId, title, member_id as memberId, created_at as createdAt from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
+=======
+		select P.post_id as postId, P.title, P.member_id as memberId, P.created_at as createdAt, M.name as name 
+		from post as P, member as M 
+		where P.member_id = M.member_id and P.dish_id = #{dishId}
+		ORDER BY P.post_id DESC limit #{startnum}, #{endnum}
+>>>>>>> 028fef8a2e3bfb6cd04f0621673e8ff324de4fcc
 	</select>
  
 	<select id="apiDishInfo" parameterType="Integer" resultType="dish.bean.DishDTO">
