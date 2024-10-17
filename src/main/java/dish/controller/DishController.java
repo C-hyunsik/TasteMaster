@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import chef.bean.ChefDTO;
 import dish.bean.DishDTO;
 import dish.service.DishService;
 
@@ -20,13 +21,12 @@ public class DishController {
 
 
     @RequestMapping(value = "/page/dish/dishList")
-  	public String pageChefDishLists(@RequestParam String chefId, Model model) throws IOException {
+  	public String pageDishDishLists(@RequestParam String chefId, Model model) throws IOException {
     	
     	List<DishDTO> dishList = dishService.apiDishList(chefId);
+    	List<ChefDTO> chefInfo = dishService.apiChefInfo(chefId);
     	model.addAttribute("dishList", dishList);
+    	model.addAttribute("chefInfo", chefInfo);
   		return "/dish/dishList";
   	}
-    
-    
-
 }

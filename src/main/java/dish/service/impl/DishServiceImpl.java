@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import chef.bean.ChefDTO;
 import dish.bean.DishDTO;
 import dish.dao.DishDAO;
 import dish.service.DishService;
@@ -22,8 +23,11 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	public List<DishDTO> apiDishList(String chefId) {
-		// TODO Auto-generated method stub
 		return dishDAO.apiDishList(chefId);
+	}
+	@Override
+	public List<ChefDTO> apiChefInfo(String chefId) {
+		return dishDAO.apiChefInfo(chefId);
 	}
 
 	

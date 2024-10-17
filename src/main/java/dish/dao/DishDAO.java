@@ -5,15 +5,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import chef.bean.ChefDTO;
 import dish.bean.DishDTO;
 
 
 @Mapper
 public interface DishDAO {
 
-	void uploadDishes(List<DishDTO> dishList);
+	public void uploadDishes(List<DishDTO> dishList);
 
-	List<DishDTO> apiDishList(String chefId);
+	public List<DishDTO> apiDishList(String chefId);
+
+	public List<ChefDTO> apiChefInfo(String chefId);
 
 	
 }

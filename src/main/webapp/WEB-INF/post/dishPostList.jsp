@@ -314,10 +314,10 @@ button:hover {
     <div class="table-container">
         <div class="image-container">
         	<div id="h2Wrap">
-	        	<h2>무조림</h2>
+	        	<h2>${dishInfo[0].dishName }</h2>
 	        </div>
 	        <div id="imgWrap">
-	        	<img src="../image/moojorim.jpg" alt="음식 사진" />
+	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo[0].imageFileName}" alt="${dishInfo[0].dishName}">
             </div>
         </div>
         <div class="content-container">
@@ -334,16 +334,18 @@ button:hover {
                 ${map2.postPaging.pagingHTML }
             </div>
             <div class="button-group">
-                <button onclick="location.href='/TasteMasters/page/post/dishpostwrite'">글쓰기</button>
+                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo[0].dishId}">글쓰기</button>
                 <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
             </div>
         </div>
+        <input type="hidden" id="dishId" value="${dishInfo[0].dishId}">
     </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //페이징 처리
 function postPaging(pg) {
-    location.href = '/TasteMasters/page/post/dishpostlist?pg=' + pg + "&dishId=1";
+	dishId = $('#dishId').val();
+    location.href = '/TasteMasters/page/post/dishPostList?pg=' + pg + "&dishId=" + dishId;
 }
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {

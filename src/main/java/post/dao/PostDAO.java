@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import dish.bean.DishDTO;
 import member.bean.MemberDTO;
 import post.bean.PostDTO;
 
@@ -16,6 +17,10 @@ public interface PostDAO {
 	public int getTotalA();
 	
 	public List<PostDTO> dishPostList(Map<String, Integer> map);
+
+	public List<DishDTO> apiDishInfo(int dishId);
+
+	public void postWrite(PostDTO postDTO);
 
 	
 }

@@ -141,20 +141,6 @@ public class ChefController {
         dishService.uploadDishes(dishList);
 		
         // 결과 메시지 구성
-        return "쉐프와 요리 정보가 성공적으로 업로드되었습니다.";
+        return "셰프와 요리 정보가 성공적으로 업로드되었습니다.";
     }
-    
-    
-<<<<<<< HEAD
-    @RequestMapping(value = "/page/post/dishList")
-  	public String pageChefDishLists(@RequestParam String chefId, Model model) throws IOException {
-    	
-    	List<DishDTO> dishList = dishService.apiDishList(chefId);
-    	model.addAttribute("dishList", dishList);
-  		return "/dish/dishList";
-  	}
-    
-=======
-
->>>>>>> 974180cf05a1b27cf168b0b2118c58bca0103b81
 }

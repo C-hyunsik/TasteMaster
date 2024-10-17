@@ -11,4 +11,23 @@
 	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
 		select * from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
 	</select>
+	<select id="apiPostList" parameterType="String" resultType="dish.bean.DishDTO">
+		SELECT dish_id as dishId, 
+		chef_id as chefId,
+		dish_name as dishName,
+		image_fileName as imageFileName,
+		image_original_fileName as imageOriginalFileName,
+		delicious_count as deliciousCount,
+		makeEasy_count as makeEasyCount
+        FROM dish 
+        WHERE chef_id = #{chefId}
+        ORDER BY dish_id DESC
+	</select>
+	<select id="apiDishInfo" parameterType="Integer" resultType="dish.bean.DishDTO">
+		select dish_id as dishId,
+			   dish_name as dishName,
+			   image_fileName as imageFileName,
+			   image_original_fileName as imageOriginalFileName
+		from dish where dish_id = #{dishId}
+	</select>
 </mapper>

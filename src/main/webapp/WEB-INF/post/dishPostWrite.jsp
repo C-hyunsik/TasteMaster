@@ -215,20 +215,21 @@ button:hover {
             <h2>글쓰기</h2>
             <div class="form-group">
                 <label for="title">제목:</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" name="title">
             </div>
             <div class="form-group">
                 <label for="content">내용:</label>
-                <textarea id="content" name="content" rows="10" required></textarea>
+                <textarea id="content" name="content" rows="10"></textarea>
             </div>
             <div class="form-group">
                 <label for="image">사진 첨부:</label>
                 <input type="file" id="image" name="image">
             </div>
             <div class="button-group">
-                <button id = "postBtn">작성하기</button>
-                <button onclick="location.href='/TasteMasters/page/post/dishpostlist?dishId=1'">목록</button>
+                <button type="button" id = "postBtn">작성하기</button>
+                <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId=${dishId}'">목록</button>
             </div>
+            <input type="hidden" id="dishId" value="${dishId }"/>
          </form>
         </div>
     </div>
@@ -249,17 +250,17 @@ document.addEventListener("DOMContentLoaded", function() {
 $(function(){
     $('#postBtn').click(function(){
         let formData = new FormData($('#postForm')[0]);
-        
+        dishId = $('#dishId').val();
         $.ajax({
             type: 'post',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            url: '/TasteMasters/api/post/upload',
+            url: '/TasteMasters/api/post/postWrite',
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");
-                location.href = "/TasteMasters/page/post/dishpostlist"; // 게시글 목록
+                location.href = "/TasteMasters/page/post/dishpostlist?dishId=" + dishId; // 게시글 목록
             },
             error: function(e) {
                 console.log(e);
