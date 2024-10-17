@@ -314,10 +314,10 @@ button:hover {
     <div class="table-container">
         <div class="image-container">
         	<div id="h2Wrap">
-	        	<h2>${dishInfo[0].dishName }</h2>
+	        	<h2>${dishInfo.dishName }</h2>
 	        </div>
 	        <div id="imgWrap">
-	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo[0].imageFileName}" alt="${dishInfo[0].dishName}">
+	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo.imageFileName}" alt="${dishInfo.dishName}">
             </div>
         </div>
         <div class="content-container">
@@ -329,16 +329,16 @@ button:hover {
                         <div class="post-meta">작성자: ${list.memberId } | 작성일: ${list.createdAt }</div>
                     </div>
                 </c:forEach>
-            </div>
-            <div id="pagingWrap">
-                ${map2.postPaging.pagingHTML }
-            </div>
-            <div class="button-group">
-                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo[0].dishId}">글쓰기</button>
-                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+            	<div id="pagingWrap">
+                	${map2.postPaging.pagingHTML }
+            	</div>
+            	<div class="button-group">
+	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
+	                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+	         	</div>
             </div>
         </div>
-        <input type="hidden" id="dishId" value="${dishInfo[0].dishId}">
+        <input type="hidden" id="dishId" value="${dishInfo.dishId}">
     </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">

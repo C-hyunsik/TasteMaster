@@ -30,9 +30,14 @@
 </head>
 <body>
 	 <header>
+         <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
@@ -81,7 +86,7 @@
     
  
     <section class="banner">
-		<img src="../image/banner.jpg" alt="배너 이미지" class="banner-img" />
+		<img src="../image/adminbanner.png" alt="배너 이미지" class="banner-img" />
 	</section>
 	
 	<div class="chefUploadContainer">
@@ -92,10 +97,8 @@
 		<c:forEach var="chef" items="${chefList}">
 			<div class="chef">
 				<input type="hidden" class="chefId" value="${chef.chefId}">
-				<a href="/TasteMasters/page/chef/dishes?chefId=${chef.chefId}">
 					<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
 					<p>${chef.chefName}</p>
-				</a>
 				<input type="button" name="chefUpdate" id="chefUpdateBtn" onclick="location.href='/TasteMasters/page/admin/chefUpdate?chefId=${chef.chefId}'" value="수정"/>
 				<input type="button" name="chefDelete" id="chefDeleteBtn" value="삭제"/>
 			</div>

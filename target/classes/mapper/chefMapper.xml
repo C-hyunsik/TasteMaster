@@ -23,7 +23,8 @@
 	
 	<!-- 1개의 정보 -->
 	<select id="apiChefGetDTO" parameterType="int" resultType="chef.bean.ChefDTO">
-		select * from chef where chef_id =#{chefId}
+		select chef_id as chefId , chef_name as chefName,
+		image_fileName as imageFileName, image_original_fileName as imageOriginalFileName from chef where chef_id =#{chefId}
 	</select>
 	
 	<select id="apiChefIdByName" parameterType="String" resultType="int">

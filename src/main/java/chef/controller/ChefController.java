@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +21,6 @@ import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
-import post.bean.PostDTO;
 import post.service.PostService;
 
 @Controller
@@ -67,6 +65,7 @@ public class ChefController {
     @ResponseBody
     public String uploadChefAndDishes(@RequestParam String chefName,
     		 @RequestParam("dishName") List<String> dishNames, // 요리 이름 리스트
+    		 @RequestParam("dishContent") List<String> dishContents, // 요리 설명 리스트
     		 @RequestParam("dishImg") List<MultipartFile> dishImages,
     		 @RequestParam("chefImg") MultipartFile chefImg, HttpSession session) {
     	
@@ -124,6 +123,7 @@ public class ChefController {
                 // DishDTO 객체 생성 및 설정
                 DishDTO dish = new DishDTO();
                 dish.setDishName(dishNames.get(i)); // 요리 이름 설정
+                dish.setDishContent(dishContents.get(i)); // 요리 설명 설정
                 dish.setImageFileName(dishImageFileName); // UUID로 생성된 파일 이름
                 dish.setImageOriginalFileName(dishImageOriginalFileName); // 원본 파일 이름
                 dish.setChefId(chefId); // 쉐프 ID 설정
@@ -147,9 +147,11 @@ public class ChefController {
         // 결과 메시지 구성
         return "셰프와 요리 정보가 성공적으로 업로드되었습니다.";
     }
-    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
-    @ResponseBody
+
+    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
+
     public String apiChefDelete(@RequestParam("chefId") int chefId) {
+    	/*
     	List<DishDTO> dishList = dishService.getDishByChefId(chefId);
     	List<PostDTO> postList = postService.getPostByChefId(chefId);
     	
@@ -164,7 +166,7 @@ public class ChefController {
                 objectStorageService.deleteFile(bucketName, "storage/" , post.getImageFileName());
             }
         }
-    	
+    	*/
     	chefService.apiChefDelete(chefId);
     	
     	return "탈락되었습니다...";

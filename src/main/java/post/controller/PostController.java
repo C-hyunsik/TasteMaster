@@ -1,6 +1,5 @@
 package post.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import dish.bean.DishDTO;
+import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
 import post.bean.PostDTO;
 import post.service.PostService;
@@ -26,6 +26,9 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 
+	@Autowired
+	private DishService dishService;
+	
     @Autowired
     private ObjectStorageService objectStorageService;
     
@@ -35,7 +38,7 @@ public class PostController {
 	@RequestMapping(value="/page/post/dishPostList", method = RequestMethod.GET)
 	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam(defaultValue = "1") int dishId,  Model model) {
 		Map<String, Object> map2 = postService.dishPostList(pg, dishId);
-		List<DishDTO> dishInfo = postService.apiDishInfo(dishId);
+		DishDTO dishInfo = dishService.apiDishInfo(dishId);
 		model.addAttribute("map2",map2);
 		model.addAttribute("dishInfo",dishInfo);
 		model.addAttribute("pg",pg);
@@ -44,13 +47,14 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/page/post/dishPostWrite", method = RequestMethod.GET)
-	public String dishPostList(@RequestParam(value = "dishId", required = false, defaultValue = "0") Integer dishId, Model model) {
+	public String dishPostList(@RequestParam(value = "dishId", required = false, defaultValue = "1") int dishId, Model model) {
 		model.addAttribute("dishId",dishId);
 		return "/post/dishPostWrite";
 	}
 	@RequestMapping(value="/api/post/postWrite")
 	public void apiPostPostWrite(@ModelAttribute PostDTO postDTO) {
 		postService.postWrite(postDTO);
+		System.out.println("D"+postDTO.getContent());
 	}
 	@RequestMapping(value="/page/post/dishpostwrite")
 	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model){
@@ -74,7 +78,7 @@ public class PostController {
         String ImageOriginalFileName; // 원본 파일 이름을 저장할 변수
  
         PostDTO post = new PostDTO();
-
+        System.out.println("dd"+content);
        
         ImageOriginalFileName = image.getOriginalFilename();
         // Naver Cloud에 쉐프 이미지 업로드

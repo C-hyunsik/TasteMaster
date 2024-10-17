@@ -218,8 +218,8 @@ button:hover {
                 <input type="text" id="title" name="title">
             </div>
             <div class="form-group">
-                <label for="content">내용:</label>
-                <textarea id="content" name="content" rows="10"></textarea>
+                	<label for="content">내용:</label>
+			 <textarea name="content" id="editorTxt0" rows="20" cols="10" style="max-width: 775px"></textarea>
             </div>
             <div class="form-group">
                 <label for="image">사진 첨부:</label>
@@ -263,8 +263,12 @@ $('#image').change(function(){
 
 $(function(){
     $('#postBtn').click(function(){
+    	
+    	oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
+    	
+    	
         let formData = new FormData($('#postForm')[0]);
-        dishId = $('#dishId').val();
+        //dishId = $('#dishId').val();
         const queryString = window.location.search;
 
 	     // URLSearchParams 객체 생성
@@ -281,7 +285,7 @@ $(function(){
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");
-                location.href = "/TasteMasters/page/post/dishpostlist?dishId=" + dishId; // 게시글 목록
+                location.href = "/TasteMasters/page/post/dishPostList?dishId=" + dishId; // 게시글 목록
             },
             error: function(e) {
                 console.log(e);
@@ -291,6 +295,35 @@ $(function(){
     });
 });
 
+</script>
+<script type="text/javascript" src="../se2/js/HuskyEZCreator.js"></script>
+<script>
+
+let oEditors = [];
+
+     smartEditor = function() {
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
+                sSkinURI: "../se2/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수
+                fCreator: "createSEditor2"
+            })
+        }
+
+     $(document).ready(function() {
+     	//스마트에디터 적용
+          smartEditor(); 
+              //값 불러오기
+           function preview(){
+            	// 에디터의 내용을 textarea에 적용
+            	oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
+                // textarea 값 불러오기 
+            	var content = document.getElementById("editorTxt0").value;
+            	alert(content);
+            	return;
+        }
+           
+     })
 </script>
 </body>
 </html>

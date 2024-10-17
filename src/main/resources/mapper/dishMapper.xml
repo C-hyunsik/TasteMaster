@@ -7,10 +7,10 @@
 <mapper namespace="dish.dao.DishDAO">
 
 	<insert id="uploadDishes" parameterType="java.util.List">
-        insert into dish (chef_id, dish_name, image_fileName, image_original_fileName)
+        insert into dish (chef_id, dish_name, dish_content, image_fileName, image_original_fileName)
         values 
         <foreach collection="list" item="dish" separator=",">
-            (#{dish.chefId}, #{dish.dishName}, #{dish.imageFileName}, #{dish.imageOriginalFileName})
+            (#{dish.chefId}, #{dish.dishName}, #{dish.dishContent}, #{dish.imageFileName}, #{dish.imageOriginalFileName})
         </foreach>
     </insert>
     
@@ -40,4 +40,16 @@
 			   image_original_fileName as imageOriginalFileName
 		from chef where chef_id = #{chefId}
 	</select>
+	
+	<select id="apiDishInfo" parameterType="int" resultType="dish.bean.DishDTO">
+		select dish_id as dishId,
+			   dish_name as dishName,
+			   image_fileName as imageFileName,
+			   image_original_fileName as imageOriginalFileName,
+			   delicious_count as deliciousCount,
+			   makeEasy_count as makeEasyCount,
+			   dish_content as dishContent
+		from dish where dish_id = #{dishId}
+	</select>
+  
 </mapper>
