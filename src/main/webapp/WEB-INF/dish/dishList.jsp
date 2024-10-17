@@ -254,22 +254,22 @@ nav.active {
     <div class="table-container">
         <div class="image-container">
             <div id="h2Wrap">
-                <h2>최현석</h2> <!-- 셰프 이름 -->
+                <h2>${chefInfo.chefName }</h2> <!-- 셰프 이름 -->
             </div>
             <div id="imgWrap">
-                <img src="../image/choi.jpg" alt="셰프 사진" />
+                <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chefInfo.imageFileName}" alt="${chefInfo.chefName}">
             </div>
         </div>
         <div class="content-container">
             <h2>음식 목록</h2>
             <div id="post_cardWrap">
                 <section class="chef-list">
-                    <%-- <c:forEach var="dish" items="${dishList}"> --%>
-                        <div class="dish">
-                            <img src="../image/moojorim.jpg" alt="">
-                            <p>무조림</p>
-                        </div>
-                    <%-- </c:forEach> --%>
+					<c:forEach var="dish" items="${dishList}">
+						<div class="dish" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dish.dishId}" style="cursor:pointer;">
+							<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}">
+							<p>${dish.dishName}</p>
+						</div>
+					</c:forEach>
                 </section>
             </div>
         </div>

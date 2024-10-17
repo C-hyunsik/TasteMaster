@@ -314,10 +314,10 @@ button:hover {
     <div class="table-container">
         <div class="image-container">
         	<div id="h2Wrap">
-	        	<h2>무조림</h2>
+	        	<h2>${dishInfo.dishName }</h2>
 	        </div>
 	        <div id="imgWrap">
-	        	<img src="../image/moojorim.jpg" alt="음식 사진" />
+	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo.imageFileName}" alt="${dishInfo.dishName}">
             </div>
         </div>
         <div class="content-container">
@@ -329,21 +329,23 @@ button:hover {
                         <div class="post-meta">작성자: ${list.memberId } | 작성일: ${list.createdAt }</div>
                     </div>
                 </c:forEach>
-            </div>
-            <div id="pagingWrap">
-                ${map2.postPaging.pagingHTML }
-            </div>
-            <div class="button-group">
-                <button onclick="location.href='/TasteMasters/page/post/dishpostwrite?dishId='+${dishId}">글쓰기</button>
-                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+            	<div id="pagingWrap">
+                	${map2.postPaging.pagingHTML }
+            	</div>
+            	<div class="button-group">
+	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
+	                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+	         	</div>
             </div>
         </div>
+        <input type="hidden" id="dishId" value="${dishInfo.dishId}">
     </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //페이징 처리
 function postPaging(pg) {
-    location.href = '/TasteMasters/page/post/dishpostlist?pg=' + pg + "&dishId=1";
+	dishId = $('#dishId').val();
+    location.href = '/TasteMasters/page/post/dishPostList?pg=' + pg + "&dishId=" + dishId;
 }
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {

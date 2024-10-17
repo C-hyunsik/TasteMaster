@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import chef.bean.ChefDTO;
 import dish.bean.DishDTO;
 import dish.dao.DishDAO;
 import dish.service.DishService;
@@ -28,6 +29,15 @@ public class DishServiceImpl implements DishService {
 	
 	public List<DishDTO> apiDishList(String chefId) {
 		return dishDAO.apiDishList(chefId);
+	}
+	@Override
+	public List<ChefDTO> apiChefInfo(String chefId) {
+		return dishDAO.apiChefInfo(chefId);
+	}
+
+	@Override
+	public DishDTO apiDishInfo(int dishId) {
+		return dishDAO.apiDishInfo(dishId);
 	}
 
 	

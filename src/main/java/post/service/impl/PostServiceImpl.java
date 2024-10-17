@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dish.bean.DishDTO;
 import post.bean.PostDTO;
 import post.bean.PostPaging;
 import post.dao.PostDAO;
@@ -47,6 +46,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public void postWrite(PostDTO postDTO) {
+		postDAO.postWrite(postDTO);
+	}
+
+	@Override
 	public void apiUploadPost(PostDTO post) {
 		postDAO.apiUploadPost(post);
 	}
@@ -56,5 +60,4 @@ public class PostServiceImpl implements PostService {
 		List<PostDTO> postList = postDAO.getPostByChefId(chefId);
 		return postList;
 	}
-	
 }

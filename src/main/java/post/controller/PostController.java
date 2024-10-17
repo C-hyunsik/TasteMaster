@@ -7,12 +7,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import dish.bean.DishDTO;
+import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
 import post.bean.PostDTO;
 import post.service.PostService;
@@ -23,21 +26,35 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 
+	@Autowired
+	private DishService dishService;
+	
     @Autowired
     private ObjectStorageService objectStorageService;
     
     private String bucketName = "bitcamp-9th-bucket-135";
     
 	
-	@RequestMapping(value="/page/post/dishpostlist")
+	@RequestMapping(value="/page/post/dishPostList", method = RequestMethod.GET)
 	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam(defaultValue = "1") int dishId,  Model model) {
 		Map<String, Object> map2 = postService.dishPostList(pg, dishId);
+		DishDTO dishInfo = dishService.apiDishInfo(dishId);
 		model.addAttribute("map2",map2);
+		model.addAttribute("dishInfo",dishInfo);
 		model.addAttribute("pg",pg);
 		model.addAttribute("dishId", dishId);
 		return "/post/dishPostList";
 	}
 	
+	@RequestMapping(value="/page/post/dishPostWrite", method = RequestMethod.GET)
+	public String dishPostList(@RequestParam(value = "dishId", required = false, defaultValue = "1") int dishId, Model model) {
+		model.addAttribute("dishId",dishId);
+		return "/post/dishPostWrite";
+	}
+	@RequestMapping(value="/api/post/postWrite")
+	public void apiPostPostWrite(@ModelAttribute PostDTO postDTO) {
+		postService.postWrite(postDTO);
+	}
 	@RequestMapping(value="/page/post/dishpostwrite")
 	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model){
 		model.addAttribute("dishId", dishId);

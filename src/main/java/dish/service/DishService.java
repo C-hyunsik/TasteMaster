@@ -13,4 +13,7 @@ public interface DishService {
 
 	public List<DishDTO> apiDishList(String chefId);
 
+	public List<ChefDTO> apiChefInfo(String chefId);
+
+	public DishDTO apiDishInfo(int dishId);
 }
