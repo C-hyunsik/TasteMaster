@@ -20,6 +20,12 @@ public class DishServiceImpl implements DishService {
 		
 	}
 
+	@Override
+	public List<DishDTO> apiDishList(String chefId) {
+		// TODO Auto-generated method stub
+		return dishDAO.apiDishList(chefId);
+	}
+
 	
 	
 }

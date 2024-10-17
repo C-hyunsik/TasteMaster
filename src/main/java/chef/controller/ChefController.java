@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -116,4 +117,14 @@ public class ChefController {
         // 결과 메시지 구성
         return "쉐프와 요리 정보가 성공적으로 업로드되었습니다.";
     }
+    
+    
+    @RequestMapping(value = "/page/chef/dishList")
+  	public String pageChefDishLists(@RequestParam String chefId, Model model) throws IOException {
+    	
+    	List<DishDTO> dishList = dishService.apiDishList(chefId);
+    	model.addAttribute("dishList", dishList);
+  		return "/dish/dishList";
+  	}
+    
 }
