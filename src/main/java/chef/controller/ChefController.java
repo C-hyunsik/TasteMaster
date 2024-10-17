@@ -31,8 +31,7 @@ public class ChefController {
     private ChefService chefService;
     @Autowired
     private DishService dishService;
-    @Autowired
-    private PostService postService;
+
 
 
     @Autowired

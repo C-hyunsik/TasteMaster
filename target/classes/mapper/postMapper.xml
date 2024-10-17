@@ -52,4 +52,8 @@
 		from post as P, member as M
 		where P.member_id = M.member_id and P.post_id = #{postId}
 	</select>
+	
+	<delete id="apiPostDelete" parameterType="int">
+    	DELETE FROM post WHERE post_id  = #{postId}
+	</delete>
 </mapper>

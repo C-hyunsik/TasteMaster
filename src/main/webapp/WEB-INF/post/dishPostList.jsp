@@ -329,7 +329,7 @@ button:hover {
                 <c:forEach var="list" items="${map2.list}">
                     <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
                         <div class="post-title">${list.title }</div>
-                        <div class="post-meta">작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
+                        <div class="post-meta">글번호 : ${list.postId} | 작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
                     </div>
                 </c:forEach>
             	<div id="pagingWrap">

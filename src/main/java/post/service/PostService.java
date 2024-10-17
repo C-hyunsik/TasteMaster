@@ -18,5 +18,7 @@ public interface PostService {
 
 	public List<PostDTO> postInfo(int postId);
 
+	public void apiPostDelete(int postId);
+
 
 }

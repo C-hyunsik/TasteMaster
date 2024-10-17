@@ -24,6 +24,6 @@ public interface PostDAO {
 
 	public List<PostDTO> postInfo(int postId);
 
-
+	public void apiPostDelete(int postId);
 	
 }
