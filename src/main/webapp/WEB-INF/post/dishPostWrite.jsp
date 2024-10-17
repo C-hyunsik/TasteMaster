@@ -34,6 +34,7 @@ header {
     font-size: 24px;
     cursor: pointer;
     z-index: 1001;
+    position: relative;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;

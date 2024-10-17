@@ -22,12 +22,9 @@
         
 
         <div class="login">
-     	   <c:if test="${sessionScope.role == 'ADMIN'}">
-	                 <a href="/TasteMasters/page/member/admin">관리자 페이지</a> |
-	       </c:if>
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
-                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a> |
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
                      <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                
@@ -74,23 +71,6 @@
 	        </div>
 	    </c:forEach>
     </section>
-
-
-
-    <%--<section class="chef-list scroll">
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-        <div class="chef">
-            <img src="./image/choi.jpg" alt="셰프 사진">
-            <p>셰프 이름</p>
-        </div>
-    </section> --%>
 
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글

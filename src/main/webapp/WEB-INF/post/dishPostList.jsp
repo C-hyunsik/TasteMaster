@@ -34,6 +34,7 @@ header {
     font-size: 24px;
     cursor: pointer;
     z-index: 1001;
+    position: relative;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
@@ -238,7 +239,6 @@ button:hover {
     .image-container {
         width: 100%; /* 모바일에서 전체 너비 사용 */
         height: auto; /* 높이 자동 조정 */
-        padding-bottom: 20px; /* 이미지와 콘텐츠 간 간격 */
     }
 
     .content-container {
