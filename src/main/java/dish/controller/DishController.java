@@ -33,4 +33,13 @@ public class DishController {
     	model.addAttribute("chefInfo", chefInfo);
   		return "/dish/dishList";
   	}
+    
+    @RequestMapping(value = "/page/dish/updateDishForm")
+    public String updateDishForm(@RequestParam int dishId, Model model) {
+    	DishDTO dishDTO = dishService.apiDishInfo(dishId);
+    	
+    	model.addAttribute("dishDTO", dishDTO);
+    	
+    	return "/dish/updateDishForm";
+    }
 }

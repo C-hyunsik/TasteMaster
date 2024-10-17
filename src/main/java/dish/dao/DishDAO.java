@@ -23,5 +23,8 @@ public interface DishDAO {
 
 	public DishDTO apiDishInfo(int dishId);
 
+
+	public DishDTO getDishByDishId(int parseInt);
+
 	
 }

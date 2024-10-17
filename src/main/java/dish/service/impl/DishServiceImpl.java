@@ -39,7 +39,5 @@ public class DishServiceImpl implements DishService {
 	public DishDTO apiDishInfo(int dishId) {
 		return dishDAO.apiDishInfo(dishId);
 	}
-
-	
 	
 }

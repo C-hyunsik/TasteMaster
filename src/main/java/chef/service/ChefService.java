@@ -1,6 +1,7 @@
 package chef.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,5 +27,7 @@ public interface ChefService {
 	public void apiUploadChef(ChefDTO chef);
 
 	public int apiChefIdByName(String chefName);
+
+	public void apiupdateChefImageFileName(Map<String, Object> params);
 	
 }
