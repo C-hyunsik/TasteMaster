@@ -254,10 +254,10 @@ nav.active {
     <div class="table-container">
         <div class="image-container">
             <div id="h2Wrap">
-                <h2>${chefInfo[0].chefName }</h2> <!-- 셰프 이름 -->
+                <h2>${chefInfo.chefName }</h2> <!-- 셰프 이름 -->
             </div>
             <div id="imgWrap">
-                <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chefInfo[0].imageFileName}" alt="${chefInfo[0].chefName}">
+                <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chefInfo.imageFileName}" alt="${chefInfo.chefName}">
             </div>
         </div>
         <div class="content-container">

@@ -18,8 +18,6 @@ public interface PostDAO {
 	
 	public List<PostDTO> dishPostList(Map<String, Integer> map);
 
-	public List<DishDTO> apiDishInfo(int dishId);
-
 	public void postWrite(PostDTO postDTO);
 
 	public void apiUploadPost(PostDTO post);

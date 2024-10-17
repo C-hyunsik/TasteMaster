@@ -35,6 +35,11 @@ public class DishServiceImpl implements DishService {
 		return dishDAO.apiChefInfo(chefId);
 	}
 
+	@Override
+	public DishDTO apiDishInfo(int dishId) {
+		return dishDAO.apiDishInfo(dishId);
+	}
+
 	
 	
 }

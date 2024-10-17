@@ -264,7 +264,7 @@ $('#image').change(function(){
 $(function(){
     $('#postBtn').click(function(){
         let formData = new FormData($('#postForm')[0]);
-        dishId = $('#dishId').val();
+        //dishId = $('#dishId').val();
         const queryString = window.location.search;
 
 	     // URLSearchParams 객체 생성
@@ -281,7 +281,7 @@ $(function(){
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");
-                location.href = "/TasteMasters/page/post/dishpostlist?dishId=" + dishId; // 게시글 목록
+                location.href = "/TasteMasters/page/post/dishPostList?dishId=" + dishId; // 게시글 목록
             },
             error: function(e) {
                 console.log(e);
