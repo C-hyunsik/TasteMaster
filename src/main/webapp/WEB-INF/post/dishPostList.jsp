@@ -34,6 +34,7 @@ header {
     font-size: 24px;
     cursor: pointer;
     z-index: 1001;
+    position: relative;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
@@ -238,7 +239,6 @@ button:hover {
     .image-container {
         width: 100%; /* 모바일에서 전체 너비 사용 */
         height: auto; /* 높이 자동 조정 */
-        padding-bottom: 20px; /* 이미지와 콘텐츠 간 간격 */
     }
 
     .content-container {
@@ -256,16 +256,43 @@ button:hover {
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
+
         <div class="login">
            <c:choose>
-                <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }</a>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
+               
                 <c:otherwise>
-                    <a href="/TasteMasters/page/member/login">로그인</a>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
                 </c:otherwise>
             </c:choose>
+          
         </div>
+        
+    
+        <nav>
+            <ul>
+     	   <c:if test="${sessionScope.role == 'ADMIN'}">
+	                 <li><a href="/TasteMasters/page/member/admin">관리자 페이지</a></li> 
+	       	  </c:if>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </nav>
     </header>
     
     <nav>
