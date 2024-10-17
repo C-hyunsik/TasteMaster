@@ -18,7 +18,7 @@ public class PostController {
 	private PostService postService;
 	
 	@RequestMapping(value="/page/post/dishpostlist")
-	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam int dishId,  Model model) {
+	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam(defaultValue = "1") int dishId,  Model model) {
 		Map<String, Object> map2 = postService.dishPostList(pg, dishId);
 		model.addAttribute("map2",map2);
 		model.addAttribute("pg",pg);

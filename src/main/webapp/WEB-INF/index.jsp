@@ -68,7 +68,7 @@
 	<section class="chef-list">
 
 		<c:forEach var="chef" items="${chefList}">
-	        <div class="chef" onclick="location.href='/TasteMasters/page/chef/dishList?chefId='+${chef.chefId}" style="cursor:pointer;">
+	        <div class="chef" onclick="location.href='/TasteMasters/page/dish/dishList?chefId='+${chef.chefId}" style="cursor:pointer;">
 	            <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${chef.imageFileName}" alt="${chef.chefName}">
 	            <p>${chef.chefName}</p>
 	        </div>
