@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService {
 		List<PostDTO> list = postDAO.dishPostList(map);
 		
 		//페이징 처리
-		int totalA = postDAO.getTotalA();
+		int totalA = postDAO.getTotalA(dishId);
 		postPaging.setTotalA(totalA);
 		postPaging.setCurrentPage((Integer.parseInt(pg)));
 		postPaging.setPageBlock(3);
