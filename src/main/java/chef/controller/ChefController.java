@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import chef.bean.ChefDTO;
-import chef.bean.ChefUploadDTO;
 import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
@@ -61,31 +59,51 @@ public class ChefController {
 
 
     // 쉐프와 요리를 업로드하는 메서드
-    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @RequestMapping(value = "/api/chef/upload", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
     @ResponseBody
-    public String uploadChefAndDishes(@ModelAttribute ChefUploadDTO chefUploadDTO,
-                                       @RequestParam("dishImages[]") List<MultipartFile> dishImages,
-                                       HttpSession session) {
+    public String uploadChefAndDishes(@RequestParam String chefName,
+    		 @RequestParam("dishName") List<String> dishNames, // 요리 이름 리스트
+    		 @RequestParam("dishImg") List<MultipartFile> dishImages,
+    		 @RequestParam("chefImg") MultipartFile chefImg, HttpSession session) {
+    	
+    	
         // 쉐프 이미지 업로드 처리
-        MultipartFile chefImage = chefUploadDTO.getChef().getImageFile();
-        String chefImageFileName = null; // 이미지 파일 이름을 저장할 변수
-        String chefImageOriginalFileName = null; // 원본 파일 이름을 저장할 변수
+        //MultipartFile chefImage = chefUploadDTO.getChef().getImageFile();
+        String chefImageFileName; // 이미지 파일 이름을 저장할 변수
+        String chefImageOriginalFileName; // 원본 파일 이름을 저장할 변수
 
-        // 쉐프 정보 객체
-        ChefDTO chef = chefUploadDTO.getChef(); // 여기서 chef 객체를 가져옵니다.
+        
+        /*
+        <insert id="apiUploadChef" parameterType="chef.bean.ChefDTO">
+        INSERT INTO chef (chef_name, image_fileName, image_original_fileName)
+        VALUES (#{chefName}, #{imageFileName}, #{imageOriginalFileName})
+    </insert>
+        */
+        
+        
+        
+        ChefDTO chef = new ChefDTO();
 
-        if (chefImage != null && !chefImage.isEmpty()) {
-            chefImageOriginalFileName = chefImage.getOriginalFilename();
-            // Naver Cloud에 쉐프 이미지 업로드
-            chefImageFileName = objectStorageService.uploadFile(bucketName, "storage/", chefImage);
-
-            chef.setImageFileName(chefImageFileName); // UUID로 생성된 파일 이름
-            chef.setImageOriginalFileName(chefImageOriginalFileName); // 원본 파일 이름
-            chefService.apiUploadChef(chef); // 쉐프 정보 DB에 저장
-        }
-
+       
+        chefImageOriginalFileName = chefImg.getOriginalFilename();
+        // Naver Cloud에 쉐프 이미지 업로드
+        chefImageFileName = objectStorageService.uploadFile(bucketName, "storage/", chefImg);
+        chef.setChefName(chefName);
+        chef.setImageFileName(chefImageFileName); // UUID로 생성된 파일 이름
+        chef.setImageOriginalFileName(chefImageOriginalFileName); // 원본 파일 이름
+        //위까지 클라우드에 오브젝트 스토리지에 이미지 등록
+        
+        
+        chefService.apiUploadChef(chef); // 쉐프 정보 DB에 저장
+        
+        int chefId = chefService.apiChefIdByName(chefName);
+        
+        
+   
+        
         // 요리 이미지와 정보를 DB에 저장
         List<DishDTO> dishList = new ArrayList<>();
+        
         for (int i = 0; i < dishImages.size(); i++) {
             MultipartFile dishImage = dishImages.get(i);
             if (dishImage != null && !dishImage.isEmpty()) {
@@ -101,19 +119,27 @@ public class ChefController {
 
                 // DishDTO 객체 생성 및 설정
                 DishDTO dish = new DishDTO();
-                dish.setDishName(chefUploadDTO.getDishes().get(i).getDishName()); // 요리 이름 설정
+                dish.setDishName(dishNames.get(i)); // 요리 이름 설정
                 dish.setImageFileName(dishImageFileName); // UUID로 생성된 파일 이름
                 dish.setImageOriginalFileName(dishImageOriginalFileName); // 원본 파일 이름
-                dish.setChefId(chef.getChefId()); // 쉐프 ID 설정
+                dish.setChefId(chefId); // 쉐프 ID 설정
 
                 // 요리 리스트에 추가
                 dishList.add(dish);
             }
         }
+        /*
+        insert id="uploadDishes" parameterType="java.util.List">
+        insert into dish (chef_id, dish_name, image_fileName, image_original_fileName)
+        values 
+        <foreach collection="list" item="dish" separator=",">
+            (#{dish.chefId}, #{dish.dishName}, #{dish.imageFileName}, #{dish.imageOriginalFileName})
+        </foreach>
+    </insert>*/
         
         // 요리 정보를 DB에 저장
         dishService.uploadDishes(dishList);
-
+		
         // 결과 메시지 구성
         return "쉐프와 요리 정보가 성공적으로 업로드되었습니다.";
     }

@@ -15,7 +15,7 @@ public class PostDTO {
 	
 	private int postId;						// 게시물 ID
     private int dishId;						// 음식 ID
-    private int userId;						// 사용자 ID
+    private int memberId;					// 사용자 ID
     private String title;					// 게시물 제목
     private String content;					// 게시물 내용
     private String imageFileName;			// UUID로 생성된 이미지 파일 이름

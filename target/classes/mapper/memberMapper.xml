@@ -26,7 +26,7 @@
 								  #{role})
 	</insert>
 	<select id="apiMemberLogin" parameterType="Map" resultType = "member.bean.MemberDTO">
-		select * from member where login_id = #{loginId} and pwd = #{pwd}
+		select login_id as loginId , role from member where login_id = #{loginId} and pwd = #{pwd}
 	</select>
 	<delete id="apiMemberDelete" parameterType="Map">
 		delete from member where login_id = #{loginId} and pwd = #{pwd}

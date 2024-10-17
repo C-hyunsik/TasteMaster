@@ -50,4 +50,9 @@ public class ChefServiceImpl implements ChefService {
 		chefDAO.apiUploadChef(chef);
 		
 	}
+
+	@Override
+	public int apiChefIdByName(String chefName) {
+		 return chefDAO.apiChefIdByName(chefName);
+	}
 }

@@ -24,5 +24,7 @@ public interface ChefService {
 	
 	//쉐프 등록
 	public void apiUploadChef(ChefDTO chef);
+
+	public int apiChefIdByName(String chefName);
 	
 }

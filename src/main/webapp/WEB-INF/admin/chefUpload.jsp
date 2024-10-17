@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Chef Upload</title>
-<link rel="stylesheet" href="./css/index.css">
+<link rel="stylesheet" href="../css/index.css">
 <style>
     /* 테이블 스타일 */
     table {
@@ -63,9 +63,8 @@
 
     /* 작은 이미지 버튼을 위한 스타일 */
     .add-dish-image {
-        position: absolute;
-        bottom: 5px; /* 네모박스 아래 */
-        right: 5px; /* 네모박스 오른쪽 */
+        margin-top: 5px; /* 네모박스 아래 간격 */
+        cursor: pointer;
     }
 </style>
 </head>
@@ -121,7 +120,7 @@
 
 <main>
     <h2>쉐프 등록</h2>
-    <form action="/TasteMasters/api/chef/upload" method="post" enctype="multipart/form-data">
+    <form id="chefForm" method="post">
         <table border="1">
             <tr>
                 <th>쉐프 이름</th>
@@ -134,7 +133,7 @@
                 <td>
                     <div class="dish-image-box" id="chefImgBox">
                         <span id="showChefImg"></span>
-                        <input type="file" name="chefimg" id="chefImg" class="dish-image-input" required>
+                        <input type="file" name="chefImg" id="chefImg" class="dish-image-input" required>
                     </div>
                 </td>
             </tr>
@@ -147,16 +146,18 @@
             <tr>
                 <th>요리 사진</th>
                 <td id="dishImageContainer">
-                    <div class="dish-image-box">
-                        <span class="showDishImg"></span>
-                        <input type="file" name="dishImg" class="dish-image-input dishImg">
-                        <img alt="요리사진 추가" src="../image/addImage.png" width="30" height="30" class="add-dish-image">
+                    <div class="dish-container" id="dishContainer">
+                        <div class="dish-image-box">
+                            <span class="showDishImg"></span>
+                            <input type="file" name="dishImg" class="dish-image-input dishImg" />
+                        </div>
                     </div>
+                    <img alt="요리사진 추가" src="../image/addImage.png" width="30" height="30" class="add-dish-image">
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="등록하기">
+                    <input type="button" value="등록하기" id="chefUploadBtn">
                     <input type="reset" value="취소">
                 </td>
             </tr>
@@ -172,25 +173,24 @@ $('#chefImgBox').on('click', function() {
     $('#chefImg').click(); // 파일 선택창 열기
 });
 
-// 요리 사진 추가 버튼 클릭 시 새로운 요리 입력란 및 이미지 박스 추가
+// 요리 사진 추가 버튼 클릭 시 새로운 요리 이름 입력란 및 이미지 박스 추가
 $(document).on('click', '.add-dish-image', function() {
-    var currentDishBox = $(this).parent(); // 현재 요리 박스
+    var dishContainer = $('#dishContainer'); // 요리 사진 컨테이너
 
-    // 새로운 요리 이름 입력란 및 요리 사진 업로드 박스 추가
-    if (!currentDishBox.next('.dish-container').length) { // 중복 방지
-        var newDishInput = `
-            <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요">
-        `;
-        var newDishImageBox = `
-            <div class="dish-image-box">
-                <span class="showDishImg"></span>
-                <input type="file" name="dishImg" class="dish-image-input dishImg">
-                <img alt="요리사진 추가" src="../image/addImage.png" width="30" height="30" class="add-dish-image">
-            </div>
-        `;
-        $('#dishNameContainer').append(newDishInput); // 요리 이름 추가
-        $('#dishImageContainer').append(newDishImageBox); // 요리 이미지 박스 추가
-    }
+    // 새로운 요리 이름 입력란 추가
+    var newDishInput = `
+        <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요" style="margin-right: 10px;">
+    `;
+    $('#dishNameContainer').append(newDishInput); // 요리 이름 추가
+
+    // 새로운 요리 사진 업로드 박스 추가
+    var newDishImageBox = `
+        <div class="dish-image-box">
+            <span class="showDishImg"></span>
+            <input type="file" name="dishImg" class="dish-image-input dishImg">
+        </div>
+    `;
+    dishContainer.append(newDishImageBox); // 네모박스 추가
 });
 
 // 쉐프 이미지 미리보기
