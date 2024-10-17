@@ -22,5 +22,5 @@ public class PostDTO {
     private String imageOriginalFileName;	// 원래 이미지 파일 이름
     private Date createdAt;					// 게시물 작성 시간
     private String createdAtToString;		// 작성 시간을 문자열로
-    private String name; 					//작성자 이름
+    private String name;					// 작성자 이름
 }

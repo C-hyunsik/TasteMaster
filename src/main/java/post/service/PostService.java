@@ -16,5 +16,9 @@ public interface PostService {
 
 	public List<PostDTO> getPostByChefId(int chefId);
 
+	public List<PostDTO> postInfo(int postId);
+
+	public void apiPostDelete(int postId);
+
 
 }

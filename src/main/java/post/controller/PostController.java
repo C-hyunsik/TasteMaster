@@ -1,7 +1,12 @@
 package post.controller;
 
+import java.util.Date;
+import java.util.List;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,19 +51,21 @@ public class PostController {
 		return "/post/dishPostList";
 	}
 	
-	@RequestMapping(value="/page/post/dishPostWrite", method = RequestMethod.GET)
-	public String dishPostList(@RequestParam(value = "dishId", required = false, defaultValue = "1") int dishId, Model model) {
-		model.addAttribute("dishId",dishId);
-		return "/post/dishPostWrite";
-	}
 	@RequestMapping(value="/api/post/postWrite")
 	public void apiPostPostWrite(@ModelAttribute PostDTO postDTO) {
 		postService.postWrite(postDTO);
 		System.out.println("D"+postDTO.getContent());
 	}
-	@RequestMapping(value="/page/post/dishpostwrite")
-	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model){
+	
+	@RequestMapping(value="/page/post/dishPostWrite")
+	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model, HttpSession httpsession, HttpServletResponse response) throws IOException{
 		model.addAttribute("dishId", dishId);
+		String loginId = (String) httpsession.getAttribute("loginId");
+		 if (loginId == null ) {
+	    	 response.sendRedirect("/TasteMasters/page/member/login"); // 메인 페이지로 리다이렉트
+	    	 return null; // 리다이렉트 후 메서드를 종료
+	    }
+		 
 		return "/post/dishPostWrite";
 	}
 	
@@ -97,5 +104,49 @@ public class PostController {
 
         // 결과 메시지 구성
         return "게시글 등록";
+    }
+    @RequestMapping(value = "/page/post/view")
+    public String pagePostView(@RequestParam int postId, @RequestParam int dishId, Model model) {
+    	List<PostDTO> postList = postService.postInfo(postId);
+    	
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
+
+        // 리스트에서 createdAt을 String으로 변환하여 set
+        for (PostDTO post : postList) {
+            Date createdAt = post.getCreatedAt();
+            if (createdAt != null) {
+                String formattedDate = formatter.format(createdAt);
+                post.setCreatedAtToString(formattedDate);
+            }
+      }
+        
+    	model.addAttribute("postList",postList);
+    	model.addAttribute("dishId",dishId);
+     
+    	return "/post/dishPostView";
+    }
+    
+    @RequestMapping(value = "/api/post/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public String apiPostDelete(@RequestParam("postId") int postId) {
+    	/*
+    	List<DishDTO> dishList = dishService.getDishByChefId(chefId);
+    	List<PostDTO> postList = postService.getPostByChefId(chefId);
+    	
+    	// 2. Naver Cloud에서 요리 및 게시물 이미지 삭제
+        for (DishDTO dish : dishList) {
+            if (dish.getImageFileName() != null) {
+                objectStorageService.deleteFile(bucketName, "storage/" , dish.getImageFileName());
+            }
+        }
+        for (PostDTO post : postList) {
+            if (post.getImageFileName() != null) {
+                objectStorageService.deleteFile(bucketName, "storage/" , post.getImageFileName());
+            }
+        }
+    	*/
+    	postService.apiPostDelete(postId);
+    	
+    	return "게시글이 삭제되었습니다.";
     }
 }

@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService {
 		map.put("endnum", endnum);
 		map.put("dishId", dishId);
 		List<PostDTO> list = postDAO.dishPostList(map);
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
 
         // 리스트에서 createdAt을 String으로 변환하여 set
         for (PostDTO post : list) {
@@ -70,5 +70,18 @@ public class PostServiceImpl implements PostService {
 	public List<PostDTO> getPostByChefId(int chefId) {
 		List<PostDTO> postList = postDAO.getPostByChefId(chefId);
 		return postList;
+	}
+	@Override
+	public List<PostDTO> postInfo(int postId) {
+		
+
+
+		
+		return postDAO.postInfo(postId);
+	}
+
+	@Override
+	public void apiPostDelete(int postId) {
+		postDAO.apiPostDelete(postId);
 	}
 }

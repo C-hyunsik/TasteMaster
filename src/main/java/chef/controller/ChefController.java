@@ -24,7 +24,6 @@ import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
-import post.service.PostService;
 
 @Controller
 public class ChefController {
@@ -33,8 +32,7 @@ public class ChefController {
     private ChefService chefService;
     @Autowired
     private DishService dishService;
-    @Autowired
-    private PostService postService;
+
 
 
     @Autowired
@@ -151,8 +149,8 @@ public class ChefController {
         return "셰프와 요리 정보가 성공적으로 업로드되었습니다.";
     }
 
-    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
-
+    @RequestMapping(value = "/api/chef/delete", method = RequestMethod.GET, produces = "text/plain; charset=UTF-8")
+    @ResponseBody
     public String apiChefDelete(@RequestParam("chefId") int chefId) {
     	/*
     	List<DishDTO> dishList = dishService.getDishByChefId(chefId);
