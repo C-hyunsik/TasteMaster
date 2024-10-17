@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: gustlr
+=======
+Built-By: ￬ﾠﾕ￪ﾱﾴ￬ﾚﾰ
+>>>>>>> 4997ace7ed38ebddf7fde2e1f9c8c91b088d9580
 Build-Jdk: 11.0.24
 Created-By: Maven Integration for Eclipse
 

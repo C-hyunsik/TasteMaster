@@ -31,5 +31,6 @@ public class MainController {
 		model.addAttribute("loginId", loginId);//jsp에 띄우기
 		return "/index"; // 파일경로
 	}
+
 	
 }

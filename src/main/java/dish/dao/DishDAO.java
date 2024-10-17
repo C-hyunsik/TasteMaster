@@ -13,5 +13,7 @@ public interface DishDAO {
 
 	void uploadDishes(List<DishDTO> dishList);
 
+	List<DishDTO> apiDishList(String chefId);
+
 	
 }
