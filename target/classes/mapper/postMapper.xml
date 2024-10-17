@@ -8,15 +8,25 @@
 	<select id="getTotalA" resultType="Integer">
 		select count(*) from post
 	</select>
+	
 	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
 		select * from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
 	</select>
 	
+
 	<insert id="apiUploadPost" parameterType="post.bean.PostDTO">
         INSERT INTO post 
         (title, content, dish_id, member_id, image_fileName, image_original_fileName) 
         VALUES 
         (#{title}, #{content}, #{dishId}, #{memberId}, #{imageFileName}, #{imageOriginalFileName});
     </insert>
+
+
+	<select id="getPostByChefId" parameterType="Integer" resultType="java.util.List">
+		select post_id, dish_id, user_id, title, content, image_fileName, image_original_fileName, 
+				created_at
+		from post
+		where chef_id = #{chefId}
+	</select>
 
 </mapper>

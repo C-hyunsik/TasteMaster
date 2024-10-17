@@ -17,7 +17,11 @@ public interface PostDAO {
 	
 	public List<PostDTO> dishPostList(Map<String, Integer> map);
 
+
 	public void apiUploadPost(PostDTO post);
+
+	public List<PostDTO> getPostByChefId(int chefId);
+
 
 	
 }
