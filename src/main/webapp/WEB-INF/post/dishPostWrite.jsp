@@ -223,6 +223,7 @@ button:hover {
             </div>
             <div class="form-group">
                 <label for="image">사진 첨부:</label>
+                <span id="showImg"></span>
                 <input type="file" id="image" name="image">
             </div>
             <div class="button-group">
@@ -245,17 +246,36 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// 이미지 미리보기
+$('#image').change(function(){
+    $('#showImg').empty(); // 기존 이미지 제거
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var img = document.createElement('img');
+        img.src = e.target.result;
+        img.width = 100;  // 이미지 크기 조정
+        img.height = 100;
+        $('#showImg').append(img);
+    }
+    reader.readAsDataURL(this.files[0]);
+});
 
 $(function(){
     $('#postBtn').click(function(){
         let formData = new FormData($('#postForm')[0]);
-        
+        const queryString = window.location.search;
+
+	     // URLSearchParams 객체 생성
+	     const urlParams = new URLSearchParams(queryString);
+	
+	     // 파라미터 예: ?pg=2&name=john
+	     const dishId = urlParams.get('dishId');    
         $.ajax({
             type: 'post',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            url: '/TasteMasters/api/post/upload',
+            url: '/TasteMasters/api/post/upload?dishId='+dishId,
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");

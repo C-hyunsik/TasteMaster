@@ -334,7 +334,7 @@ button:hover {
                 ${map2.postPaging.pagingHTML }
             </div>
             <div class="button-group">
-                <button onclick="location.href='/TasteMasters/page/post/dishpostwrite'">글쓰기</button>
+                <button onclick="location.href='/TasteMasters/page/post/dishpostwrite?dishId='+${dishId}">글쓰기</button>
                 <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
             </div>
         </div>

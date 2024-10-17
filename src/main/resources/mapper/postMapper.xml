@@ -11,4 +11,12 @@
 	<select id="dishPostList" parameterType="Map" resultType="post.bean.PostDTO">
 		select * from post where dish_id = #{dishId} limit #{startnum}, #{endnum}
 	</select>
+	
+	<insert id="apiUploadPost" parameterType="post.bean.PostDTO">
+        INSERT INTO post 
+        (title, content, dish_id, member_id, image_fileName, image_original_fileName) 
+        VALUES 
+        (#{title}, #{content}, #{dishId}, #{memberId}, #{imageFileName}, #{imageOriginalFileName});
+    </insert>
+
 </mapper>

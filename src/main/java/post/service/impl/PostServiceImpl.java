@@ -44,5 +44,11 @@ public class PostServiceImpl implements PostService {
 		map2.put("pg",pg);
 		return map2;
 	}
+
+	@Override
+	public void apiUploadPost(PostDTO post) {
+		postDAO.apiUploadPost(post);
+		
+	}
 	
 }
