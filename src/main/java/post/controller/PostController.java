@@ -1,10 +1,7 @@
 package post.controller;
 
-<<<<<<< HEAD
 import java.util.List;
-=======
 import java.io.IOException;
->>>>>>> 028fef8a2e3bfb6cd04f0621673e8ff324de4fcc
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
