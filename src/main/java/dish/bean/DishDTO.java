@@ -18,6 +18,6 @@ public class DishDTO {
     private String imageOriginalFileName;   // 이미지의 원래 파일 이름
     private int deliciousCount;             // '맛있어요' 평가 개수
     private int makeEasyCount;              // '만들기 간단해요' 평가 개수
-    private String dishContent;
+    private String dishContent;            // 요리 설명
 
 }

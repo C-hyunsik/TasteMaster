@@ -70,9 +70,14 @@
 </head>
 <body>
 	<header>
+         <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
@@ -140,6 +145,14 @@
                     <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요">
                 </td>
             </tr>
+            
+            <tr>
+            	<th>요리 설명</th>
+            	<td id="dishContentContainer">
+            		<textarea name="dishContent" rows="5" cols="30"></textarea>
+            	</td>
+            </tr>
+            
             <tr>
                 <th>요리 사진</th>
                 <td id="dishImageContainer">
@@ -166,19 +179,22 @@
 <script type="text/javascript" src="../js/chefUpload.js"></script>
 <script type="text/javascript">
 // 박스 클릭 시 파일 선택 창 열기
-$('#chefImgBox').on('click', function() {
-    $('#chefImg').click(); // 파일 선택창 열기
-});
-
-// 요리 사진 추가 버튼 클릭 시 새로운 요리 이름 입력란 및 이미지 박스 추가
+// 요리 사진 추가 버튼 클릭 시 새로운 요리 이름 입력란, 요리 설명, 및 이미지 박스 추가
 $(document).on('click', '.add-dish-image', function() {
     var dishContainer = $('#dishContainer'); // 요리 사진 컨테이너
+    var dishContentContainer = $('#dishContentContainer'); // 요리 설명 컨테이너
 
     // 새로운 요리 이름 입력란 추가
     var newDishInput = `
         <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요" style="margin-right: 10px;">
     `;
     $('#dishNameContainer').append(newDishInput); // 요리 이름 추가
+
+    // 새로운 요리 설명 입력란 추가
+    var newDishContent = `
+        <textarea name="dishContent" rows="5" cols="50" placeholder="요리 설명을 입력하세요"></textarea>
+    `;
+    dishContentContainer.append(newDishContent); // 요리 설명 추가
 
     // 새로운 요리 사진 업로드 박스 추가
     var newDishImageBox = `
