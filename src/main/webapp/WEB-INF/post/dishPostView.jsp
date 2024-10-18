@@ -274,13 +274,13 @@ textarea {
     <div class="comment-section">
         <h3>댓글 작성</h3>
         <button id="toggleCommentInput">댓글 작성</button>
-        <textarea id="commentInput" placeholder="댓글을 작성하세요..."></textarea>
+        <textarea id="commentInput" name = "content" placeholder="댓글을 작성하세요..."></textarea>
         <button id="submitComment" style="display: none;">댓글 작성</button>
         <h3>댓글 목록</h3>
         <div class="comments">
-            <c:forEach var="comment" items="${post.comments}">
+            <c:forEach var="comment" items="${commentList}">
                 <div class="comment">
-                    <div class="comment-meta">작성자: ${comment.memberId} | 작성일: ${comment.createdAt}</div>
+                    <div class="comment-meta">작성자: ${comment.name} | 작성일: ${comment.createdAtToString}</div>
                     <p>${comment.content}</p>
                 </div>
             </c:forEach>
@@ -312,11 +312,38 @@ document.addEventListener("DOMContentLoaded", function() {
     // 댓글 작성 버튼 클릭 시 처리
     submitComment.addEventListener('click', function() {
         // 댓글 작성 로직 추가 (AJAX 등을 사용할 수 있음)
-        alert('댓글이 작성되었습니다!'); // 예시 알림
-        commentInput.value = ''; // 입력란 초기화
-        commentInput.style.display = 'none'; // 입력란 숨기기
-        submitComment.style.display = 'none'; // 버튼 숨기기
-        toggleCommentInput.style.display = 'inline'; // 댓글 작성 버튼 다시 표시
+       
+        
+     const queryString = window.location.search;
+
+     // URLSearchParams 객체 생성
+     const urlParams = new URLSearchParams(queryString);
+
+     // 파라미터 예: ?pg=2&name=john
+     const postId = urlParams.get('postId');
+       $.ajax({
+            type: 'post',
+            url: '/TasteMasters/api/comment/enroll?postId='+postId,
+            data : {
+            	content : $('#commentInput').val()
+            },
+            success: function(data) {
+
+                alert('댓글이 작성되었습니다!'); // 예시 알림
+                location.reload();
+                /*
+                commentInput.value = ''; // 입력란 초기화
+                commentInput.style.display = 'none'; // 입력란 숨기기
+                submitComment.style.display = 'none'; // 버튼 숨기기
+                toggleCommentInput.style.display = 'inline'; // 댓글 작성 버튼 다시 표시
+                */
+            },
+            error: function(e) {
+                console.log(e);
+                alert("로그인 후 다시 시도해주세요.");
+            }
+        }); //ajax
+     
     });
 });
 
@@ -324,7 +351,7 @@ document.addEventListener("DOMContentLoaded", function() {
 $(function(){
     $('#deleteBtn').click(function(){
     	
-        const queryString = window.location.search;
+         const queryString = window.location.search;
 
 	     // URLSearchParams 객체 생성
 	     const urlParams = new URLSearchParams(queryString);

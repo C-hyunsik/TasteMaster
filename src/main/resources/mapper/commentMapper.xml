@@ -6,5 +6,16 @@
 <!-- <mapper namespace="memberSQL"> -->
 <mapper namespace="comment.dao.CommentDAO">
 
+	<insert id="apiCommentEnroll" parameterType="comment.bean.CommentDTO">
+		insert into comment(post_id, member_id, content) values(#{postId}, #{memberId}, #{content})
+	</insert>
 	
+	<select id="apiCommentList" parameterType="int" resultType="comment.bean.CommentDTO">
+		select C.comment_id as commentId , C.post_id as postId,
+		C.member_id as memberId , C.content , C.created_at as createdAt,
+		M.name as name
+		from comment as C, member as M where C.member_id = M.member_id and C.post_id = #{postId}
+		 order by commentId desc
+	</select>
+
 </mapper>

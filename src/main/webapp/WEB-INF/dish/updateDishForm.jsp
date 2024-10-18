@@ -115,13 +115,50 @@ nav.active {
 </head>
 <body>
     <header>
+        <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="셰프 검색">
+        </div>
+        
+        <div class="login">
+           <c:choose>
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
+                </c:when>
+               
+                <c:otherwise>
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
+                    <a href="/TasteMasters/page/member/join">회원 가입</a>
+                </c:otherwise>
+            </c:choose>
+          
+        </div>
+        
         <nav>
             <ul>
+     	   <c:if test="${sessionScope.role == 'ADMIN'}">
+	                 <li><a href="/TasteMasters/page/member/admin">관리자 페이지</a></li> 
+	       	  </c:if>
                 <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
-                <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </nav>
     </header>

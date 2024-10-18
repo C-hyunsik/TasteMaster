@@ -1,10 +1,15 @@
 package post.controller;
 
+<<<<<<< HEAD
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+=======
+>>>>>>> c4ea9c7d99ed96531b96bf0dbf01e28cbc855c82
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import comment.bean.CommentDTO;
+import comment.service.CommentService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
@@ -36,6 +43,9 @@ public class PostController {
 
 	@Autowired
 	private DishService dishService;
+
+	@Autowired
+	private CommentService commentService;
 	
     @Autowired
     private ObjectStorageService objectStorageService;
@@ -111,7 +121,7 @@ public class PostController {
     @RequestMapping(value = "/page/post/view")
     public String pagePostView(@RequestParam int postId, @RequestParam int dishId, Model model) {
     	List<PostDTO> postList = postService.postInfo(postId);
-    	
+    	List<CommentDTO> commentList = commentService.apiCommentList(postId);
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
 
         // 리스트에서 createdAt을 String으로 변환하여 set
@@ -121,11 +131,20 @@ public class PostController {
                 String formattedDate = formatter.format(createdAt);
                 post.setCreatedAtToString(formattedDate);
             }
+       }
+
+        // 리스트에서 createdAt을 String으로 변환하여 set
+        for (CommentDTO comment : commentList) {
+            Date createdAt = comment.getCreatedAt();
+            if (createdAt != null) {
+                String formattedDate = formatter.format(createdAt);
+                comment.setCreatedAtToString(formattedDate);
+            }
       }
         
     	model.addAttribute("postList",postList);
     	model.addAttribute("dishId",dishId);
-     
+    	model.addAttribute("commentList", commentList);
     	return "/post/dishPostView";
     }
     

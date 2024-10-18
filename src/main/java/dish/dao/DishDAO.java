@@ -26,5 +26,8 @@ public interface DishDAO {
 
 	public DishDTO getDishByDishId(int parseInt);
 
+
+	public void apiUpdateDish(DishDTO existingDish);
+
 	
 }

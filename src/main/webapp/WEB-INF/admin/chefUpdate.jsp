@@ -164,6 +164,33 @@ nav.active {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* 수정된 음식 테이블 가로와 세로 길이 */
+.chef-list-table {
+    width: 100%; /* 테이블 전체 가로 길이 */
+    border-collapse: collapse;
+}
+
+.chef-list-table td {
+    padding: 20px; /* 셀 내부의 패딩을 추가해 세로 길이를 늘림 */
+    border-bottom: 1px solid #ccc;
+}
+
+.chef-list-table th {
+    padding: 10px; /* 칼럼명 패딩 */
+    font-size: 14px; /* 칼럼명 크기 줄이기 */
+    text-align: center; /* 칼럼명 가운데 정렬 */
+}
+
+/* textarea의 세로 길이 더 길게 설정 */
+.chef-list-table textarea {
+    width: 120%; /* 가로 길이를 120%로 설정 */
+    max-width: 400px; /* 최대 가로 길이 설정 */
+    height: 100px; /* 세로 길이 조정 */
+    padding: 10px;
+    font-size: 14px;
+    resize: none; /* 사용자가 세로 길이를 조절하지 못하도록 설정 */
+}
+
 @media (max-width: 768px) {
     .table-container {
         flex-direction: column; /* 모바일에서 세로 방향으로 정렬 */
@@ -186,25 +213,27 @@ nav.active {
         width: 100%; /* 모바일에서는 카드 크기 조정 */
     }
     
-.button-container {
+    .button-container {
         display: flex;
         justify-content: center; /* 버튼을 수평 중앙 정렬 */
         margin-top: 10px; /* 이미지와 버튼 사이의 간격 조정 */
         width: 100%; /* 부모 요소의 너비를 100%로 설정 */
     }
 
-.button-container input {
+    .button-container input {
         padding: 10px; /* 버튼 내부 여백 조정 */
         border: 1px solid #ccc; /* 테두리 스타일 조정 */
         border-radius: 5px; /* 모서리 둥글게 */
         background-color: #fff; /* 배경색 */
         cursor: pointer; /* 커서 모양 변경 */
     }
-span {
-	font-size: 8px;
-}
+
+    span {
+        font-size: 8px;
+    }
 
 }
+
 </style>
 </head>
 <body>
@@ -293,27 +322,61 @@ span {
 		    </div>
         </form>
 
-        <div class="content-container">
-            <h2>음식 목록</h2>
-            <div id="post_cardWrap">
-                <section class="chef-list">
-				    <c:forEach var="dish" items="${dishList}">
-				        <div class="dish" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dish.dishId}" style="cursor:pointer;">
-				            <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}">
-				            <p>${dish.dishName}</p>
-				        </div>
-				      
-				            <input type="button" class="dishUpdateBtn" name="dishUpdateBtn" value="수정하기" 
-				            	onclick="location.href='/TasteMasters/page/dish/updateDishForm?dishId=${dish.dishId}'">
-				   
-				    </c:forEach>
-				</section>
 
-            </div>
-        </div>
-    </div>
+		<div class="content-container">
+		    <h2>음식 목록</h2>
+		    <div id="post_cardWrap">
+		        <table class="chef-list-table" style="width: 100%; border-collapse: collapse;">
+		            <thead>
+		                <tr style="background-color: #f0f0f0; text-align: left;">
+		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">사진</th>
+		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">이름</th>
+		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">설명</th>
+		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">수정하기</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+    <c:forEach var="dish" items="${dishList}">
+        <input type="hidden" value="${chefInfo.chefId }"/>
+        <tr>
+            <!-- 사진 -->
+            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+                <div class="dishImgWrap" data-dishid="${dish.dishId}" style="cursor: pointer;">
+                    <img id="dishImg_${dish.dishId}" src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}" style="width: 100px; height: auto; border-radius: 5px;">
+                    <input type="file" id="dishFileInput_${dish.dishId}" name="dishImageUpdateBtn"  data-dishid="${dish.dishId}">
+                
+                </div>
+            </td>
+            
+            <!-- 이름 -->
+            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+                <input type="text" name="dishName" value="${dish.dishName}" data-dishid="${dish.dishId}">
+            </td>
+            
+            <!-- 설명 -->
+            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+                <textarea data-dishid="${dish.dishId}">
+                    ${dish.dishContent}
+                </textarea>
+            </td>
+            
+            <!-- 수정하기 버튼 -->
+            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
+                <input type="button" class="dishUpdateBtn" data-dishid="${dish.dishId}" value="수정하기">
+            </td>
+        </tr>
+    </c:forEach>
+</tbody>
+
+		
+		        </table>
+		    </div>
+		</div>
+	</div>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 <script type="text/javascript" src="../js/chefImgUpdate.js"></script>
+<script type="text/javascript" src="../js/dishUpdate.js"></script>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         var menuIcon = document.querySelector('.menu-icon');
@@ -339,11 +402,28 @@ span {
         reader.onload = function(e) {
             var img = document.createElement('img');
             img.src = e.target.result;
-            img.width = 100;  // 이미지 크기 조정
-            img.height = 100;
+
             $('#imgWrap').append(img);
         }
         reader.readAsDataURL(this.files[0]);
+    });
+ 
+ // 음식 사진 클릭 시 파일 선택창 열기
+    $('.dishImgWrap').click(function() {
+        var dishId = $(this).data('dishid'); // 현재 음식의 ID 가져오기
+        $('#dishFileInput_' + dishId).click(); // 해당 음식의 파일 입력 요소 클릭
+    });
+
+    // 음식 사진 미리보기
+    $('input[type="file"]').change(function(){
+        var dishId = $(this).data('dishid'); // 음식 ID 가져오기
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            $('#dishImg_' + dishId).attr('src', e.target.result); // 미리보기 이미지 업데이트
+        }
+        
+        reader.readAsDataURL(this.files[0]); // 파일 읽기
     });
     
 </script>
