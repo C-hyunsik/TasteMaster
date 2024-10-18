@@ -68,8 +68,9 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/page/post/dishPostWrite")
-	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model, HttpSession httpsession, HttpServletResponse response) throws IOException{
+	public String pagePostDishPostWrite(@RequestParam int dishId, @RequestParam int chefId,  Model model, HttpSession httpsession, HttpServletResponse response) throws IOException{
 		model.addAttribute("dishId", dishId);
+		model.addAttribute("chefId", chefId);
 		String loginId = (String) httpsession.getAttribute("loginId");
 		 if (loginId == null ) {
 	    	 response.sendRedirect("/TasteMasters/page/member/login"); // 메인 페이지로 리다이렉트
@@ -115,7 +116,7 @@ public class PostController {
         return "게시글 등록";
     }
     @RequestMapping(value = "/page/post/view")
-    public String pagePostView(@RequestParam int postId, @RequestParam int dishId, Model model) {
+    public String pagePostView(@RequestParam int postId, @RequestParam int dishId, @RequestParam int chefId, Model model) {
     	List<PostDTO> postList = postService.postInfo(postId);
     	List<CommentDTO> commentList = commentService.apiCommentList(postId);
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
@@ -140,6 +141,7 @@ public class PostController {
         
     	model.addAttribute("postList",postList);
     	model.addAttribute("dishId",dishId);
+    	model.addAttribute("chefId",chefId);
     	model.addAttribute("commentList", commentList);
     	return "/post/dishPostView";
     }

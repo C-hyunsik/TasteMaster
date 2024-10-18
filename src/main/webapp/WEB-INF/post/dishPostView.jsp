@@ -262,11 +262,11 @@ textarea {
 				<c:when test="${sessionScope.memberId == postList[0].memberId || sessionScope.role == 'ADMIN' }">
 					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>
 					<button id = "deleteBtn">글 삭제</button>
-					<button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
+					<button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:when>
 	             
 				<c:otherwise>
-	                  <button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
+	                  <button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:otherwise>
 			</c:choose>
         </div>

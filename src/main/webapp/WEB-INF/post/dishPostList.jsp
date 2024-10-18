@@ -334,7 +334,7 @@ button:hover {
         <br><br><br>
             <div id="post_cardWrap">
                 <c:forEach var="list" items="${map2.list}">
-                    <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
+                    <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?chefId='+${chefId }+'&dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
                         <div class="post-title">${list.title }</div>
                         <div class="post-meta">글번호 : ${list.postId} | 작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
                     </div>
@@ -343,7 +343,7 @@ button:hover {
                 	${map2.postPaging.pagingHTML }
             	</div>
             	<div class="button-group">
-	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
+	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?chefId='+${chefId }+'&dishId='+${dishInfo.dishId}">글쓰기</button>
 	                <button onclick="location.href='/TasteMasters/page/dish/dishList?chefId='+${chefId}">목록</button>
 	         	</div>
             </div>
