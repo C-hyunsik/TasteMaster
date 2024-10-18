@@ -1,15 +1,11 @@
 package post.controller;
 
-<<<<<<< HEAD
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-=======
->>>>>>> c4ea9c7d99ed96531b96bf0dbf01e28cbc855c82
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;

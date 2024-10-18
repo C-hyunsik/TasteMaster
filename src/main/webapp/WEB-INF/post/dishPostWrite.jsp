@@ -235,6 +235,9 @@ button:hover {
 				<label for="content">내용:</label>
 			 <div id="editor"></div>
             </div>
+            <div class="form-group">
+            	<input type="file" name="image" id="image" style="visibility: hidden;"/>
+            </div>
             <div class="button-group">
                 <button type="button" id = "postBtn">작성하기</button>
                 <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId=${dishId}'">목록</button>
