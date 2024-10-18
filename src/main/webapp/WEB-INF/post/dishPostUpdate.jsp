@@ -240,9 +240,10 @@ button:hover {
             </div>
             <div class="button-group">
                 <button type="button" id = "postBtn">수정하기</button>
-                <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId=${dishId}'">목록</button>
+                <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId=${dishId}'">목록</button>
             </div>
             <input type="hidden" id="dishId" value="${dishId }"/>
+            <input type="hidden" id="chefId" value="${chefId }"/>
          </form>
         </div>
     </div>
@@ -289,12 +290,12 @@ $(function () {
         // Froala 에디터 내용 가져오기
         const content = editor.html.get(); 
         formData.append('content', content); // 'content'는 서버에서 받을 때 사용할 파라미터명
-        alert(content);
         
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const postId = urlParams.get('postId');
         dishId = $('#dishId').val();
+        chefId = $('#chefId').val();
 
         $.ajax({
             type: 'post',
@@ -305,7 +306,7 @@ $(function () {
             data: formData,
             success: function(data) {
                 alert("게시글이 수정되었습니다.");
-                location.href = "/TasteMasters/page/post/dishPostList?dishId=" + dishId; // 게시글 목록
+                location.href = "/TasteMasters/page/post/dishPostList?chefId=" + chefId + "&dishId=" + dishId; // 게시글 목록
             },
             error: function(e) {
                 console.log(e);

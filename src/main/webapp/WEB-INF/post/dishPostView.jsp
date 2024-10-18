@@ -260,7 +260,7 @@ textarea {
         <div class="button-group">
 	        <c:choose>
 				<c:when test="${sessionScope.memberId == postList[0].memberId || sessionScope.role == 'ADMIN' }">
-					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>
+					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?chefId='+${chefId }+'&dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>
 					<button id = "deleteBtn">글 삭제</button>
 					<button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:when>
@@ -359,12 +359,13 @@ $(function(){
 	
 	     // 파라미터 예: ?pg=2&name=john
 	     const postId = urlParams.get('postId');
+	     const chefId = urlParams.get('chefId');
         $.ajax({
             type: 'get',
             url: '/TasteMasters/api/post/delete?postId='+postId,
             success: function(data) {
                 alert("게시글이 삭제되었습니다.");
-                location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}
+                location.href='/TasteMasters/page/post/dishPostList?chefId='+chefId +'&dishId='+${dishId}
             },
             error: function(e) {
                 console.log(e);

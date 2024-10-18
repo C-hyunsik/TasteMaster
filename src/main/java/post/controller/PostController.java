@@ -197,10 +197,11 @@ public class PostController {
         }
     }
     @RequestMapping(value="page/post/dishPostUpdate")
-    public String dishPostUpdate(@RequestParam int postId, @RequestParam int dishId, Model model) {
+    public String dishPostUpdate(@RequestParam int postId, @RequestParam int dishId, @RequestParam int chefId, Model model) {
     	List<PostDTO> postList = postService.postInfo(postId);
     	model.addAttribute("postList", postList);
     	model.addAttribute("dishId", dishId);
+    	model.addAttribute("chefId", chefId);
     	return "/post/dishPostUpdate";
     }
     
