@@ -82,5 +82,15 @@ public class DishController {
 
         return "요리 정보가 성공적으로 업데이트되었습니다.";
     }
-
+    @RequestMapping(value="/api/dish/deliciousCount", method = RequestMethod.POST)
+    @ResponseBody
+    public void apiDishDeliciousCount(@RequestParam("dishId") int dishId) {
+    	dishService.apiDishDeliciousCount(dishId);
+    }
+    
+    @RequestMapping(value="/api/dish/easyCount", method = RequestMethod.POST)
+    @ResponseBody
+    public void apiDishEasyCount(@RequestParam("dishId") int dishId) {
+    	dishService.apiDishEasyCount(dishId);
+    }
 }

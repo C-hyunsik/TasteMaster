@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
 $(function(){
 	document.getElementById('searchBtn').addEventListener('click', function() {
 	    var keyword = document.getElementById('keyword').value;

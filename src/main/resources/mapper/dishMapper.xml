@@ -54,12 +54,18 @@
 	</select>
   
    <update id="apiUpdateDish" parameterType="dish.bean.DishDTO">
-    UPDATE dish
-    SET 
-        dish_name = #{dishName},
-        dish_content = #{dishContent},
-        image_fileName = #{imageFileName},
-        image_original_fileName = #{imageOriginalFileName}
-    WHERE dish_id = #{dishId}
-</update>
+	    UPDATE dish
+	    SET 
+	        dish_name = #{dishName},
+	        dish_content = #{dishContent},
+	        image_fileName = #{imageFileName},
+	        image_original_fileName = #{imageOriginalFileName}
+	    WHERE dish_id = #{dishId}
+	</update>
+	<update id="apiDishDeliciousCount" parameterType="Integer">
+		update dish set delicious_count = delicious_count + 1 where dish_id = #{dishId}
+	</update>
+	<update id="apiDishEasyCount" parameterType="Integer">
+		update dish set makeEasy_count = makeEasy_count + 1 where dish_id = #{dishId}
+	</update>
 </mapper>

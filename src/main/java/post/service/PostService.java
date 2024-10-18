@@ -20,5 +20,7 @@ public interface PostService {
 
 	public void apiPostDelete(int postId);
 
+	public void apiUpdatePost(PostDTO post);
+
 
 }

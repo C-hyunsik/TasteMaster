@@ -5,188 +5,180 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>글 상세보기</title>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글 상세보기</title>
+<style type="text/css">
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: white;
-            color: black;
-            height: auto; /* 높이 자동 조정 */
-        }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: white;
+    color: black;
+    height: auto; /* 높이 자동 조정 */
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: black;
-            padding: 10px;
-            color: white;
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 10px;
+    color: white;
+}
 
-        .menu-icon {
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1001;
-            position: relative;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-        }
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    position: relative;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+}
 
-        nav {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 250px;
-            height: 100vh;
-            background-color: black;
-            color: white;
-            transition: 0.3s ease;
-            z-index: 1000;
-        }
+nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: black;
+    color: white;
+    transition: 0.3s ease;
+    z-index: 1000;
+}
 
-        nav ul {
-            list-style-type: none;
-            padding: 50px 10px;
-        }
+nav ul {
+    list-style-type: none;
+    padding: 50px 10px;
+}
 
-        nav ul li {
-            margin: 20px 0;
-        }
+nav ul li {
+    margin: 20px 0;
+}
 
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-        }
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
 
-        nav.active {
-            left: 0;
-        }
+nav.active {
+    left: 0;
+}
 
-        .login a {
-            color: white;
-            text-decoration: none;
-        }
+.login a {
+    color: white;
+    text-decoration: none;
+}
 
-        .search-bar {
-            margin-left: 3%;
-            width: 60%;
-        }
+.search-bar {
+    margin-left: 3%;
+    width: 60%;
+}
 
-        .search-bar input {
-            padding: 5px;
-            width: 100%;
-        }
+.search-bar input {
+    padding: 5px;
+    width: 100%;
+}
 
-        .content-container {
-            width: 60%; /* 검색창과 동일한 너비 */
-            margin: 20px auto; /* 중앙 정렬 */
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 5px; /* 모서리 둥글게 */
-        }
+.content-container {
+    width: 60%; /* 검색창과 동일한 너비 */
+    margin: 20px auto; /* 중앙 정렬 */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px; /* 모서리 둥글게 */
+}
 
-        .image-container {
-            width: 100%; /* 이미지 너비 조정 */
-            display: flex;
-            justify-content: flex-start; /* 왼쪽 정렬 */
-            margin: 20px 0; /* 이미지와 내용 간 여백 */
-        }
+.post-content {
+    margin: 20px 0; /* 내용과 댓글 간 여백 */
+}
 
-        .image-container img {
-            width: 30%; /* 이미지 크기 조정 */
-            border-radius: 5px;
-        }
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
-        .post-content {
-            margin: 20px 0; /* 내용과 댓글 간 여백 */
-        }
+button {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
 
-        .button-group {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
+button:hover {
+    background-color: #333;
+}
 
-        button {
-            padding: 10px 20px;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 10px;
-        }
+.comment-section {
+    margin: 0 auto;
+    width: 60%; /* 부모 요소와 동일한 너비 */
+}
 
-        button:hover {
-            background-color: #333;
-        }
+textarea {
+    width: 90%;
+    height: 100px;
+    margin: 10px auto; /* 댓글 입력란과 버튼 간 여백 */
+    display: none; /* 기본적으로 숨김 */
+}
 
-        .comment-section {
-            margin: 0 auto;
-            width: 60%; /* 부모 요소와 동일한 너비 */
-        }
+.comments {
+    margin-top: 20px; /* 댓글 목록과 작성란 간 여백 */
+}
 
-        textarea {
-            width: 90%;
-            height: 100px;
-            margin: 10px auto; /* 댓글 입력란과 버튼 간 여백 */
-            display: none; /* 기본적으로 숨김 */
-        }
+.comment {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px; /* 각 댓글 간 여백 */
+}
 
-        .comments {
-            margin-top: 20px; /* 댓글 목록과 작성란 간 여백 */
-        }
+.comment-meta {
+    font-size: 14px;
+    color: #666; /* 작성자 및 날짜 색상 */
+}
+#editorWrap {
+	width:90%;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    margin: 0 auto; 
+}
+/* 모바일 화면에서 버튼을 세로로 정렬 */
+@media (max-width: 768px) {
+    .button-group {
+        flex-direction: column; /* 세로 방향으로 정렬 */
+        align-items: center; /* 중앙 정렬 */
+    }
 
-        .comment {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px; /* 각 댓글 간 여백 */
-        }
+    button {
+        margin: 5px 0; /* 상하 여백 추가 */
+        width: 100%; /* 버튼 너비를 100%로 */
+    }
 
-        .comment-meta {
-            font-size: 14px;
-            color: #666; /* 작성자 및 날짜 색상 */
-        }
+    .content-container {
+        width: 90%; /* 모바일 화면에서 약간 넓게 */
+    }
+    .comment-section {
+        margin: 0 auto;
+        width: 90%; /* 부모 요소와 동일한 너비 */
+    }
 
-        /* 모바일 화면에서 버튼을 세로로 정렬 */
-        @media (max-width: 768px) {
-            .button-group {
-                flex-direction: column; /* 세로 방향으로 정렬 */
-                align-items: center; /* 중앙 정렬 */
-            }
-
-            button {
-                margin: 5px 0; /* 상하 여백 추가 */
-                width: 100%; /* 버튼 너비를 100%로 */
-            }
-
-            .content-container {
-                width: 90%; /* 모바일 화면에서 약간 넓게 */
-            }
-            .comment-section {
-                margin: 0 auto;
-                width: 90%; /* 부모 요소와 동일한 너비 */
-            }
-
-            textarea {
-                width: 100%;
-                height: 100px;
-                margin: 10px auto; /* 댓글 입력란과 버튼 간 여백 */
-                display: none; /* 기본적으로 숨김 */
-            }
-        }
-    </style>
+    textarea {
+        width: 100%;
+        height: 100px;
+        margin: 10px auto; /* 댓글 입력란과 버튼 간 여백 */
+        display: none; /* 기본적으로 숨김 */
+    }
+}
+</style>
 </head>
 <body>
     <header>
@@ -199,23 +191,49 @@
         </div>
         
         <div class="search-bar">
-            <input type="text" placeholder="셰프 검색">
+            <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-        
+
+		<div>
+		  <input type="button" id="searchBtn" value="검색">
+		</div>  
+
         <div class="login">
            <c:choose>
-                <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |<br>
-                    <a href="/TasteMasters/api/member/logout">로그아웃</a> 
+ 				<c:when test="${not empty sessionScope.loginId}">
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
+                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
+               
                 <c:otherwise>
                     <a href="/TasteMasters/page/member/login">로그인</a> | 
                     <a href="/TasteMasters/page/member/join">회원 가입</a>
                 </c:otherwise>
             </c:choose>
+          
         </div>
+        
+    
+        <nav>
+            <ul>
+     	   <c:if test="${sessionScope.role == 'ADMIN'}">
+	                 <li><a href="/TasteMasters/page/member/admin">관리자 페이지</a></li> 
+	       	  </c:if>
+                <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.loginId}">
+                        <li><a href="/TasteMasters/page/member/mypage">마이페이지</a></li>
+                        <li><a href="/TasteMasters/api/member/logout">로그아웃</a> </li>
+                    </c:when>
+          
+                    <c:otherwise>
+                        <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </nav>
     </header>
-
     <nav>
         <ul>
             <li><a href="/TasteMasters/page/index">셰프 목록</a></li>
@@ -235,23 +253,22 @@
     <div class="content-container">
         <h2>${postList[0].title}</h2> <!-- 제목 -->
         <div class="post-meta">글 번호: ${postList[0].postId} | 작성자: ${postList[0].name} | 작성일: ${postList[0].createdAtToString}</div>
-        <div class="image-container">
-            <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${postList[0].imageFileName}" alt="${postList[0].imageOriginalFileName}">
-        </div>
         <div class="post-content">
             <h3>내용 부문</h3>
-            <p>${postList[0].content}</p>
+            <div id="editorWrap">
+            	<pre>${postList[0].content}</pre>
+            </div>
         </div>
         <div class="button-group">
 	        <c:choose>
-				<c:when test="${sessionScope.memberId == postList[0].memberId || sesstionScope.role == 'ADMIN' }">
-					<button onclick="location.href='/TasteMasters/page/post/postUpdate?postId=${postList[0].postId}'">글 수정</button>
+				<c:when test="${sessionScope.memberId == postList[0].memberId || sessionScope.role == 'ADMIN' }">
+					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?chefId='+${chefId }+'&dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>
 					<button id = "deleteBtn">글 삭제</button>
-					<button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
+					<button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:when>
 	             
 				<c:otherwise>
-	                  <button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
+	                  <button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:otherwise>
 			</c:choose>
         </div>
@@ -358,6 +375,7 @@ $(function(){
 	
 	     // 파라미터 예: ?pg=2&name=john
 	     const postId = urlParams.get('postId');
+	     const chefId = urlParams.get('chefId');
 	     
 	     var confirm = confirm('글을 삭제하시겠습니까?');
 	     
@@ -367,7 +385,7 @@ $(function(){
 	             url: '/TasteMasters/api/post/delete?postId='+postId,
 	             success: function(data) {
 	                 alert("게시글이 삭제되었습니다.");
-	                 location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}
+	                 location.href='/TasteMasters/page/post/dishPostList?chefId='+chefId +'&dishId='+${dishId}
 	             },
 	             error: function(e) {
 	                 console.log(e);
@@ -378,8 +396,32 @@ $(function(){
     });
 });
 
+$(function(){
+	document.getElementById('searchBtn').addEventListener('click', function() {
+	    var keyword = document.getElementById('keyword').value;
 
+	    if (keyword.trim() === '') {
+	        alert('검색어를 입력하세요.');
+	        return;
+	    }
 
+	    // AJAX 요청
+	    $.ajax({
+	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
+	        type: 'GET',
+	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+	        success: function(response) {
+	            // 검색 결과에 따라 페이지 이동
+	            // 예: 검색 결과 페이지로 리디렉션
+	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+	        },
+	        error: function() {
+	            alert('검색에 실패했습니다.');
+	        }
+	    });
+	});
+
+});
 </script>
 </body>
 </html>

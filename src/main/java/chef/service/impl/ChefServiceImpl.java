@@ -61,4 +61,9 @@ public class ChefServiceImpl implements ChefService {
 		chefDAO.apiupdateChefImageFileName(params);
 		
 	}
+
+	@Override
+	public List<ChefDTO> apiChefSearch(String keyword) {
+		return chefDAO.apiChefSearch(keyword);
+	}
 }

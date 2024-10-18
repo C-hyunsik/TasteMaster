@@ -158,6 +158,19 @@ nav.active {
     color: #444;
     background-color: #f0f0f0;
 }
+.countWrap {
+    display: flex; /* 플렉스 박스를 사용하여 정렬 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-top: 10px; /* 위쪽 여백 추가 */
+}
+
+.countWrap img {
+    margin-left: 5px; /* 아이콘과 숫자 간 간격 */
+    margin-right: 5px; /* 아이콘 사이 간격 */
+    width:45px;
+	height: 45px;
+}
 
 .dish:hover {
     transform: translateY(-5px);
@@ -190,6 +203,7 @@ nav.active {
 </head>
 <body>
     <header>
+        
         <div class="logo">
         	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
@@ -199,10 +213,11 @@ nav.active {
         </div>
         
         <div class="search-bar">
-            <input type="text" placeholder="셰프 검색">
+            <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-        
-
+		<div>
+		  <input type="button" id="searchBtn" value="검색">
+		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -270,25 +285,90 @@ nav.active {
             <div id="post_cardWrap">
                 <section class="chef-list">
 					<c:forEach var="dish" items="${dishList}">
-						<div class="dish" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dish.dishId}" style="cursor:pointer;">
+					<div>
+						<div class="dish" onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefInfo.chefId }+'&dishId='+${dish.dishId}" style="cursor:pointer;">
 							<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}">
 							<p>${dish.dishName}</p>
 						</div>
+						<div class="countWrap">
+							<img src="../image/tasty.png" alt="tasty" style="cursor:pointer;"/> : <span>${dish.deliciousCount }</span>
+							<img src="../image/easy.jpg" alt="easy" style="cursor:pointer;"/> : <span>${dish.makeEasyCount }</span>
+							<input type="hidden" id="dishId" value="${dish.dishId}"/>
+						</div>
+					</div>
 					</c:forEach>
                 </section>
             </div>
         </div>
     </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
-    // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
-    document.addEventListener("DOMContentLoaded", function() {
-        var menuIcon = document.querySelector('.menu-icon');
-        var navMenu = document.querySelector('nav');
+// 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
+document.addEventListener("DOMContentLoaded", function() {
+    var menuIcon = document.querySelector('.menu-icon');
+    var navMenu = document.querySelector('nav');
 
-        menuIcon.addEventListener('click', function() {
-            navMenu.classList.toggle('active'); // 메뉴 보이기/숨기기
-        });
+    menuIcon.addEventListener('click', function() {
+        navMenu.classList.toggle('active'); // 메뉴 보이기/숨기기
     });
+});
+$('.countWrap img[alt="tasty"]').click(function() {
+    // 부모 요소에서 hidden input을 찾아 dishId 가져오기
+    var dishId = $(this).closest('div').find('input[type="hidden"]').val();
+    $.ajax({
+        type: 'post',
+        url: '/TasteMasters/api/dish/deliciousCount',
+        data: {'dishId': dishId},
+        success: function() {
+            window.location.reload();
+        },
+        error: function(e) {
+            console.log('오류:', e);
+        }
+    });
+});
+$('.countWrap img[alt="easy"]').click(function() {
+    // 부모 요소에서 hidden input을 찾아 dishId 가져오기
+    var dishId = $(this).closest('div').find('input[type="hidden"]').val();
+    $.ajax({
+        type: 'post',
+        url: '/TasteMasters/api/dish/easyCount',
+        data: {'dishId': dishId},
+        success: function() {
+            window.location.reload();
+        },
+        error: function(e) {
+            console.log('오류:', e);
+        }
+    });
+});
+    
+$(function(){
+	document.getElementById('searchBtn').addEventListener('click', function() {
+	    var keyword = document.getElementById('keyword').value;
+
+	    if (keyword.trim() === '') {
+	        alert('검색어를 입력하세요.');
+	        return;
+	    }
+
+	    // AJAX 요청
+	    $.ajax({
+	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
+	        type: 'GET',
+	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+	        success: function(response) {
+	            // 검색 결과에 따라 페이지 이동
+	            // 예: 검색 결과 페이지로 리디렉션
+	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+	        },
+	        error: function() {
+	            alert('검색에 실패했습니다.');
+	        }
+	    });
+	});
+
+});
 </script>
 </body>
 </html>

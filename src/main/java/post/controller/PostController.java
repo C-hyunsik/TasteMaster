@@ -1,15 +1,19 @@
 package post.controller;
 
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,13 +50,14 @@ public class PostController {
     
 	
 	@RequestMapping(value="/page/post/dishPostList", method = RequestMethod.GET)
-	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam(defaultValue = "1") int dishId,  Model model) {
+	public String pagePostDishPostList(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam int dishId, @RequestParam int chefId,  Model model) {
 		Map<String, Object> map2 = postService.dishPostList(pg, dishId);
 		DishDTO dishInfo = dishService.apiDishInfo(dishId);
 		model.addAttribute("map2",map2);
 		model.addAttribute("dishInfo",dishInfo);
 		model.addAttribute("pg",pg);
 		model.addAttribute("dishId", dishId);
+		model.addAttribute("chefId", chefId);
 		return "/post/dishPostList";
 	}
 	
@@ -63,8 +68,9 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/page/post/dishPostWrite")
-	public String pagePostDishPostWrite(@RequestParam(defaultValue = "1") int dishId,  Model model, HttpSession httpsession, HttpServletResponse response) throws IOException{
+	public String pagePostDishPostWrite(@RequestParam int dishId, @RequestParam int chefId,  Model model, HttpSession httpsession, HttpServletResponse response) throws IOException{
 		model.addAttribute("dishId", dishId);
+		model.addAttribute("chefId", chefId);
 		String loginId = (String) httpsession.getAttribute("loginId");
 		 if (loginId == null ) {
 	    	 response.sendRedirect("/TasteMasters/page/member/login"); // 메인 페이지로 리다이렉트
@@ -75,7 +81,6 @@ public class PostController {
 	}
 	
 	
-	 // 쉐프와 요리를 업로드하는 메서드
     @RequestMapping(value = "/api/post/upload", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
     @ResponseBody
     public String uploadChefAndDishes(@RequestParam String title,
@@ -111,10 +116,8 @@ public class PostController {
         return "게시글 등록";
     }
     @RequestMapping(value = "/page/post/view")
-    public String pagePostView(@RequestParam int postId,
-    							@RequestParam int dishId,
-    							@RequestParam(required = false, defaultValue = "1") String pg, 
-    							Model model) {
+
+    public String pagePostView(@RequestParam int postId, @RequestParam int dishId, @RequestParam int chefId, Model model) {
     	List<PostDTO> postList = postService.postInfo(postId);
     	List<CommentDTO> commentList = commentService.apiCommentList(postId);
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
@@ -139,6 +142,7 @@ public class PostController {
         
     	model.addAttribute("postList",postList);
     	model.addAttribute("dishId",dishId);
+    	model.addAttribute("chefId",chefId);
     	model.addAttribute("commentList", commentList);
     	return "/post/dishPostView";
     }
@@ -165,5 +169,72 @@ public class PostController {
     	postService.apiPostDelete(postId);
     	
     	return "게시글이 삭제되었습니다.";
+    }
+    @RequestMapping(value = "api/post/imageUpload", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> apiPostImageUpload(@RequestParam("file") MultipartFile file) {
+        Map<String, String> responseMap = new HashMap<>();
+
+        // 파일이 비어있는지 확인
+        if (file.isEmpty()) {
+            responseMap.put("error", "파일이 비어있습니다.");
+            return ResponseEntity.badRequest().body(responseMap);
+        }
+
+        try {
+            // 이미지 파일 이름
+            String originalFileName = file.getOriginalFilename();
+            // Naver Cloud에 이미지 업로드
+            String imageFileName = objectStorageService.uploadFile(bucketName, "storage/", file);
+            String imageUrl = "https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/" + imageFileName;
+
+            // JSON 형식으로 URL 반환
+            responseMap.put("link", imageUrl);
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseMap.put("error", "파일 업로드 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMap);
+        }
+    }
+    @RequestMapping(value="page/post/dishPostUpdate")
+    public String dishPostUpdate(@RequestParam int postId, @RequestParam int dishId, @RequestParam int chefId, Model model) {
+    	List<PostDTO> postList = postService.postInfo(postId);
+    	model.addAttribute("postList", postList);
+    	model.addAttribute("dishId", dishId);
+    	model.addAttribute("chefId", chefId);
+    	return "/post/dishPostUpdate";
+    }
+    
+    @RequestMapping(value = "/api/post/update", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @ResponseBody
+    public String postUpdate(@RequestParam String title,
+    		 				 @RequestParam String content,
+    		 				 @RequestParam MultipartFile image,
+    		 				 @RequestParam int postId,
+    		 				 HttpSession session) {
+    	
+        String ImageFileName; // 이미지 파일 이름을 저장할 변수
+        String ImageOriginalFileName; // 원본 파일 이름을 저장할 변수
+ 
+        PostDTO post = new PostDTO();
+        System.out.println("dd"+content);
+       
+        ImageOriginalFileName = image.getOriginalFilename();
+        // Naver Cloud에 쉐프 이미지 업로드
+        ImageFileName = objectStorageService.uploadFile(bucketName, "storage/", image);
+        post.setTitle(title);
+        post.setContent(content);
+        post.setPostId(postId);
+        post.setImageFileName(ImageFileName); // UUID로 생성된 파일 이름
+        post.setImageOriginalFileName(ImageOriginalFileName); // 원본 파일 이름
+        //위까지 클라우드에 오브젝트 스토리지에 이미지 등록
+        
+        
+        postService.apiUpdatePost(post); //게시글 정보 DB에 저장
+
+
+        // 결과 메시지 구성
+        return "게시글 등록";
     }
 }

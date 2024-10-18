@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${dishInfo.dishName} 게시글</title>
+<title>글 수정</title>
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js"></script>
 <style type="text/css">
 * {
     margin: 0;
@@ -18,7 +21,7 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: white;
     color: black;
-    height: auto; /* 높이 자동 조정 */
+    height: auto;
 }
 
 header {
@@ -84,72 +87,50 @@ nav.active {
     width: 100%;
 }
 
-.table-container {
+.container {
     display: flex;
     margin: 20px auto;
     width: 80%;
-    height: auto; /* 높이 자동 조정 */
 }
 
-.image-container {
-    width: 50%; /* PC 화면에서 이미지 너비 */
-    padding-right: 20px;
-    padding-left: 20px;
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    margin:auto 0;
-    background-color: #f9f9f9;
-}
-
-.image-container img {
+.form-container {
     width: 100%;
-    border-radius: 5px;
-}
-
-.content-container {
-    width: 50%; /* PC 화면에서 콘텐츠 너비 */
     background-color: #f9f9f9;
     padding: 20px;
 }
 
-.content-container h2 {
+.form-container h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-#post_cardWrap {
-    width: 100%;
+.form-group {
+    margin-bottom: 15px;
+}
+#editorWrap{
+	height:450px;
+}
+#editor{
+	overflow:scroll;
+	height: 100%;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
 }
 
-.post-card {
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px; /* 카드 간 간격 */
-    transition: box-shadow 0.3s;
-}
-
-.post-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 효과 */
-}
-
-.post-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.post-meta {
-    font-size: 14px;
-    color: #666; /* 작성자 및 날짜 색상 */
 }
 
 .button-group {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 button {
@@ -166,92 +147,17 @@ button:hover {
     background-color: #333;
 }
 
-#pagingWrap {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#paging {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#paging:hover {
-    background-color: #f0f0f0;
-}
-
-#currentPaging {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-}
-
-#movepaging {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#movepaging:hover {
-    background-color: #f0f0f0;
-}
-
-#noContent {
-    color: #999;
-    font-style: italic;
-}
-@media (min-width: 769px) {
-	body{
-		height: 100vh;
-	}
-	.table-container{
-		height: 65%;
-	}
-	.image-container{
-		height: 100%;
-	}
-	#post_cardWrap{
-		height: 75%;
-	}
-	.content-container{
-		height: 100%;
-	}
-	
-}
 @media (max-width: 768px) {
-    .table-container {
-        flex-direction: column; /* 모바일에서 세로 방향으로 정렬 */
-        width: 90%; /* 모바일 화면에서 너비 조정 */
-    }
-
-    .image-container {
-        width: 100%; /* 모바일에서 전체 너비 사용 */
-        height: auto; /* 높이 자동 조정 */
-    }
-
-    .content-container {
-        width: 100%; /* 모바일에서 전체 너비 사용 */
-        height: auto; /* 높이 자동 조정 */
+    .container {
+        flex-direction: column;
+        width: 90%;
     }
 }
 </style>
 </head>
 <body>
-  <header>
-        
-        <div class="logo">
+	<header>
+		<div class="logo">
         	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
@@ -260,11 +166,10 @@ button:hover {
         </div>
         
         <div class="search-bar">
-            <input type="text" id = "keyword" placeholder="셰프 검색">
+            <input type="text" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
+        
+
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -318,45 +223,32 @@ button:hover {
         </ul>
     </nav>
 
-    <div class="table-container">
-        <div class="image-container">
-        	<div id="h2Wrap">
-	        	<h2>${dishInfo.dishName }</h2>
-	        </div>
-	        <div id="imgWrap">
-	        	<img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dishInfo.imageFileName}" alt="${dishInfo.dishName}">
+    <div class="container">
+        <div class="form-container">
+         <form id="postForm" method="post">
+            <h2>글쓰기</h2>
+            <div class="form-group">
+                <label for="title">제목:</label>
+                <input type="text" id="title" name="title" value="${postList[0].title}">
             </div>
-            <div id="contentWrap">
-	        	<pre>${dishInfo.dishContent }</pre>
+            <div class="form-group" id="editorWrap">
+				<label for="content">내용:</label>
+			 <div id="editor">${postList[0].content}</div>
             </div>
+            <div class="form-group">
+            	<input type="file" name="image" id="image" style="visibility: hidden;"/>
+            </div>
+            <div class="button-group">
+                <button type="button" id = "postBtn">수정하기</button>
+                <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId=${dishId}'">목록</button>
+            </div>
+            <input type="hidden" id="dishId" value="${dishId }"/>
+            <input type="hidden" id="chefId" value="${chefId }"/>
+         </form>
         </div>
-        <div class="content-container">
-        <br><br><br>
-            <div id="post_cardWrap">
-                <c:forEach var="list" items="${map2.list}">
-                    <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?chefId='+${chefId }+'&dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
-                        <div class="post-title">${list.title }</div>
-                        <div class="post-meta">글번호 : ${list.postId} | 작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
-                    </div>
-                </c:forEach>
-            	<div id="pagingWrap">
-                	${map2.postPaging.pagingHTML }
-            	</div>
-            	<div class="button-group">
-	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?chefId='+${chefId }+'&dishId='+${dishInfo.dishId}">글쓰기</button>
-	                <button onclick="location.href='/TasteMasters/page/dish/dishList?chefId='+${chefId}">목록</button>
-	         	</div>
-            </div>
-        </div>
-        <input type="hidden" id="dishId" value="${dishInfo.dishId}">
     </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
-//페이징 처리
-function postPaging(pg) {
-	dishId = $('#dishId').val();
-    location.href = '/TasteMasters/page/post/dishPostList?pg=' + pg + "&dishId=" + dishId;
-}
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
     var menuIcon = document.querySelector('.menu-icon');
@@ -366,7 +258,63 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active');
     });
 });
+$(function () {
+    var editor = new FroalaEditor('#editor', {
+        height: '79%',
+        imageUploadURL: '/TasteMasters/api/post/imageUpload',
+        'events': {
+            'image.uploaded': function (response) {
+                // JSON 응답 파싱
+                try {
+                    var jsonResponse = JSON.parse(response);  // 응답이 문자열인 경우 JSON 파싱
+                    if (jsonResponse.link) {
+                        //this.image.insert(jsonResponse.link);  // 이미지 URL을 사용해 에디터에 삽입
+                    } else {
+                        console.error('Invalid response format:', response);
+                        alert('이미지 업로드 중 파싱 오류가 발생했습니다.');
+                    }
+                } catch (error) {
+                    console.error('JSON parsing error:', error);
+                    alert('이미지 업로드 중 오류가 발생했습니다.');
+                }
+            },
+            'image.error': function (error) {
+                console.log('Image upload error:', error);
+                alert('이미지 업로드 중 오류가 발생했습니다.');
+            }
+        }
+    });
+    $('#postBtn').click(function(){
+        let formData = new FormData($('#postForm')[0]);
+		
+        // Froala 에디터 내용 가져오기
+        const content = editor.html.get(); 
+        formData.append('content', content); // 'content'는 서버에서 받을 때 사용할 파라미터명
+        
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const postId = urlParams.get('postId');
+        dishId = $('#dishId').val();
+        chefId = $('#chefId').val();
 
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            url: '/TasteMasters/api/post/update?postId=' + postId,
+            data: formData,
+            success: function(data) {
+                alert("게시글이 수정되었습니다.");
+                location.href = "/TasteMasters/page/post/dishPostList?chefId=" + chefId + "&dishId=" + dishId; // 게시글 목록
+            },
+            error: function(e) {
+                console.log(e);
+                alert("수정 중 오류가 발생했습니다.");
+            }
+        }); //ajax
+    });
+});
 $(function(){
 	document.getElementById('searchBtn').addEventListener('click', function() {
 	    var keyword = document.getElementById('keyword').value;

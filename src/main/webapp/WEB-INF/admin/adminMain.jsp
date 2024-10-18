@@ -30,7 +30,8 @@
 </head>
 <body>
 	 <header>
-         <div class="logo">
+        
+        <div class="logo">
         	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
@@ -39,23 +40,20 @@
         </div>
         
         <div class="search-bar">
-            <input type="text" placeholder="셰프 검색">
+            <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-        
-
+		<div>
+		  <input type="button" id="searchBtn" value="검색">
+		</div>  
         <div class="login">
-
-     	   <c:if test="${sessionScope.role == 'ADMIN'}">
-	                 <a href="/TasteMasters/page/member/admin">관리자 페이지</a>
-	       </c:if>
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
-                     <a href="/TasteMasters/page/member/mypage">${loginId }님 마이페이지</a>
+                     <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
                      <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                
                 <c:otherwise>
-                    <a href="/TasteMasters/page/member/login">로그인</a> 
+                    <a href="/TasteMasters/page/member/login">로그인</a> | 
                     <a href="/TasteMasters/page/member/join">회원 가입</a>
                 </c:otherwise>
             </c:choose>
@@ -124,6 +122,32 @@ document.getElementById('chefUpload').addEventListener('click', function() {
     location.href = '/TasteMasters/page/chef/upload';
 });
 
+$(function(){
+	document.getElementById('searchBtn').addEventListener('click', function() {
+	    var keyword = document.getElementById('keyword').value;
+
+	    if (keyword.trim() === '') {
+	        alert('검색어를 입력하세요.');
+	        return;
+	    }
+
+	    // AJAX 요청
+	    $.ajax({
+	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
+	        type: 'GET',
+	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+	        success: function(response) {
+	            // 검색 결과에 따라 페이지 이동
+	            // 예: 검색 결과 페이지로 리디렉션
+	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+	        },
+	        error: function() {
+	            alert('검색에 실패했습니다.');
+	        }
+	    });
+	});
+
+});
 </script>
 </body>
 </html>
