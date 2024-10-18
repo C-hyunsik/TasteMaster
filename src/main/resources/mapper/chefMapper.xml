@@ -54,6 +54,17 @@
     WHERE chef_id = #{chefId}
 </update>
 	
+	<!-- 목록 -->
+	<select id="apiChefSearch" parameterType = "String" resultType="chef.bean.ChefDTO">
+		SELECT chef_id as chefId, 
+		chef_name as chefName ,  
+		image_fileName as imageFileName,
+		image_original_fileName as imageOriginalFileName
+        FROM chef 
+		WHERE REPLACE(chef_name, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+        ORDER BY chef_id DESC
+	</select>
+	
 
 
 </mapper>

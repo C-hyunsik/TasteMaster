@@ -156,8 +156,9 @@ button:hover {
 </style>
 </head>
 <body>
-	<header>
-		<div class="logo">
+	 <header>
+        
+        <div class="logo">
         	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
@@ -166,10 +167,11 @@ button:hover {
         </div>
         
         <div class="search-bar">
-            <input type="text" placeholder="셰프 검색">
+            <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-        
-
+		<div>
+		  <input type="button" id="searchBtn" value="검색">
+		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -246,6 +248,7 @@ button:hover {
          </form>
         </div>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -312,6 +315,42 @@ $(function () {
         }); //ajax
     });
 });
+
+
+</script>
+<script type="text/javascript" src="../se2/js/HuskyEZCreator.js"></script>
+<script>
+
+
+     
+     
+     $(function(){
+	document.getElementById('searchBtn').addEventListener('click', function() {
+	    var keyword = document.getElementById('keyword').value;
+
+	    if (keyword.trim() === '') {
+	        alert('검색어를 입력하세요.');
+	        return;
+	    }
+
+	    // AJAX 요청
+	    $.ajax({
+	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
+	        type: 'GET',
+	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+	        success: function(response) {
+	            // 검색 결과에 따라 페이지 이동
+	            // 예: 검색 결과 페이지로 리디렉션
+	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+	        },
+	        error: function() {
+	            alert('검색에 실패했습니다.');
+	        }
+	    });
+	});
+
+});
+
 </script>
 </body>
 </html>

@@ -31,5 +31,7 @@ public interface ChefDAO {
 
 	public void apiupdateChefImageFileName(Map<String, Object> params);
 
+	public List<ChefDTO> apiChefSearch(String keyword);
+
 
 }

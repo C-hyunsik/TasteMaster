@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import chef.bean.ChefDTO;
-import dish.bean.DishDTO;
 
 public interface ChefService {
 
@@ -29,5 +28,7 @@ public interface ChefService {
 	public int apiChefIdByName(String chefName);
 
 	public void apiupdateChefImageFileName(Map<String, Object> params);
+
+	public List<ChefDTO> apiChefSearch(String keyword);
 	
 }
