@@ -17,5 +17,17 @@
 		from comment as C, member as M where C.member_id = M.member_id and C.post_id = #{postId}
 		 order by commentId desc
 	</select>
+	
+	<delete id="apiCommentDelete" parameterType="comment.bean.CommentDTO">
+        delete from comment
+        where comment_id = #{commentId} and member_id = #{memberId}
+    </delete>
+    
+    <update id="apiCommentUpdate" parameterType="comment.bean.CommentDTO">
+    	UPDATE comment
+		SET content = #{content}, created_at = CURRENT_TIMESTAMP
+		WHERE comment_id = #{commentId} AND member_id = #{memberId}
+
+    </update>
 
 </mapper>

@@ -42,4 +42,44 @@ public class CommentController {
 		// 결과 메시지 구성
 		return "댓글 등록";
 	}
+	
+	@RequestMapping(value = "/api/comment/delete")
+	@ResponseBody
+	public String apiCommentDelete(@RequestParam int commentId, HttpSession session, HttpServletResponse httpServletResponse) {
+	    Integer memberId = (Integer) session.getAttribute("memberId");
+
+	    if (memberId == null) {
+	        return "로그인이 필요합니다.";
+	    }
+	    
+	    CommentDTO commentDTO = new CommentDTO();
+	    commentDTO.setCommentId(commentId);
+	    commentDTO.setMemberId(memberId); // Optional: 확인 용도
+
+	    // 댓글 삭제 서비스 호출
+	    boolean isDeleted = commentService.apiCommentDelete(commentDTO);
+
+	    if (isDeleted) {
+	        return "댓글 삭제 완료";
+	    } else {
+	        return "댓글 삭제 실패";
+	    }
+	}
+	
+	@RequestMapping(value = "/api/comment/update")
+	@ResponseBody
+	public boolean apiCommentUpdate(@RequestParam("commentId") int commentId, @RequestParam("content") String content, HttpSession session, HttpServletResponse httpServletResponse ) {
+		Integer memberId = (Integer) session.getAttribute("memberId");
+	
+	    CommentDTO commentDTO = new CommentDTO();
+	    commentDTO.setCommentId(commentId);
+	    commentDTO.setContent(content);
+	    commentDTO.setMemberId(memberId);  // 확인 용도
+	    System.out.println(commentDTO.getContent());
+
+	    // 댓글 수정 서비스 호출
+	    boolean isUpdated = commentService.apiCommentUpdate(commentDTO); // 서비스 메소드 작성 필요
+
+	    return isUpdated;
+	}
 }

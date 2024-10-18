@@ -111,7 +111,10 @@ public class PostController {
         return "게시글 등록";
     }
     @RequestMapping(value = "/page/post/view")
-    public String pagePostView(@RequestParam int postId, @RequestParam int dishId, Model model) {
+    public String pagePostView(@RequestParam int postId,
+    							@RequestParam int dishId,
+    							@RequestParam(required = false, defaultValue = "1") String pg, 
+    							Model model) {
     	List<PostDTO> postList = postService.postInfo(postId);
     	List<CommentDTO> commentList = commentService.apiCommentList(postId);
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");

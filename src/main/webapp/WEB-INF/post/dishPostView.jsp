@@ -190,12 +190,18 @@
 </head>
 <body>
     <header>
+        <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
+        
         <div class="login">
            <c:choose>
                 <c:when test="${not empty sessionScope.loginId}">
@@ -256,18 +262,32 @@
         <button id="toggleCommentInput">댓글 작성</button>
         <textarea id="commentInput" name = "content" placeholder="댓글을 작성하세요..."></textarea>
         <button id="submitComment" style="display: none;">댓글 작성</button>
+        
         <h3>댓글 목록</h3>
         <div class="comments">
             <c:forEach var="comment" items="${commentList}">
                 <div class="comment">
                     <div class="comment-meta">작성자: ${comment.name} | 작성일: ${comment.createdAtToString}</div>
-                    <p>${comment.content}</p>
+                    <input type="hidden" value="${comment.commentId }" class="commentId" />
+                    <c:choose>
+	                    <c:when test="${sessionScope.memberId == commentList[0].memberId || sessionScope.role == 'ADMIN' }">
+		                    <input type="button" value="삭제" class="commentDeleteBtn" name="commentDeleteBtn"/>
+		                    <input type="button" value="수정" class="commentUpdateBtn" name="commentUpdateBtn"/>
+	                    </c:when>
+                    </c:choose>
+                    <pre>
+                    	<p class="assisComment">${comment.content}</p>
+                    	<textarea class="updateArea" rows="3" cols="6" type="hidden">${comment.content}</textarea>
+                    </pre>
                 </div>
             </c:forEach>
         </div>
+      
     </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../js/commentDelete.js"></script>
+<script type="text/javascript" src="../js/commentUpdate.js"></script>
 <script type="text/javascript">
 // 사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -338,20 +358,28 @@ $(function(){
 	
 	     // 파라미터 예: ?pg=2&name=john
 	     const postId = urlParams.get('postId');
-        $.ajax({
-            type: 'get',
-            url: '/TasteMasters/api/post/delete?postId='+postId,
-            success: function(data) {
-                alert("게시글이 삭제되었습니다.");
-                location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}
-            },
-            error: function(e) {
-                console.log(e);
-                alert("삭제 중 오류가 발생했습니다.");
-            }
-        }); //ajax
+	     
+	     var confirm = confirm('글을 삭제하시겠습니까?');
+	     
+	     if(confirm) {
+	    	 $.ajax({
+	             type: 'get',
+	             url: '/TasteMasters/api/post/delete?postId='+postId,
+	             success: function(data) {
+	                 alert("게시글이 삭제되었습니다.");
+	                 location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}
+	             },
+	             error: function(e) {
+	                 console.log(e);
+	                 alert("삭제 중 오류가 발생했습니다.");
+	             }
+	         }); //ajax
+	     }
     });
 });
+
+
+
 </script>
 </body>
 </html>

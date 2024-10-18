@@ -300,7 +300,7 @@ $('#loginBtn').click(function(){
 		$('#idDiv').html('아이디를 입력해주세요').css('color','red');
 	}
 	else if(!pwd){
-		$('#pwdDiv').html('아이디를 입력해주세요').css('color','red');
+		$('#pwdDiv').html('비밀번호를 입력해주세요').css('color','red');
 	}
 	else{
 		$.ajax({
@@ -311,7 +311,7 @@ $('#loginBtn').click(function(){
 				'pwd':pwd
 			},
 			success:function(){
-				alert(loginId + '님 로그인');
+				//alert(loginId + '님 로그인');
 				location.href = '/TasteMasters/page/index';
 			},
 			error:function(e){
