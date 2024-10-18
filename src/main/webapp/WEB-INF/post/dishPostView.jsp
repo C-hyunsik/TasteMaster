@@ -199,7 +199,7 @@
         <div class="login">
            <c:choose>
                 <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
+                    <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |<br>
                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                 <c:otherwise>
@@ -235,9 +235,6 @@
         <div class="post-content">
             <h3>내용 부문</h3>
             <p>${post[0].content}</p>
-            <p>로그인된 ID: ${sessionScope.memberId}</p>
-			<p>작성자 ID: ${postList[0].memberId}</p>
-			<p>작성자 역할: ${sesstionScope.role}</p>
         </div>
         <div class="button-group">
 	        <c:choose>
