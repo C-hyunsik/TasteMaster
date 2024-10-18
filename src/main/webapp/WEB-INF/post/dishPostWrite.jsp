@@ -315,16 +315,7 @@ $(function () {
         }); //ajax
     });
 });
-
-
-</script>
-<script type="text/javascript" src="../se2/js/HuskyEZCreator.js"></script>
-<script>
-
-
-     
-     
-     $(function(){
+$(function(){
 	document.getElementById('searchBtn').addEventListener('click', function() {
 	    var keyword = document.getElementById('keyword').value;
 

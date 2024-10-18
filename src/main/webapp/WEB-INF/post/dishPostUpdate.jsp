@@ -314,6 +314,32 @@ $(function () {
         }); //ajax
     });
 });
+$(function(){
+	document.getElementById('searchBtn').addEventListener('click', function() {
+	    var keyword = document.getElementById('keyword').value;
+
+	    if (keyword.trim() === '') {
+	        alert('검색어를 입력하세요.');
+	        return;
+	    }
+
+	    // AJAX 요청
+	    $.ajax({
+	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
+	        type: 'GET',
+	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+	        success: function(response) {
+	            // 검색 결과에 따라 페이지 이동
+	            // 예: 검색 결과 페이지로 리디렉션
+	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+	        },
+	        error: function() {
+	            alert('검색에 실패했습니다.');
+	        }
+	    });
+	});
+
+});
 </script>
 </body>
 </html>

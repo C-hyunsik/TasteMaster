@@ -344,7 +344,7 @@ button:hover {
             	</div>
             	<div class="button-group">
 	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
-	                <button onclick="location.href='/TasteMasters/page/index'">메인화면</button>
+	                <button onclick="location.href='/TasteMasters/page/dish/dishList?chefId='+${chefId}">목록</button>
 	         	</div>
             </div>
         </div>

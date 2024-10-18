@@ -301,11 +301,7 @@ nav.active {
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-=======
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
->>>>>>> 05699b749762c6f0de14a8298f0a229a61752eac
 <script type="text/javascript">
 // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
 document.addEventListener("DOMContentLoaded", function() {
@@ -315,7 +311,6 @@ document.addEventListener("DOMContentLoaded", function() {
     menuIcon.addEventListener('click', function() {
         navMenu.classList.toggle('active'); // 메뉴 보이기/숨기기
     });
-<<<<<<< HEAD
 });
 $('.countWrap img[alt="tasty"]').click(function() {
     // 부모 요소에서 hidden input을 찾아 dishId 가져오기
@@ -347,35 +342,33 @@ $('.countWrap img[alt="easy"]').click(function() {
         }
     });
 });
-=======
     
-    $(function(){
-    	document.getElementById('searchBtn').addEventListener('click', function() {
-    	    var keyword = document.getElementById('keyword').value;
+$(function(){
+	document.getElementById('searchBtn').addEventListener('click', function() {
+	    var keyword = document.getElementById('keyword').value;
 
-    	    if (keyword.trim() === '') {
-    	        alert('검색어를 입력하세요.');
-    	        return;
-    	    }
+	    if (keyword.trim() === '') {
+	        alert('검색어를 입력하세요.');
+	        return;
+	    }
 
-    	    // AJAX 요청
-    	    $.ajax({
-    	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-    	        type: 'GET',
-    	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-    	        success: function(response) {
-    	            // 검색 결과에 따라 페이지 이동
-    	            // 예: 검색 결과 페이지로 리디렉션
-    	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-    	        },
-    	        error: function() {
-    	            alert('검색에 실패했습니다.');
-    	        }
-    	    });
-    	});
+	    // AJAX 요청
+	    $.ajax({
+	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
+	        type: 'GET',
+	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+	        success: function(response) {
+	            // 검색 결과에 따라 페이지 이동
+	            // 예: 검색 결과 페이지로 리디렉션
+	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+	        },
+	        error: function() {
+	            alert('검색에 실패했습니다.');
+	        }
+	    });
+	});
 
-    });
->>>>>>> 05699b749762c6f0de14a8298f0a229a61752eac
+});
 </script>
 </body>
 </html>
