@@ -40,6 +40,10 @@ public class DishServiceImpl implements DishService {
 		return dishDAO.apiDishInfo(dishId);
 	}
 
-	
+	@Override
+	public void apiUpdateDish(DishDTO existingDish) {
+		dishDAO.apiUpdateDish(existingDish);
+		
+	}
 	
 }

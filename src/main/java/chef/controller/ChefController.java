@@ -2,14 +2,16 @@ package chef.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +24,6 @@ import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
 import naver.objectstorage.ObjectStorageService;
-import post.service.PostService;
 
 @Controller
 public class ChefController {
@@ -170,5 +171,40 @@ public class ChefController {
     	chefService.apiChefDelete(chefId);
     	
     	return "탈락되었습니다...";
+    }
+    
+    @RequestMapping(value = "/page/admin/chefUpdate")
+    public String ChefUpdate(@RequestParam String chefId, Model model) {
+    	List<DishDTO> dishList = dishService.apiDishList(chefId);
+    	ChefDTO chefInfo = chefService.apiChefGetDTO(Integer.parseInt(chefId));
+    	model.addAttribute("dishList", dishList);
+    	model.addAttribute("chefInfo", chefInfo);
+    	
+    	return "/admin/chefUpdate";
+    }
+    
+    @RequestMapping(value = "/api/chef/chefImgUpdate", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @ResponseBody
+    public String chefImgUpdate(@RequestParam int chefId, @RequestParam("chefImg") MultipartFile chefImg) {
+        // 기존 이미지 파일 이름 가져오기
+        String existingImageFileName = chefService.apiChefGetImageFileName(chefId);
+        
+        // Naver Cloud에서 기존 이미지 삭제
+        if (existingImageFileName != null) {
+            objectStorageService.deleteFile(bucketName, "storage/", existingImageFileName);
+        }
+
+        // 새로운 이미지 파일 이름 업로드
+        String newImageFileName = objectStorageService.uploadFile(bucketName, "storage/", chefImg);
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("chefId", chefId);
+        params.put("newImageFileName", newImageFileName);
+        params.put("originalFilename", chefImg.getOriginalFilename());
+
+        // 쉐프 정보 업데이트
+        chefService.apiupdateChefImageFileName(params);
+
+        return "이미지가 성공적으로 업데이트되었습니다.";
     }
 }

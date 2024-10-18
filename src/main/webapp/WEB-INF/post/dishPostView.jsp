@@ -199,7 +199,7 @@
         <div class="login">
            <c:choose>
                 <c:when test="${not empty sessionScope.loginId}">
-                    <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |
+                    <a href="/TasteMasters/page/member/mypage">${loginId }님</a> |<br>
                     <a href="/TasteMasters/api/member/logout">로그아웃</a> 
                 </c:when>
                 <c:otherwise>
