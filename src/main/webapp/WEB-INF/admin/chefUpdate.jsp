@@ -355,7 +355,7 @@ nav.active {
             
             <!-- 설명 -->
             <td style="padding: 10px; border-bottom: 1px solid #ccc;">
-                <textarea data-dishid="${dish.dishContent}">
+                <textarea data-dishid="${dish.dishId}">
                     ${dish.dishContent}
                 </textarea>
             </td>

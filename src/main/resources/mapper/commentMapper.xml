@@ -15,6 +15,7 @@
 		C.member_id as memberId , C.content , C.created_at as createdAt,
 		M.name as name
 		from comment as C, member as M where C.member_id = M.member_id and C.post_id = #{postId}
+		 order by commentId desc
 	</select>
 
 </mapper>

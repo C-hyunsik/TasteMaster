@@ -56,7 +56,7 @@ public class DishController {
     public String apiDishUpdate(@RequestParam int dishId, 
                                 @RequestParam String dishName, 
                                 @RequestParam String dishContent, 
-                                @RequestParam("dishImg") MultipartFile dishImg) {
+                                MultipartFile dishImage) {
         // 기존 요리 정보 가져오기
         DishDTO existingDish = dishService.apiDishInfo(dishId);
         
@@ -69,13 +69,13 @@ public class DishController {
         }
 
         // 새로운 이미지 파일 이름 업로드
-        String newImageFileName = objectStorageService.uploadFile(bucketName, "storage/", dishImg);
+        String newImageFileName = objectStorageService.uploadFile(bucketName, "storage/", dishImage);
 
         // DishDTO 업데이트
         existingDish.setDishName(dishName);
         existingDish.setDishContent(dishContent);
         existingDish.setImageFileName(newImageFileName); // UUID로 생성된 파일 이름
-        existingDish.setImageOriginalFileName(dishImg.getOriginalFilename()); // 원본 파일 이름
+        existingDish.setImageOriginalFileName(dishImage.getOriginalFilename()); // 원본 파일 이름
 
         // 업데이트된 요리 정보를 DB에 저장
         dishService.apiUpdateDish(existingDish);

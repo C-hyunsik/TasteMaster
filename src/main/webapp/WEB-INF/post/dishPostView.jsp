@@ -260,7 +260,7 @@
         <div class="comments">
             <c:forEach var="comment" items="${commentList}">
                 <div class="comment">
-                    <div class="comment-meta">작성자: ${comment.name} | 작성일: ${comment.createdAt}</div>
+                    <div class="comment-meta">작성자: ${comment.name} | 작성일: ${comment.createdAtToString}</div>
                     <p>${comment.content}</p>
                 </div>
             </c:forEach>
