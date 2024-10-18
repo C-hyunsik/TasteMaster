@@ -79,7 +79,6 @@ public class PostController {
 	}
 	
 	
-	 // 쉐프와 요리를 업로드하는 메서드
     @RequestMapping(value = "/api/post/upload", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
     @ResponseBody
     public String uploadChefAndDishes(@RequestParam String title,
@@ -194,5 +193,43 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMap);
         }
     }
+    @RequestMapping(value="page/post/dishPostUpdate")
+    public String dishPostUpdate(@RequestParam int postId, @RequestParam int dishId, Model model) {
+    	List<PostDTO> postList = postService.postInfo(postId);
+    	model.addAttribute("postList", postList);
+    	model.addAttribute("dishId", dishId);
+    	return "/post/dishPostUpdate";
+    }
+    
+    @RequestMapping(value = "/api/post/update", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @ResponseBody
+    public String postUpdate(@RequestParam String title,
+    		 				 @RequestParam String content,
+    		 				 @RequestParam MultipartFile image,
+    		 				 @RequestParam int postId,
+    		 				 HttpSession session) {
+    	
+        String ImageFileName; // 이미지 파일 이름을 저장할 변수
+        String ImageOriginalFileName; // 원본 파일 이름을 저장할 변수
+ 
+        PostDTO post = new PostDTO();
+        System.out.println("dd"+content);
+       
+        ImageOriginalFileName = image.getOriginalFilename();
+        // Naver Cloud에 쉐프 이미지 업로드
+        ImageFileName = objectStorageService.uploadFile(bucketName, "storage/", image);
+        post.setTitle(title);
+        post.setContent(content);
+        post.setPostId(postId);
+        post.setImageFileName(ImageFileName); // UUID로 생성된 파일 이름
+        post.setImageOriginalFileName(ImageOriginalFileName); // 원본 파일 이름
+        //위까지 클라우드에 오브젝트 스토리지에 이미지 등록
+        
+        
+        postService.apiUpdatePost(post); //게시글 정보 DB에 저장
 
+
+        // 결과 메시지 구성
+        return "게시글 등록";
+    }
 }

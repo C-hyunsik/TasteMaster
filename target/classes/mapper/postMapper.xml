@@ -56,4 +56,12 @@
 	<delete id="apiPostDelete" parameterType="int">
     	DELETE FROM post WHERE post_id  = #{postId}
 	</delete>
+	<update id="apiUpdatePost" parameterType="post.bean.PostDTO">
+		update post set title = #{title},
+						content = #{content},
+						created_at = now(),
+						image_fileName = #{imageFileName},
+						image_original_fileName = #{imageOriginalFileName}
+		where post_id = #{postId}
+	</update>
 </mapper>

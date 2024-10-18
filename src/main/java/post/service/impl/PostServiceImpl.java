@@ -73,15 +73,15 @@ public class PostServiceImpl implements PostService {
 	}
 	@Override
 	public List<PostDTO> postInfo(int postId) {
-		
-
-
-		
 		return postDAO.postInfo(postId);
 	}
 
 	@Override
 	public void apiPostDelete(int postId) {
 		postDAO.apiPostDelete(postId);
+	}
+	@Override
+	public void apiUpdatePost(PostDTO post) {
+		postDAO.apiUpdatePost(post);
 	}
 }
