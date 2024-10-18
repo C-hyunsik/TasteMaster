@@ -250,9 +250,14 @@ button:hover {
 </head>
 <body>
     <header>
+        <div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
+        </div>
+        
         <div class="menu">
             <span class="menu-icon">&#9776;</span>
         </div>
+        
         <div class="search-bar">
             <input type="text" placeholder="셰프 검색">
         </div>
@@ -329,7 +334,7 @@ button:hover {
                 <c:forEach var="list" items="${map2.list}">
                     <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
                         <div class="post-title">${list.title }</div>
-                        <div class="post-meta">작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
+                        <div class="post-meta">글번호 : ${list.postId} | 작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
                     </div>
                 </c:forEach>
             	<div id="pagingWrap">

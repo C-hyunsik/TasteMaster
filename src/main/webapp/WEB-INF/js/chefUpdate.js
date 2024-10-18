@@ -1,5 +1,0 @@
-$(function(){
-	$('#chefUpdateBtn').click(function(){
-		
-	});
-});

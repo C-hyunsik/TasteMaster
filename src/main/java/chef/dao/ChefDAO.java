@@ -1,6 +1,7 @@
 package chef.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,8 @@ public interface ChefDAO {
 	public void apiUploadChef(ChefDTO chef);
 
 	public int apiChefIdByName(String chefName);
+
+	public void apiupdateChefImageFileName(Map<String, Object> params);
 
 
 }

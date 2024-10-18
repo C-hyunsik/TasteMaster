@@ -1,6 +1,7 @@
 package chef.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,11 @@ public class ChefServiceImpl implements ChefService {
 	@Override
 	public int apiChefIdByName(String chefName) {
 		 return chefDAO.apiChefIdByName(chefName);
+	}
+
+	@Override
+	public void apiupdateChefImageFileName(Map<String, Object> params) {
+		chefDAO.apiupdateChefImageFileName(params);
+		
 	}
 }

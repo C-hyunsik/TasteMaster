@@ -46,5 +46,14 @@
     <delete id="apiChefDelete" parameterType="int">
     	DELETE FROM chef WHERE chef_id  = #{chefId}
 	</delete>
+	
+	<update id="apiupdateChefImageFileName" parameterType="map">
+    UPDATE chef 
+    SET image_fileName = #{newImageFileName}, 
+        image_original_fileName = #{originalFilename} 
+    WHERE chef_id = #{chefId}
+</update>
+	
+
 
 </mapper>

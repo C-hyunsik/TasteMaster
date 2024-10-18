@@ -228,19 +228,19 @@
 
     <div class="content-container">
         <h2>${postList[0].title}</h2> <!-- 제목 -->
-        <div class="post-meta">글 번호: ${postList[0].postId} | 작성자: ${postList[0].name} | 작성일: ${postList[0].createdAt}</div>
+        <div class="post-meta">글 번호: ${postList[0].postId} | 작성자: ${postList[0].name} | 작성일: ${postList[0].createdAtToString}</div>
         <div class="image-container">
             <img src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${postList[0].imageFileName}" alt="${postList[0].imageOriginalFileName}">
         </div>
         <div class="post-content">
             <h3>내용 부문</h3>
-            <p>${post[0].content}</p>
+            <p>${postList[0].content}</p>
         </div>
         <div class="button-group">
 	        <c:choose>
 				<c:when test="${sessionScope.memberId == postList[0].memberId || sesstionScope.role == 'ADMIN' }">
-					<button onclick="location.href='/TasteMasters/page/post/postUpdate?postId=${post.id}'">글 수정</button>
-					<button onclick="location.href='/TasteMasters/page/post/postDelete?postId=${post.id}'">글 삭제</button>
+					<button onclick="location.href='/TasteMasters/page/post/postUpdate?postId=${postList[0].postId}'">글 수정</button>
+					<button id = "deleteBtn">글 삭제</button>
 					<button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
 				</c:when>
 	             
@@ -297,6 +297,32 @@ document.addEventListener("DOMContentLoaded", function() {
         commentInput.style.display = 'none'; // 입력란 숨기기
         submitComment.style.display = 'none'; // 버튼 숨기기
         toggleCommentInput.style.display = 'inline'; // 댓글 작성 버튼 다시 표시
+    });
+});
+
+
+$(function(){
+    $('#deleteBtn').click(function(){
+    	
+        const queryString = window.location.search;
+
+	     // URLSearchParams 객체 생성
+	     const urlParams = new URLSearchParams(queryString);
+	
+	     // 파라미터 예: ?pg=2&name=john
+	     const postId = urlParams.get('postId');
+        $.ajax({
+            type: 'get',
+            url: '/TasteMasters/api/post/delete?postId='+postId,
+            success: function(data) {
+                alert("게시글이 삭제되었습니다.");
+                location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}
+            },
+            error: function(e) {
+                console.log(e);
+                alert("삭제 중 오류가 발생했습니다.");
+            }
+        }); //ajax
     });
 });
 </script>
