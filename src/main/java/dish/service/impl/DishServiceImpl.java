@@ -45,5 +45,13 @@ public class DishServiceImpl implements DishService {
 		dishDAO.apiUpdateDish(existingDish);
 		
 	}
-	
+	@Override
+	public void apiDishDeliciousCount(int dishId) {
+		dishDAO.apiDishDeliciousCount(dishId);
+		
+	}
+	@Override
+	public void apiDishEasyCount(int dishId) {
+		dishDAO.apiDishEasyCount(dishId);
+	}
 }

@@ -19,4 +19,8 @@ public interface DishService {
 
 	public void apiUpdateDish(DishDTO existingDish);
 
+	public void apiDishDeliciousCount(int dishId);
+
+	public void apiDishEasyCount(int dishId);
+
 }
