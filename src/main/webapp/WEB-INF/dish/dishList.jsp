@@ -192,7 +192,7 @@ nav.active {
     <header>
         
         <div class="logo">
-        	<a href="/TasteMasters/page/index"><img alt="로고" src="./image/logo.png" width="40px" height="40px"></a>
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
         <div class="menu">
@@ -281,6 +281,7 @@ nav.active {
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
     // 메뉴 아이콘 클릭 시 메뉴 슬라이드 토글
     document.addEventListener("DOMContentLoaded", function() {

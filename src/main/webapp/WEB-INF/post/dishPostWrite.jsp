@@ -159,7 +159,7 @@ button:hover {
 	 <header>
         
         <div class="logo">
-        	<a href="/TasteMasters/page/index"><img alt="로고" src="./image/logo.png" width="40px" height="40px"></a>
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
         <div class="menu">
@@ -248,6 +248,7 @@ button:hover {
          </form>
         </div>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {

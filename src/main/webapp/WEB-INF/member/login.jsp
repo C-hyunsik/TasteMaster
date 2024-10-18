@@ -195,7 +195,7 @@ button:hover {
       <header>
         
         <div class="logo">
-        	<a href="/TasteMasters/page/index"><img alt="로고" src="./image/logo.png" width="40px" height="40px"></a>
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
         <div class="menu">
