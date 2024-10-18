@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>글쓰기</title>
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js"></script>
 <style type="text/css">
 * {
     margin: 0;
@@ -104,7 +107,13 @@ nav.active {
 .form-group {
     margin-bottom: 15px;
 }
-
+#editorWrap{
+	height:450px;
+}
+#editor{
+	overflow:scroll;
+	height: 100%;
+}
 .form-group label {
     display: block;
     margin-bottom: 5px;
@@ -121,7 +130,7 @@ nav.active {
 .button-group {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 button {
@@ -222,14 +231,9 @@ button:hover {
                 <label for="title">제목:</label>
                 <input type="text" id="title" name="title">
             </div>
-            <div class="form-group">
-                	<label for="content">내용:</label>
-			 <textarea name="content" id="editorTxt0" rows="20" cols="10" style="max-width: 775px"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="image">사진 첨부:</label>
-                <span id="showImg"></span>
-                <input type="file" id="image" name="image">
+            <div class="form-group" id="editorWrap">
+				<label for="content">내용:</label>
+			 <div id="editor"></div>
             </div>
             <div class="button-group">
                 <button type="button" id = "postBtn">작성하기</button>
@@ -239,8 +243,6 @@ button:hover {
          </form>
         </div>
     </div>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -251,42 +253,50 @@ document.addEventListener("DOMContentLoaded", function() {
         navMenu.classList.toggle('active');
     });
 });
-
-// 이미지 미리보기
-$('#image').change(function(){
-    $('#showImg').empty(); // 기존 이미지 제거
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        var img = document.createElement('img');
-        img.src = e.target.result;
-        img.width = 100;  // 이미지 크기 조정
-        img.height = 100;
-        $('#showImg').append(img);
-    }
-    reader.readAsDataURL(this.files[0]);
-});
-
-$(function(){
+$(function () {
+    var editor = new FroalaEditor('#editor', {
+        height: '79%',
+        imageUploadURL: '/TasteMasters/api/post/imageUpload',
+        'events': {
+            'image.uploaded': function (response) {
+                // JSON 응답 파싱
+                try {
+                    var jsonResponse = JSON.parse(response);  // 응답이 문자열인 경우 JSON 파싱
+                    if (jsonResponse.link) {
+                        //this.image.insert(jsonResponse.link);  // 이미지 URL을 사용해 에디터에 삽입
+                    } else {
+                        console.error('Invalid response format:', response);
+                        alert('이미지 업로드 중 파싱 오류가 발생했습니다.');
+                    }
+                } catch (error) {
+                    console.error('JSON parsing error:', error);
+                    alert('이미지 업로드 중 오류가 발생했습니다.');
+                }
+            },
+            'image.error': function (error) {
+                console.log('Image upload error:', error);
+                alert('이미지 업로드 중 오류가 발생했습니다.');
+            }
+        }
+    });
     $('#postBtn').click(function(){
-    	
-    	oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
-    	
-    	
         let formData = new FormData($('#postForm')[0]);
-        //dishId = $('#dishId').val();
+		
+        // Froala 에디터 내용 가져오기
+        const content = editor.html.get(); 
+        formData.append('content', content); // 'content'는 서버에서 받을 때 사용할 파라미터명
+        alert(content);
+        
         const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const dishId = urlParams.get('dishId');
 
-	     // URLSearchParams 객체 생성
-	     const urlParams = new URLSearchParams(queryString);
-	
-	     // 파라미터 예: ?pg=2&name=john
-	     const dishId = urlParams.get('dishId');
         $.ajax({
             type: 'post',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            url: '/TasteMasters/api/post/upload?dishId='+dishId,
+            url: '/TasteMasters/api/post/upload?dishId=' + dishId,
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");
@@ -299,36 +309,6 @@ $(function(){
         }); //ajax
     });
 });
-
-</script>
-<script type="text/javascript" src="../se2/js/HuskyEZCreator.js"></script>
-<script>
-
-let oEditors = [];
-
-     smartEditor = function() {
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-                sSkinURI: "../se2/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수
-                fCreator: "createSEditor2"
-            })
-        }
-
-     $(document).ready(function() {
-     	//스마트에디터 적용
-          smartEditor(); 
-              //값 불러오기
-           function preview(){
-            	// 에디터의 내용을 textarea에 적용
-            	oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
-                // textarea 값 불러오기 
-            	var content = document.getElementById("editorTxt0").value;
-            	alert(content);
-            	return;
-        }
-           
-     })
 </script>
 </body>
 </html>

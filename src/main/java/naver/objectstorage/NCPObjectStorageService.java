@@ -54,7 +54,7 @@ public class NCPObjectStorageService implements ObjectStorageService {
 										 objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
 			
 			s3.putObject(putObjectRequest);
-			
+			System.out.println("imageFileName : " + imageFileName);
 			return imageFileName;
 		}catch(Exception e) {
 			throw new RuntimeException("파일 업로드 에러");

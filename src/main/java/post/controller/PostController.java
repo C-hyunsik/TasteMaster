@@ -1,6 +1,7 @@
 package post.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -149,4 +152,32 @@ public class PostController {
     	
     	return "게시글이 삭제되었습니다.";
     }
+    @RequestMapping(value = "api/post/imageUpload", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> apiPostImageUpload(@RequestParam("file") MultipartFile file) {
+        Map<String, String> responseMap = new HashMap<>();
+
+        // 파일이 비어있는지 확인
+        if (file.isEmpty()) {
+            responseMap.put("error", "파일이 비어있습니다.");
+            return ResponseEntity.badRequest().body(responseMap);
+        }
+
+        try {
+            // 이미지 파일 이름
+            String originalFileName = file.getOriginalFilename();
+            // Naver Cloud에 이미지 업로드
+            String imageFileName = objectStorageService.uploadFile(bucketName, "storage/", file);
+            String imageUrl = "https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/" + imageFileName;
+
+            // JSON 형식으로 URL 반환
+            responseMap.put("link", imageUrl);
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseMap.put("error", "파일 업로드 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMap);
+        }
+    }
+
 }
