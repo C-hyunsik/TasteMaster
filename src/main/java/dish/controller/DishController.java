@@ -1,5 +1,6 @@
 package dish.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -7,22 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import chef.bean.ChefDTO;
 import chef.service.ChefService;
 import dish.bean.DishDTO;
 import dish.service.DishService;
+import naver.objectstorage.ObjectStorageService;
 
 @Controller
 public class DishController {
 
 	@Autowired
 	private DishService dishService;
-
-
 	@Autowired
 	private ChefService chefService;
+	@Autowired
+    private ObjectStorageService objectStorageService;
+    
+    private String bucketName = "bitcamp-9th-bucket-135";
+    
 
     @RequestMapping(value = "/page/dish/dishList")
   	public String pageDishDishLists(@RequestParam String chefId, Model model) throws IOException {
@@ -42,4 +50,37 @@ public class DishController {
     	
     	return "/dish/updateDishForm";
     }
+    
+    @RequestMapping(value = "/api/dish/update", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @ResponseBody
+    public String apiDishUpdate(@RequestParam int dishId, 
+                                @RequestParam String dishName, 
+                                @RequestParam String dishContent, 
+                                @RequestParam("dishImg") MultipartFile dishImg) {
+        // 기존 요리 정보 가져오기
+        DishDTO existingDish = dishService.apiDishInfo(dishId);
+        
+        // 기존 이미지 파일 이름 가져오기
+        String existingImageFileName = existingDish.getImageFileName();
+
+        // Naver Cloud에서 기존 이미지 삭제
+        if (existingImageFileName != null) {
+            objectStorageService.deleteFile(bucketName, "storage/", existingImageFileName);
+        }
+
+        // 새로운 이미지 파일 이름 업로드
+        String newImageFileName = objectStorageService.uploadFile(bucketName, "storage/", dishImg);
+
+        // DishDTO 업데이트
+        existingDish.setDishName(dishName);
+        existingDish.setDishContent(dishContent);
+        existingDish.setImageFileName(newImageFileName); // UUID로 생성된 파일 이름
+        existingDish.setImageOriginalFileName(dishImg.getOriginalFilename()); // 원본 파일 이름
+
+        // 업데이트된 요리 정보를 DB에 저장
+        dishService.apiUpdateDish(existingDish);
+
+        return "요리 정보가 성공적으로 업데이트되었습니다.";
+    }
+
 }

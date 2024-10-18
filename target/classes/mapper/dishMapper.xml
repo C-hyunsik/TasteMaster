@@ -28,7 +28,8 @@
 			   image_fileName as imageFileName,
 			   image_original_fileName as imageOriginalFileName,
 			   delicious_count as deliciousCount,
-			   makeEasy_count as makeEasyCount
+			   makeEasy_count as makeEasyCount,
+			   dish_content as dishContent
         FROM dish 
         WHERE chef_id = #{chefId}
         ORDER BY dish_id DESC
@@ -52,4 +53,13 @@
 		from dish where dish_id = #{dishId}
 	</select>
   
+   <update id="apiUpdateDish" parameterType="dish.bean.DishDTO">
+    UPDATE dish
+    SET 
+        dish_name = #{dishName},
+        dish_content = #{dishContent},
+        image_fileName = #{imageFileName},
+        image_original_fileName = #{imageOriginalFileName}
+    WHERE dish_id = #{dishId}
+</update>
 </mapper>
