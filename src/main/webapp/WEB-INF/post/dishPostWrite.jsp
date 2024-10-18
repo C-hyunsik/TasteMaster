@@ -314,37 +314,13 @@ $(function () {
         }); //ajax
     });
 });
-<<<<<<< HEAD
+
 
 </script>
 <script type="text/javascript" src="../se2/js/HuskyEZCreator.js"></script>
 <script>
 
-let oEditors = [];
 
-     smartEditor = function() {
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-                sSkinURI: "../se2/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수
-                fCreator: "createSEditor2"
-            })
-        }
-
-     $(document).ready(function() {
-     	//스마트에디터 적용
-          smartEditor(); 
-              //값 불러오기
-           function preview(){
-            	// 에디터의 내용을 textarea에 적용
-            	oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
-                // textarea 값 불러오기 
-            	var content = document.getElementById("editorTxt0").value;
-            	alert(content);
-            	return;
-        }
-           
-     })
      
      
      $(function(){
@@ -373,8 +349,7 @@ let oEditors = [];
 	});
 
 });
-=======
->>>>>>> c8d4f63e45d225adb8c4ba8260bdf17e45988552
+
 </script>
 </body>
 </html>

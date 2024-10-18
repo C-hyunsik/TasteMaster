@@ -182,14 +182,8 @@ textarea {
 </head>
 <body>
     <header>
-<<<<<<< HEAD
-        
-        <div class="logo">
-        	<a href="/TasteMasters/page/index"><img alt="로고" src="./image/logo.png" width="40px" height="40px"></a>
-=======
         <div class="logo">
         	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
->>>>>>> c8d4f63e45d225adb8c4ba8260bdf17e45988552
         </div>
         
         <div class="menu">
@@ -199,13 +193,9 @@ textarea {
         <div class="search-bar">
             <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-<<<<<<< HEAD
 		<div>
 		  <input type="button" id="searchBtn" value="검색">
 		</div>  
-=======
-
->>>>>>> c8d4f63e45d225adb8c4ba8260bdf17e45988552
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
