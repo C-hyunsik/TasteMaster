@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글쓰기</title>
+<title>글 수정</title>
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js"></script>
@@ -156,10 +156,9 @@ button:hover {
 </style>
 </head>
 <body>
-	 <header>
-        
-        <div class="logo">
-        	<a href="/TasteMasters/page/index"><img alt="로고" src="./image/logo.png" width="40px" height="40px"></a>
+	<header>
+		<div class="logo">
+        	<a href="/TasteMasters/page/index"><img alt="로고" src="../image/logo.png" width="40px" height="40px"></a>
         </div>
         
         <div class="menu">
@@ -167,11 +166,10 @@ button:hover {
         </div>
         
         <div class="search-bar">
-            <input type="text" id = "keyword" placeholder="셰프 검색">
+            <input type="text" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
+        
+
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -231,17 +229,17 @@ button:hover {
             <h2>글쓰기</h2>
             <div class="form-group">
                 <label for="title">제목:</label>
-                <input type="text" id="title" name="title">
+                <input type="text" id="title" name="title" value="${postList[0].title}">
             </div>
             <div class="form-group" id="editorWrap">
 				<label for="content">내용:</label>
-			 <div id="editor"></div>
+			 <div id="editor">${postList[0].content}</div>
             </div>
             <div class="form-group">
             	<input type="file" name="image" id="image" style="visibility: hidden;"/>
             </div>
             <div class="button-group">
-                <button type="button" id = "postBtn">작성하기</button>
+                <button type="button" id = "postBtn">수정하기</button>
                 <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId=${dishId}'">목록</button>
             </div>
             <input type="hidden" id="dishId" value="${dishId }"/>
@@ -294,87 +292,27 @@ $(function () {
         
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const dishId = urlParams.get('dishId');
+        const postId = urlParams.get('postId');
+        dishId = $('#dishId').val();
 
         $.ajax({
             type: 'post',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            url: '/TasteMasters/api/post/upload?dishId=' + dishId,
+            url: '/TasteMasters/api/post/update?postId=' + postId,
             data: formData,
             success: function(data) {
-                alert("게시글이 등록되었습니다.");
+                alert("게시글이 수정되었습니다.");
                 location.href = "/TasteMasters/page/post/dishPostList?dishId=" + dishId; // 게시글 목록
             },
             error: function(e) {
                 console.log(e);
-                alert("등록 중 오류가 발생했습니다.");
+                alert("수정 중 오류가 발생했습니다.");
             }
         }); //ajax
     });
 });
-<<<<<<< HEAD
-
-</script>
-<script type="text/javascript" src="../se2/js/HuskyEZCreator.js"></script>
-<script>
-
-let oEditors = [];
-
-     smartEditor = function() {
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-                sSkinURI: "../se2/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수
-                fCreator: "createSEditor2"
-            })
-        }
-
-     $(document).ready(function() {
-     	//스마트에디터 적용
-          smartEditor(); 
-              //값 불러오기
-           function preview(){
-            	// 에디터의 내용을 textarea에 적용
-            	oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
-                // textarea 값 불러오기 
-            	var content = document.getElementById("editorTxt0").value;
-            	alert(content);
-            	return;
-        }
-           
-     })
-     
-     
-     $(function(){
-	document.getElementById('searchBtn').addEventListener('click', function() {
-	    var keyword = document.getElementById('keyword').value;
-
-	    if (keyword.trim() === '') {
-	        alert('검색어를 입력하세요.');
-	        return;
-	    }
-
-	    // AJAX 요청
-	    $.ajax({
-	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-	        type: 'GET',
-	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-	        success: function(response) {
-	            // 검색 결과에 따라 페이지 이동
-	            // 예: 검색 결과 페이지로 리디렉션
-	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-	        },
-	        error: function() {
-	            alert('검색에 실패했습니다.');
-	        }
-	    });
-	});
-
-});
-=======
->>>>>>> c8d4f63e45d225adb8c4ba8260bdf17e45988552
 </script>
 </body>
 </html>
