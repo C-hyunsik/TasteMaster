@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int apiIdCheck(String loginId) {
+	public Integer apiIdCheck(String loginId) {
 		return memberDAO.apiIdCheck(loginId);
 	}
 
