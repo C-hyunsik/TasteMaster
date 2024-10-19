@@ -15,7 +15,7 @@ var mobile;
 var naverLogin = new naver.LoginWithNaverId(
 		{
 			clientId: "AlpD5zZwk5wWNXV6GfC6", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
-			callbackUrl: "http://223.130.136.106:8090/TasteMasters/page/member/callBack", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
+			callbackUrl: "http://223.130.136.106:8090/TasteMasters/page/index/callBack", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
 			isPopup: false,
 			callbackHandle: true
 		}
