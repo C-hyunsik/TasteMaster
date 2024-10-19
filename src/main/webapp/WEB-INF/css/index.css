@@ -26,9 +26,8 @@ header {
 }
 
 .menu {
-    margin-left: 0;
+    margin-left: -7%;
 }
-
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
@@ -71,7 +70,7 @@ nav.active {
     left: 0; /* 메뉴가 화면에 보이도록 이동 */
 }
 .search-bar{
-	margin-left:3%;
+	margin-left:-7%;
 	width : 60%;
 }
 .search-bar input {
@@ -146,6 +145,13 @@ nav.active {
 }
 /* 모바일 등 더 작은 화면 (768px 이하일 때 적용) */
 @media (max-width: 768px) {
+	.menu {
+    	margin-left: 0;
+	}
+	.search-bar{
+		margin-left: 3%;
+		width : 40%;
+	}
     .chef-list {
         grid-template-columns: repeat(2, 1fr); /* 작은 화면에서는 2명 배치 */
         width: 100%; /* 모바일에서는 가로 크기를 100%로 설정 */

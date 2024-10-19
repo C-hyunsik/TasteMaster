@@ -210,7 +210,7 @@ public class ChefController {
     
     @RequestMapping(value = "/api/chef/addOnlyDish", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
     @ResponseBody
-    public boolean addOnlyDish(@RequestParam int chefId,
+    public void addOnlyDish(@RequestParam int chefId,
 					            @RequestParam("dishName") List<String> dishNames, // 요리 이름 리스트
 					            @RequestParam("dishContent") List<String> dishContents, // 요리 설명 리스트
 					            @RequestParam("dishImg") List<MultipartFile> dishImages) {
@@ -235,7 +235,6 @@ public class ChefController {
                 } catch (Exception e) {
                     e.printStackTrace();
                     isUpload = false;
-                    return isUpload;
                 }
 
                 dish.setImageFileName(dishImageFileName); // UUID로 생성된 파일 이름
@@ -250,7 +249,5 @@ public class ChefController {
         dishService.uploadDishes(dishList);
     	
         isUpload = true; //이러면 좀 그렇지만...boolean 리턴으로 하나 새로 생성하긴...좀 그래서 걍 기존에 있는걸로 진행함...ㅎ
-        
-    	return isUpload;
     }
 }
