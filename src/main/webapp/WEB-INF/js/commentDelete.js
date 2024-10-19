@@ -21,7 +21,7 @@ $(function() {
                 success: function(data) {
                     if(data){
                     	alert("댓글이 삭제되었습니다.");
-                    	location.href = '/TasteMasters/page/post/view?chefId='+chefId+'&dishId=' + dishId + '&postId=' + postId;
+                        location.reload(); // 페이지 새로고침
                     	}
                     },
                 error: function(e) {
