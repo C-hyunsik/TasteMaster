@@ -11,6 +11,7 @@ $(function() {
 			const params = new URLSearchParams(queryString);
 			
 			// 특정 쿼리 파라미터 가져오기 (예: 'pg'라는 파라미터)
+			var chefId = params.get('chefId');
             var dishId = params.get('dishId');
             var postId = params.get('postId');
             
@@ -20,7 +21,7 @@ $(function() {
                 success: function(data) {
                     if(data){
                     	alert("댓글이 삭제되었습니다.");
-                    	location.href = '/TasteMasters/page/post/view?dishId=' + dishId + '&postId=' + postId;
+                    	location.href = '/TasteMasters/page/post/view?chefId='+chefId+'&dishId=' + dishId + '&postId=' + postId;
                     	}
                     },
                 error: function(e) {
