@@ -6,7 +6,11 @@ import comment.bean.CommentDTO;
 
 public interface CommentService {
 
-	void apiCommentEnroll(CommentDTO comment);
+	public void apiCommentEnroll(CommentDTO comment);
 
-	List<CommentDTO> apiCommentList(int postId);
+	public List<CommentDTO> apiCommentList(int postId);
+
+	public boolean apiCommentDelete(CommentDTO commentDTO);
+
+	public boolean apiCommentUpdate(CommentDTO commentDTO);
 }

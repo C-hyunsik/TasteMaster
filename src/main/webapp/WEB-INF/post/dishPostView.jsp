@@ -77,8 +77,11 @@ nav.active {
     text-decoration: none;
 }
 
+.menu {
+    margin-left: -7%;
+}
 .search-bar {
-    margin-left: 3%;
+    margin-left: -7%;
     width: 60%;
 }
 
@@ -153,6 +156,13 @@ textarea {
 }
 /* 모바일 화면에서 버튼을 세로로 정렬 */
 @media (max-width: 768px) {
+	.menu {
+    	margin-left: 0;
+	}
+	.search-bar{
+		margin-left: 3%;
+		width : 40%;
+	}
     .button-group {
         flex-direction: column; /* 세로 방향으로 정렬 */
         align-items: center; /* 중앙 정렬 */
@@ -193,9 +203,6 @@ textarea {
         <div class="search-bar">
             <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -260,13 +267,13 @@ textarea {
         <div class="button-group">
 	        <c:choose>
 				<c:when test="${sessionScope.memberId == postList[0].memberId || sessionScope.role == 'ADMIN' }">
-					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>
+					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?chefId='+${chefId }+'&dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>
 					<button id = "deleteBtn">글 삭제</button>
-					<button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
+					<button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:when>
 	             
 				<c:otherwise>
-	                  <button onclick="location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}">목록</button>
+	                  <button onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId }+'&dishId='+${dishId}">목록</button>
 				</c:otherwise>
 			</c:choose>
         </div>
@@ -277,18 +284,32 @@ textarea {
         <button id="toggleCommentInput">댓글 작성</button>
         <textarea id="commentInput" name = "content" placeholder="댓글을 작성하세요..."></textarea>
         <button id="submitComment" style="display: none;">댓글 작성</button>
+        
         <h3>댓글 목록</h3>
         <div class="comments">
             <c:forEach var="comment" items="${commentList}">
                 <div class="comment">
                     <div class="comment-meta">작성자: ${comment.name} | 작성일: ${comment.createdAtToString}</div>
-                    <p>${comment.content}</p>
+                    <input type="hidden" value="${comment.commentId }" class="commentId" />
+                    <c:choose>
+	                    <c:when test="${sessionScope.memberId == commentList[0].memberId || sessionScope.role == 'ADMIN' }">
+		                    <input type="button" value="삭제" class="commentDeleteBtn" name="commentDeleteBtn"/>
+		                    <input type="button" value="수정" class="commentUpdateBtn" name="commentUpdateBtn"/>
+	                    </c:when>
+                    </c:choose>
+                    <pre>
+                    	<p class="assisComment">${comment.content}</p>
+                    	<textarea class="updateArea" rows="3" cols="6" type="hidden">${comment.content}</textarea>
+                    </pre>
                 </div>
             </c:forEach>
         </div>
+      
     </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../js/commentDelete.js"></script>
+<script type="text/javascript" src="../js/commentUpdate.js"></script>
 <script type="text/javascript">
 // 사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -359,46 +380,57 @@ $(function(){
 	
 	     // 파라미터 예: ?pg=2&name=john
 	     const postId = urlParams.get('postId');
-        $.ajax({
-            type: 'get',
-            url: '/TasteMasters/api/post/delete?postId='+postId,
-            success: function(data) {
-                alert("게시글이 삭제되었습니다.");
-                location.href='/TasteMasters/page/post/dishPostList?dishId='+${dishId}
-            },
-            error: function(e) {
-                console.log(e);
-                alert("삭제 중 오류가 발생했습니다.");
-            }
-        }); //ajax
+	     const chefId = urlParams.get('chefId');
+	     
+	     var confirm = confirm('글을 삭제하시겠습니까?');
+	     
+	     if(confirm) {
+	    	 $.ajax({
+	             type: 'get',
+	             url: '/TasteMasters/api/post/delete?postId='+postId,
+	             success: function(data) {
+	                 alert("게시글이 삭제되었습니다.");
+	                 location.href='/TasteMasters/page/post/dishPostList?chefId='+chefId +'&dishId='+${dishId}
+	             },
+	             error: function(e) {
+	                 console.log(e);
+	                 alert("삭제 중 오류가 발생했습니다.");
+	             }
+	         }); //ajax
+	     }
     });
 });
 
 $(function(){
-	document.getElementById('searchBtn').addEventListener('click', function() {
-	    var keyword = document.getElementById('keyword').value;
+    function performSearch() {
+        var keyword = document.getElementById('keyword').value;
 
-	    if (keyword.trim() === '') {
-	        alert('검색어를 입력하세요.');
-	        return;
-	    }
+        if (keyword.trim() === '') {
+            alert('검색어를 입력하세요.');
+            return;
+        }
 
-	    // AJAX 요청
-	    $.ajax({
-	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-	        type: 'GET',
-	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-	        success: function(response) {
-	            // 검색 결과에 따라 페이지 이동
-	            // 예: 검색 결과 페이지로 리디렉션
-	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-	        },
-	        error: function() {
-	            alert('검색에 실패했습니다.');
-	        }
-	    });
-	});
+        // AJAX 요청
+        $.ajax({
+            url: '/TasteMasters/page/search',  // 서버의 검색 URL
+            type: 'GET',
+            data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+            success: function(response) {
+                // 검색 결과에 따라 페이지 이동
+                window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+            },
+            error: function() {
+                alert('검색에 실패했습니다.');
+            }
+        });
+    }
 
+    // 엔터키 입력 시 검색 수행
+    document.getElementById('keyword').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
 });
 </script>
 </body>

@@ -94,7 +94,7 @@ nav.active {
 }
 
 .image-container {
-    width: 50%; /* 셰프 이미지 너비 */
+    width: 100%; /* 셰프 이미지 너비 */
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -190,6 +190,13 @@ nav.active {
     font-size: 14px;
     resize: none; /* 사용자가 세로 길이를 조절하지 못하도록 설정 */
 }
+.addDishContainer {
+    display: flex; /* Flexbox 사용 */
+    flex-wrap: wrap; /* 항목이 넘칠 경우 줄바꿈 */
+    gap: 10px; /* 항목 간격 */
+    margin-top: 10px; /* 위쪽 여백 추가 */
+}
+
 
 @media (max-width: 768px) {
     .table-container {
@@ -250,9 +257,6 @@ nav.active {
         <div class="search-bar">
             <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -324,9 +328,13 @@ nav.active {
 		    </div>
         </form>
 
-
+		
+		
 		<div class="content-container">
 		    <h2>음식 목록</h2>
+		    <button id="addDishBtn">
+		        요리 추가
+		    </button>
 		    <div id="post_cardWrap">
 		        <table class="chef-list-table" style="width: 100%; border-collapse: collapse;">
 		            <thead>
@@ -338,39 +346,43 @@ nav.active {
 		                </tr>
 		            </thead>
 		            <tbody>
-    <c:forEach var="dish" items="${dishList}">
-        <input type="hidden" value="${chefInfo.chefId }"/>
-        <tr>
-            <!-- 사진 -->
-            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
-                <div class="dishImgWrap" data-dishid="${dish.dishId}" style="cursor: pointer;">
-                    <img id="dishImg_${dish.dishId}" src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}" style="width: 100px; height: auto; border-radius: 5px;">
-                    <input type="file" id="dishFileInput_${dish.dishId}" name="dishImageUpdateBtn"  data-dishid="${dish.dishId}">
-                
-                </div>
-            </td>
-            
-            <!-- 이름 -->
-            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
-                <input type="text" name="dishName" value="${dish.dishName}" data-dishid="${dish.dishId}">
-            </td>
-            
-            <!-- 설명 -->
-            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
-                <textarea data-dishid="${dish.dishId}">
-                    ${dish.dishContent}
-                </textarea>
-            </td>
-            
-            <!-- 수정하기 버튼 -->
-            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
-                <input type="button" class="dishUpdateBtn" data-dishid="${dish.dishId}" value="수정하기">
-            </td>
-        </tr>
-    </c:forEach>
-</tbody>
-
-		
+					    <c:forEach var="dish" items="${dishList}">
+					        <input type="hidden" value="${chefInfo.chefId }"/>
+					        <tr>
+					            <!-- 사진 -->
+					            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+					                <div class="dishImgWrap" data-dishid="${dish.dishId}" style="cursor: pointer;">
+					                    <img id="dishImg_${dish.dishId}" src="https://kr.object.ncloudstorage.com/bitcamp-9th-bucket-135/storage/${dish.imageFileName}" alt="${dish.dishName}" style="width: 100px; height: auto; border-radius: 5px;">
+					                    <input type="file" id="dishFileInput_${dish.dishId}" name="dishImageUpdateBtn"  data-dishid="${dish.dishId}">
+					                </div>
+					            </td>
+					            
+					            <!-- 이름 -->
+					            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+					                <input type="text" name="dishName" value="${dish.dishName}" data-dishid="${dish.dishId}">
+					            </td>
+					            
+					            <!-- 설명 -->
+					            <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+					                <textarea data-dishid="${dish.dishId}">
+					                    ${dish.dishContent}
+					                </textarea>
+					            </td>
+					            
+					            <!-- 수정하기 버튼 -->
+					            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
+					                <input type="button" class="dishUpdateBtn" data-dishid="${dish.dishId}" value="수정하기">
+					            </td>
+					        </tr>
+					    </c:forEach>
+					    
+						    <tr>
+						    	<td class="addDishContainer">
+						    	
+						    	</td>
+						    </tr>
+					    
+					</tbody>
 		        </table>
 		    </div>
 		</div>
@@ -379,6 +391,7 @@ nav.active {
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 <script type="text/javascript" src="../js/chefImgUpdate.js"></script>
 <script type="text/javascript" src="../js/dishUpdate.js"></script>
+<script type="text/javascript" src="../js/onlyDishUpload.js"></script>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         var menuIcon = document.querySelector('.menu-icon');
@@ -428,33 +441,73 @@ nav.active {
         reader.readAsDataURL(this.files[0]); // 파일 읽기
     });
     
+ // 요리 추가 버튼 눌렀을 때 항목 추가
+    $(document).on('click', '#addDishBtn', function() {
+        // 새로운 요리 추가 박스
+        var newDishContainer = `
+        	<form id="addOnlyDish">
+	            <div class="new-dish">
+	                <span class="showDishImg"></span>
+	                <input type="file" name="dishImg" class="dish-image-input dishImg" style="display: inline-block;">
+	                <input type="text" name="dishName" required placeholder="요리 이름을 입력하세요" style="margin-right: 10px; display: inline-block;">
+	                <textarea name="dishContent" rows="1" cols="20" placeholder="요리 설명을 입력하세요" style="display: inline-block;"></textarea>
+	                <input type="button" name="addOnlyDishBtn" class="addOnlyDishBtn" value="추가하기" style="display: inline-block;">
+	            </div>
+            </form
+        `;
+
+        $('.addDishContainer').append(newDishContainer); // 새로운 요리 항목 추가
+
+        // 추가된 파일 입력란에 대한 이미지 미리보기 기능
+        $('.dish-image-input').last().change(function(){
+            var reader = new FileReader();
+            var dishImgWrap = $(this).siblings('.showDishImg'); // 해당 이미지 미리보기를 보여줄 엘리먼트
+
+            reader.onload = function(e) {
+                dishImgWrap.empty(); // 기존 이미지 제거
+                var img = $('<img>').attr('src', e.target.result).css({
+                    'width': '100px',
+                    'height': 'auto',
+                    'border-radius': '5px',
+                    'margin-right': '10px'
+                });
+                dishImgWrap.append(img); // 새 이미지를 미리보기로 추가
+            }
+            reader.readAsDataURL(this.files[0]); // 파일 읽기
+        });
+    });
+    
     $(function(){
-    	document.getElementById('searchBtn').addEventListener('click', function() {
-    	    var keyword = document.getElementById('keyword').value;
+        function performSearch() {
+            var keyword = document.getElementById('keyword').value;
 
-    	    if (keyword.trim() === '') {
-    	        alert('검색어를 입력하세요.');
-    	        return;
-    	    }
+            if (keyword.trim() === '') {
+                alert('검색어를 입력하세요.');
+                return;
+            }
 
-    	    // AJAX 요청
-    	    $.ajax({
-    	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-    	        type: 'GET',
-    	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-    	        success: function(response) {
-    	            // 검색 결과에 따라 페이지 이동
-    	            // 예: 검색 결과 페이지로 리디렉션
-    	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-    	        },
-    	        error: function() {
-    	            alert('검색에 실패했습니다.');
-    	        }
-    	    });
-    	});
+            // AJAX 요청
+            $.ajax({
+                url: '/TasteMasters/page/search',  // 서버의 검색 URL
+                type: 'GET',
+                data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+                success: function(response) {
+                    // 검색 결과에 따라 페이지 이동
+                    window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+                },
+                error: function() {
+                    alert('검색에 실패했습니다.');
+                }
+            });
+        }
 
+        // 엔터키 입력 시 검색 수행
+        document.getElementById('keyword').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
     });
 </script>
-
 </body>
 </html>

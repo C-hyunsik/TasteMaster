@@ -15,9 +15,9 @@ public interface DishService {
 
 	public List<ChefDTO> apiChefInfo(String chefId);
 
-	public DishDTO apiDishInfo(int dishId);
-
 	public void apiUpdateDish(DishDTO existingDish);
+
+	public DishDTO apiDishInfo(int dishId);
 
 	public void apiDishDeliciousCount(int dishId);
 

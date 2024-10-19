@@ -74,8 +74,12 @@ nav.active {
     color: white;
     text-decoration: none;
 }
+
+.menu {
+    margin-left: -7%;
+}
 .search-bar {
-    margin-left: 3%;
+    margin-left: -7%;
     width: 60%;
 }
 
@@ -231,6 +235,13 @@ button:hover {
 	
 }
 @media (max-width: 768px) {
+	.menu {
+    	margin-left: 0;
+	}
+	.search-bar{
+		margin-left: 3%;
+		width : 40%;
+	}
     .table-container {
         flex-direction: column; /* 모바일에서 세로 방향으로 정렬 */
         width: 90%; /* 모바일 화면에서 너비 조정 */
@@ -262,9 +273,6 @@ button:hover {
         <div class="search-bar">
             <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -334,7 +342,7 @@ button:hover {
         <br><br><br>
             <div id="post_cardWrap">
                 <c:forEach var="list" items="${map2.list}">
-                    <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
+                    <div class="post-card" onclick="location.href='/TasteMasters/page/post/view?chefId='+${chefId }+'&dishId='+${dishInfo.dishId}+'&postId='+${list.postId}" style="cursor:pointer;">
                         <div class="post-title">${list.title }</div>
                         <div class="post-meta">글번호 : ${list.postId} | 작성자: ${list.name } | 작성일: ${list.createdAtToString }</div>
                     </div>
@@ -343,7 +351,7 @@ button:hover {
                 	${map2.postPaging.pagingHTML }
             	</div>
             	<div class="button-group">
-	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?dishId='+${dishInfo.dishId}">글쓰기</button>
+	                <button onclick="location.href='/TasteMasters/page/post/dishPostWrite?chefId='+${chefId }+'&dishId='+${dishInfo.dishId}">글쓰기</button>
 	                <button onclick="location.href='/TasteMasters/page/dish/dishList?chefId='+${chefId}">목록</button>
 	         	</div>
             </div>
@@ -368,30 +376,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 $(function(){
-	document.getElementById('searchBtn').addEventListener('click', function() {
-	    var keyword = document.getElementById('keyword').value;
+    function performSearch() {
+        var keyword = document.getElementById('keyword').value;
 
-	    if (keyword.trim() === '') {
-	        alert('검색어를 입력하세요.');
-	        return;
-	    }
+        if (keyword.trim() === '') {
+            alert('검색어를 입력하세요.');
+            return;
+        }
 
-	    // AJAX 요청
-	    $.ajax({
-	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-	        type: 'GET',
-	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-	        success: function(response) {
-	            // 검색 결과에 따라 페이지 이동
-	            // 예: 검색 결과 페이지로 리디렉션
-	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-	        },
-	        error: function() {
-	            alert('검색에 실패했습니다.');
-	        }
-	    });
-	});
+        // AJAX 요청
+        $.ajax({
+            url: '/TasteMasters/page/search',  // 서버의 검색 URL
+            type: 'GET',
+            data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+            success: function(response) {
+                // 검색 결과에 따라 페이지 이동
+                window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+            },
+            error: function() {
+                alert('검색에 실패했습니다.');
+            }
+        });
+    }
 
+    // 엔터키 입력 시 검색 수행
+    document.getElementById('keyword').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
 });
 </script>
 </body>

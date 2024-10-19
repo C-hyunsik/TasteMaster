@@ -77,8 +77,11 @@ nav.active {
     color: white;
     text-decoration: none;
 }
+.menu {
+    margin-left: -7%;
+}
 .search-bar {
-    margin-left: 3%;
+    margin-left: -7%;
     width: 60%;
 }
 
@@ -148,6 +151,13 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+	.menu {
+    	margin-left: 0;
+	}
+	.search-bar{
+		margin-left: 3%;
+		width : 40%;
+	}
     .container {
         flex-direction: column;
         width: 90%;
@@ -169,9 +179,6 @@ button:hover {
         <div class="search-bar">
             <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -242,9 +249,10 @@ button:hover {
             </div>
             <div class="button-group">
                 <button type="button" id = "postBtn">작성하기</button>
-                <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?dishId=${dishId}'">목록</button>
+                <button type="button" onclick="location.href='/TasteMasters/page/post/dishPostList?chefId='+${chefId}+'&dishId=${dishId}'">목록</button>
             </div>
             <input type="hidden" id="dishId" value="${dishId }"/>
+            <input type="hidden" id="chefId" value="${chefId }"/>
          </form>
         </div>
     </div>
@@ -291,11 +299,11 @@ $(function () {
         // Froala 에디터 내용 가져오기
         const content = editor.html.get(); 
         formData.append('content', content); // 'content'는 서버에서 받을 때 사용할 파라미터명
-        alert(content);
         
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const dishId = urlParams.get('dishId');
+        const chefId = urlParams.get('chefId');
 
         $.ajax({
             type: 'post',
@@ -306,7 +314,7 @@ $(function () {
             data: formData,
             success: function(data) {
                 alert("게시글이 등록되었습니다.");
-                location.href = "/TasteMasters/page/post/dishPostList?dishId=" + dishId; // 게시글 목록
+                location.href = "/TasteMasters/page/post/dishPostList?chefId="+chefId+"&dishId=" + dishId; // 게시글 목록
             },
             error: function(e) {
                 console.log(e);
@@ -316,32 +324,36 @@ $(function () {
     });
 });
 $(function(){
-	document.getElementById('searchBtn').addEventListener('click', function() {
-	    var keyword = document.getElementById('keyword').value;
+    function performSearch() {
+        var keyword = document.getElementById('keyword').value;
 
-	    if (keyword.trim() === '') {
-	        alert('검색어를 입력하세요.');
-	        return;
-	    }
+        if (keyword.trim() === '') {
+            alert('검색어를 입력하세요.');
+            return;
+        }
 
-	    // AJAX 요청
-	    $.ajax({
-	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-	        type: 'GET',
-	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-	        success: function(response) {
-	            // 검색 결과에 따라 페이지 이동
-	            // 예: 검색 결과 페이지로 리디렉션
-	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-	        },
-	        error: function() {
-	            alert('검색에 실패했습니다.');
-	        }
-	    });
-	});
+        // AJAX 요청
+        $.ajax({
+            url: '/TasteMasters/page/search',  // 서버의 검색 URL
+            type: 'GET',
+            data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+            success: function(response) {
+                // 검색 결과에 따라 페이지 이동
+                window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+            },
+            error: function() {
+                alert('검색에 실패했습니다.');
+            }
+        });
+    }
 
+    // 엔터키 입력 시 검색 수행
+    document.getElementById('keyword').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
 });
-
 </script>
 </body>
 </html>

@@ -27,6 +27,17 @@ public class CommentServiceImpl implements CommentService {
 		return commentDAO.apiCommentList(postId);
 	}
 
+	@Override
+	public boolean apiCommentDelete(CommentDTO commentDTO) {
+		return commentDAO.apiCommentDelete(commentDTO);
+
+	}
+
+	@Override
+	public boolean apiCommentUpdate(CommentDTO commentDTO) {
+		return commentDAO.apiCommentUpdate(commentDTO);
+	}
+
 	
 	
 }

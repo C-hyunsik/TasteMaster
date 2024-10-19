@@ -15,19 +15,23 @@ $('.dishUpdateBtn').on('click', function() {
     if (dishFileInput.files.length > 0) {
         formData.append('dishImage', dishFileInput.files[0]);
     }
-
-    $.ajax({
-        url: '/TasteMasters/api/dish/update',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            alert('음식 정보가 성공적으로 수정되었습니다.');
-			location.href='/TasteMasters/page/admin/chefUpdate?chefId=' + chefId;
-        },
-        error: function(xhr, status, error) {
-            alert('오류가 발생했습니다: ' + error);
-        }
-    });
+    if(dishFileInput.files.length <= 0){
+    	alert('이미지를 등록해주세요');
+    }
+    else{
+	    $.ajax({
+	        url: '/TasteMasters/api/dish/update',
+	        type: 'POST',
+	        data: formData,
+	        contentType: false,
+	        processData: false,
+	        success: function(response) {
+	            alert('음식 정보가 성공적으로 수정되었습니다.');
+				location.href='/TasteMasters/page/admin/chefUpdate?chefId=' + chefId;
+	        },
+	        error: function(xhr, status, error) {
+	            alert('오류가 발생했습니다: ' + error);
+	        }
+	    });
+    }
 });

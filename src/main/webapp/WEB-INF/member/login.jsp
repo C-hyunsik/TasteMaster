@@ -27,34 +27,41 @@ header {
     background-color: black;
     padding: 10px;
     color: white;
-    position: relative;
+    position: relative; /* 사이드바가 절대 위치를 가질 수 있도록 부모 요소에 상대적 위치 설정 */
 }
 
+.logo {
+    margin-right: 10px; /* 로고와 메뉴 간의 간격을 줄이기 위해 오른쪽 마진 조정 */
+}
+
+.menu {
+    margin-left: -7%;
+}
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
-    z-index: 1001;
-    position: relative;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
+    z-index: 1001; /* 메뉴가 열려도 아이콘이 보이도록 z-index 조정 */
+    position: relative; /* 상대적 위치 설정 */
+    padding: 10px; /* 여백 추가하여 클릭하기 쉽게 */
+    background-color: rgba(0, 0, 0, 0.7); /* 배경을 추가하여 가독성 높이기 */
+    border-radius: 5px; /* 모서리 둥글게 */
 }
 
 nav {
-    position: fixed;
+    position: fixed; /* 화면에 고정 */
     top: 0;
-    left: -100%;
-    width: 250px;
-    height: 100vh;
+    left: -100%; /* 메뉴를 기본적으로 화면 밖에 숨겨두기 */
+    width: 250px; /* 메뉴의 너비 */
+    height: 100vh; /* 화면 세로 길이 전체 */
     background-color: black;
     color: white;
-    transition: 0.3s ease;
+    transition: 0.3s ease; /* 슬라이드 애니메이션 효과 */
     z-index: 1000;
 }
 
 nav ul {
     list-style-type: none;
-    padding: 50px 10px;
+    padding: 50px 10px; /* 메뉴 상단의 여백 */
 }
 
 nav ul li {
@@ -67,17 +74,17 @@ nav ul li a {
     font-size: 18px;
 }
 
+/* 메뉴가 보이는 상태 */
 nav.active {
-    left: 0;
+    left: 0; /* 메뉴가 화면에 보이도록 이동 */
 }
-
-.search-bar {
-    margin-left: 3%;
-    width: 60%;
+.search-bar{
+	margin-left:-7%;
+	width : 60%;
 }
-
 .search-bar input {
     padding: 5px;
+    font-size:16px;
     width: 100%;
 }
 
@@ -176,6 +183,13 @@ button:hover {
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
+	.menu {
+    	margin-left: 0;
+	}
+	.search-bar{
+		margin-left: 3%;
+		width : 40%;
+	}
     .form-container {
         width: 90%;
     }
@@ -205,9 +219,6 @@ button:hover {
         <div class="search-bar">
             <input type="text" id = "keyword" placeholder="셰프 검색">
         </div>
-		<div>
-		  <input type="button" id="searchBtn" value="검색">
-		</div>  
         <div class="login">
            <c:choose>
  				<c:when test="${not empty sessionScope.loginId}">
@@ -238,6 +249,7 @@ button:hover {
           
                     <c:otherwise>
                         <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        
                         <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
                     </c:otherwise>
                 </c:choose>
@@ -247,6 +259,8 @@ button:hover {
 
     <div class="form-container">
 	    <h2>로그인</h2>
+	    
+    					
 	    <form action="loginAction.jsp" method="post">
 	        <div class="form-group">
 	            <label for="loginId">아이디</label>
@@ -271,7 +285,7 @@ button:hover {
 	            <div class="sns-button" id="kakao-login">
 	                <img src="../image/kakao.jpg" alt="카카오톡 로그인" />
 	            </div>
-	            <div class="sns-button" id="naver-login">
+	            <div class="sns-button" id="naverIdLogin">
 	                <img src="../image/naver.jpg" alt="네이버 로그인" />
 	            </div>
 	            <div class="sns-button" id="google-login">
@@ -281,6 +295,7 @@ button:hover {
 	    </div>
 	</div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -302,7 +317,7 @@ $('#loginBtn').click(function(){
 		$('#idDiv').html('아이디를 입력해주세요').css('color','red');
 	}
 	else if(!pwd){
-		$('#pwdDiv').html('아이디를 입력해주세요').css('color','red');
+		$('#pwdDiv').html('비밀번호를 입력해주세요').css('color','red');
 	}
 	else{
 		$.ajax({
@@ -324,31 +339,49 @@ $('#loginBtn').click(function(){
 });
 
 $(function(){
-	document.getElementById('searchBtn').addEventListener('click', function() {
-	    var keyword = document.getElementById('keyword').value;
+    function performSearch() {
+        var keyword = document.getElementById('keyword').value;
 
-	    if (keyword.trim() === '') {
-	        alert('검색어를 입력하세요.');
-	        return;
-	    }
+        if (keyword.trim() === '') {
+            alert('검색어를 입력하세요.');
+            return;
+        }
 
-	    // AJAX 요청
-	    $.ajax({
-	        url: '/TasteMasters/page/search',  // 서버의 검색 URL
-	        type: 'GET',
-	        data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
-	        success: function(response) {
-	            // 검색 결과에 따라 페이지 이동
-	            // 예: 검색 결과 페이지로 리디렉션
-	            window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
-	        },
-	        error: function() {
-	            alert('검색에 실패했습니다.');
-	        }
-	    });
-	});
+        // AJAX 요청
+        $.ajax({
+            url: '/TasteMasters/page/search',  // 서버의 검색 URL
+            type: 'GET',
+            data: { keyword: keyword },  // 서버로 전달할 데이터 (쿼리스트링)
+            success: function(response) {
+                // 검색 결과에 따라 페이지 이동
+                window.location.href = '/TasteMasters/page/search?keyword=' + encodeURIComponent(keyword);
+            },
+            error: function() {
+                alert('검색에 실패했습니다.');
+            }
+        });
+    }
 
+    // 엔터키 입력 시 검색 수행
+    document.getElementById('keyword').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
 });
+
 </script>
+<script>
+//네이버 소셜 로그인
+  const naverLogin = new naver.LoginWithNaverId(
+            {
+                clientId: "AlpD5zZwk5wWNXV6GfC6",
+                callbackUrl: "http://223.130.136.106:8090/TasteMasters/page/member/callBack",
+                loginButton: {color: "green", type: 1, height: 40}
+            }
+        );
+ naverLogin.init(); // 로그인 설정
+</script>
+
 </body>
 </html>
