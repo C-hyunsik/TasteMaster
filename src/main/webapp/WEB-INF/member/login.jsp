@@ -376,7 +376,7 @@ $(function(){
   const naverLogin = new naver.LoginWithNaverId(
             {
                 clientId: "AlpD5zZwk5wWNXV6GfC6",
-                callbackUrl: "http://localhost:8080/TasteMasters/page/member/callBack",
+                callbackUrl: "http://223.130.136.106:8090/TasteMasters/page/member/callBack",
                 loginButton: {color: "green", type: 1, height: 40}
             }
         );
