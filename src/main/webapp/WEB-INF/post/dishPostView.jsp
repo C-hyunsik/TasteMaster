@@ -382,9 +382,9 @@ $(function(){
 	     const postId = urlParams.get('postId');
 	     const chefId = urlParams.get('chefId');
 	     
-	     var confirm = confirm('글을 삭제하시겠습니까?');
+	     var confirms = confirm('글을 삭제하시겠습니까?');
 	     
-	     if(confirm) {
+	     if(confirms) {
 	    	 $.ajax({
 	             type: 'get',
 	             url: '/TasteMasters/api/post/delete?postId='+postId,
