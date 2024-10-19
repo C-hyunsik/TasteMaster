@@ -32,7 +32,7 @@ $(function(){
 		            data: { content: newContent }, // 수정된 댓글 내용
 		            success: function(data) {
 		                if(data) {
-		                	alert('댓글 수정이 완료돠ㅣ었습니다.')
+		                	alert('댓글 수정이 완료되었습니다.')
 		                	location.reload(); // 페이지 새로고침
 		                }
 		                

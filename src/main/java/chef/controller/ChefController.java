@@ -207,4 +207,50 @@ public class ChefController {
 
         return "이미지가 성공적으로 업데이트되었습니다.";
     }
+    
+    @RequestMapping(value = "/api/chef/addOnlyDish", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+    @ResponseBody
+    public boolean addOnlyDish(@RequestParam int chefId,
+					            @RequestParam("dishName") List<String> dishNames, // 요리 이름 리스트
+					            @RequestParam("dishContent") List<String> dishContents, // 요리 설명 리스트
+					            @RequestParam("dishImg") List<MultipartFile> dishImages) {
+    	boolean isUpload;
+    	
+    	List<DishDTO> dishList = new ArrayList<>();
+
+        for (int i = 0; i < dishNames.size(); i++) {
+            DishDTO dish = new DishDTO();
+            dish.setChefId(chefId); // 쉐프 ID 설정
+            dish.setDishName(dishNames.get(i)); // 요리 이름 설정
+            dish.setDishContent(dishContents.get(i)); // 요리 설명 설정
+
+            if (dishImages.get(i) != null && !dishImages.get(i).isEmpty()) {
+                MultipartFile dishImage = dishImages.get(i);
+                String dishImageOriginalFileName = dishImage.getOriginalFilename();
+                String dishImageFileName = null;
+
+                try {
+                    // Naver Cloud에 요리 이미지 업로드
+                    dishImageFileName = objectStorageService.uploadFile(bucketName, "storage/", dishImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    isUpload = false;
+                    return isUpload;
+                }
+
+                dish.setImageFileName(dishImageFileName); // UUID로 생성된 파일 이름
+                dish.setImageOriginalFileName(dishImageOriginalFileName); // 원본 파일 이름
+            }
+
+            // 요리 리스트에 추가
+            dishList.add(dish);
+        }
+
+        // 요리 정보를 DB에 저장
+        dishService.uploadDishes(dishList);
+    	
+        isUpload = true; //이러면 좀 그렇지만...boolean 리턴으로 하나 새로 생성하긴...좀 그래서 걍 기존에 있는걸로 진행함...ㅎ
+        
+    	return isUpload;
+    }
 }

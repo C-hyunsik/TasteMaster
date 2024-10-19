@@ -12,9 +12,11 @@ $(function() {
                 type: 'get',
                 url: '/TasteMasters/api/comment/delete?commentId=' + commentId,
                 success: function(data) {
-                    alert(data);
-                    location.href = '/TasteMasters/page/post/view?dishId=' + dishId + '&postId=' + postId;
-                },
+                    if(data){
+                    	alert("댓글이 삭제되었습니다.");
+                    	location.href = '/TasteMasters/page/post/view?dishId=' + dishId + '&postId=' + postId;
+                    	}
+                    },
                 error: function(e) {
                     console.log(e);
                     alert("삭제 중 오류가 발생했습니다.");

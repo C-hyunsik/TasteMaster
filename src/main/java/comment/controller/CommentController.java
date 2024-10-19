@@ -45,12 +45,8 @@ public class CommentController {
 	
 	@RequestMapping(value = "/api/comment/delete")
 	@ResponseBody
-	public String apiCommentDelete(@RequestParam int commentId, HttpSession session, HttpServletResponse httpServletResponse) {
+	public boolean apiCommentDelete(@RequestParam int commentId, HttpSession session, HttpServletResponse httpServletResponse) {
 	    Integer memberId = (Integer) session.getAttribute("memberId");
-
-	    if (memberId == null) {
-	        return "로그인이 필요합니다.";
-	    }
 	    
 	    CommentDTO commentDTO = new CommentDTO();
 	    commentDTO.setCommentId(commentId);
@@ -58,12 +54,8 @@ public class CommentController {
 
 	    // 댓글 삭제 서비스 호출
 	    boolean isDeleted = commentService.apiCommentDelete(commentDTO);
-
-	    if (isDeleted) {
-	        return "댓글 삭제 완료";
-	    } else {
-	        return "댓글 삭제 실패";
-	    }
+	    
+	    return isDeleted;
 	}
 	
 	@RequestMapping(value = "/api/comment/update")

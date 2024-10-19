@@ -165,8 +165,8 @@ nav.active {
                 </c:choose>
             </ul>
         </nav>
-    </header>
-
+    </header>ㄴ
+	
     <div class="table-container">
         <form id="dishUpdate" method="post" enctype="multipart/form-data" action="/TasteMasters/api/dish/update">
             <div class="image-container">
