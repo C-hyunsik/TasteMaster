@@ -12,11 +12,9 @@ $(function() {
             contentType: false,
             url: '/TasteMasters/api/chef/addOnlyDish',
             data: formData,
-            success: function(data) {
-            	if(data) {
-                	alert("쉐프 정보가 업데이트되었습니다.");
-            		location.href = '/TasteMasters/admin/chefUpdate?chefId=' + chefId;	
-            	}
+            success: function() {
+            	alert("쉐프 정보가 업데이트되었습니다.");
+        		location.href = '/TasteMasters/page/admin/chefUpdate?chefId=' + chefId;
             },
             error: function(e) {
                 console.log(e);
