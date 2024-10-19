@@ -5,8 +5,14 @@ $(function() {
         if (confirmDelete) {
             var commentId = $(this).closest('.comment').find('.commentId').val();
             
-            var dishId = '${dishId}';
-            var postId = '${postId}';
+            const queryString = window.location.search;
+
+			// 쿼리 스트링을 URLSearchParams 객체로 변환
+			const params = new URLSearchParams(queryString);
+			
+			// 특정 쿼리 파라미터 가져오기 (예: 'pg'라는 파라미터)
+            var dishId = params.get('dishId');
+            var postId = params.get('postId');
             
             $.ajax({
                 type: 'get',
