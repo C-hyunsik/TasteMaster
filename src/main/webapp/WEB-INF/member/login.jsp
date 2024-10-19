@@ -238,6 +238,7 @@ button:hover {
           
                     <c:otherwise>
                         <li><a href="/TasteMasters/page/member/login">로그인</a></li>
+                        
                         <li><a href="/TasteMasters/page/member/join">회원 가입</a></li>
                     </c:otherwise>
                 </c:choose>
@@ -247,6 +248,8 @@ button:hover {
 
     <div class="form-container">
 	    <h2>로그인</h2>
+	    
+    					
 	    <form action="loginAction.jsp" method="post">
 	        <div class="form-group">
 	            <label for="loginId">아이디</label>
@@ -271,7 +274,7 @@ button:hover {
 	            <div class="sns-button" id="kakao-login">
 	                <img src="../image/kakao.jpg" alt="카카오톡 로그인" />
 	            </div>
-	            <div class="sns-button" id="naver-login">
+	            <div class="sns-button" id="naverIdLogin">
 	                <img src="../image/naver.jpg" alt="네이버 로그인" />
 	            </div>
 	            <div class="sns-button" id="google-login">
@@ -281,6 +284,7 @@ button:hover {
 	    </div>
 	</div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script type="text/javascript">
 //사이드 메뉴 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -349,6 +353,19 @@ $(function(){
 	});
 
 });
+
 </script>
+<script>
+//네이버 소셜 로그인
+  const naverLogin = new naver.LoginWithNaverId(
+            {
+                clientId: "AlpD5zZwk5wWNXV6GfC6",
+                callbackUrl: "http://localhost:8080/TasteMasters/page/member/callBack",
+                loginButton: {color: "green", type: 1, height: 40}
+            }
+        );
+ naverLogin.init(); // 로그인 설정
+</script>
+
 </body>
 </html>

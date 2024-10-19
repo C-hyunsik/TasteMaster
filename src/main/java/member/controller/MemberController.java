@@ -35,11 +35,20 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
     private ChefService chefService;
+	@Autowired
+    private MemberDTO memberDTO;
 
 	@RequestMapping(value = "/page/member/join")
 	public String pageMemberJoin() {
 
 		return "/member/join";
+
+	}
+	
+	@RequestMapping(value = "/page/member/callBack")
+	public String pageMembercallBack() {
+
+		return "/member/callBack";
 
 	}
 
@@ -221,4 +230,53 @@ public class MemberController {
 		return checkNum;
 	}
 	
+	@RequestMapping(value = "/api/member/naverLogin")
+	@ResponseBody
+	public String apiMemberNaverLogin(@RequestParam("name") String name,
+									@RequestParam("email") String email,
+									@RequestParam("gender") String gender,
+									@RequestParam("mobile") String mobile,
+									HttpServletResponse response,
+									HttpSession httpSession) {
+		//System.out.println(name);
+		
+		// mobile을 tel1, tel2, tel3으로 나누기
+	    String[] telParts = mobile.split("-");
+		
+		memberDTO.setName(name);
+		memberDTO.setLoginId(email); //아이디가 암호화되어서 엄청 길어짐. 그래서 걍 이름으로 함
+		memberDTO.setPwd(mobile); //비번 암호화해서 해야겠지만...pom.xml에 추가해야하는데...모르겠어서 걍 폰 번호로 함
+		memberDTO.setGender(gender);
+		memberDTO.setEmail(email);
+		memberDTO.setTel1(telParts[0]);
+        memberDTO.setTel2(telParts[1]);
+        memberDTO.setTel3(telParts[2]);
+		memberDTO.setRole("User");
+		
+		System.out.println("디버전.");
+		
+		int id_check = memberService.apiIdCheck(email);
+		System.out.println("id_check = " + id_check);
+		
+		if(id_check != 1) { //0 =  아이디 없음
+		    int naverResult = memberService.apiMemberJoin(memberDTO);
+		    System.out.println("naverResult="+naverResult);
+		    if (naverResult == 0) {
+		    	httpSession.setAttribute("loginId", memberDTO.getLoginId());
+			    httpSession.setAttribute("role", memberDTO.getRole());
+			    httpSession.setAttribute("memberId", memberDTO.getMemberId());
+
+			    response.setStatus(HttpServletResponse.SC_CREATED); // 201
+		    }
+		    
+		} else {   //1 = 아이디 있으,ㅁ
+		        // 응답 코드 설정: 201 Created
+		        httpSession.setAttribute("loginId", memberDTO.getLoginId());
+		        httpSession.setAttribute("role", memberDTO.getRole());
+		        httpSession.setAttribute("memberId", memberDTO.getMemberId());
+
+		        response.setStatus(HttpServletResponse.SC_CREATED); // 201
+		}
+		return "1";
+	}
 }
