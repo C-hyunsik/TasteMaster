@@ -1,7 +1,8 @@
 $(function(){
     $(document).on('click', 'input[name="dishDeleteBtn"]', function() {
-        var chefId = '${chefInfo.chefId}';
-        var dishId = '${dish.dishId}';
+        var chefId = $('#chefId').val();
+        
+        var dishId = $(this).data('dishid');
 		
 		if(confirm('정말 이 요리를 삭제하시겠습니까?')) {
 			

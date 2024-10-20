@@ -96,6 +96,7 @@ public class DishController {
     }
     
     @RequestMapping(value="/api/dish/dishDelete")
+    @ResponseBody
     public void apiDishDelete(@RequestParam("chefId") int chefId, @RequestParam("dishId") int dishId) {
     	Map map = new HashMap();
     	
