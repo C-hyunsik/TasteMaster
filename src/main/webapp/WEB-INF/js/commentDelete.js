@@ -5,8 +5,15 @@ $(function() {
         if (confirmDelete) {
             var commentId = $(this).closest('.comment').find('.commentId').val();
             
-            var dishId = '${dishId}';
-            var postId = '${postId}';
+            const queryString = window.location.search;
+
+			// 쿼리 스트링을 URLSearchParams 객체로 변환
+			const params = new URLSearchParams(queryString);
+			
+			// 특정 쿼리 파라미터 가져오기 (예: 'pg'라는 파라미터)
+			var chefId = params.get('chefId');
+            var dishId = params.get('dishId');
+            var postId = params.get('postId');
             
             $.ajax({
                 type: 'get',
@@ -14,7 +21,7 @@ $(function() {
                 success: function(data) {
                     if(data){
                     	alert("댓글이 삭제되었습니다.");
-                    	location.href = '/TasteMasters/page/post/view?dishId=' + dishId + '&postId=' + postId;
+                        location.reload(); // 페이지 새로고침
                     	}
                     },
                 error: function(e) {

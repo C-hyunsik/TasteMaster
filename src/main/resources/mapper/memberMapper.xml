@@ -34,8 +34,8 @@
 	</delete>
 	
 	<select id="apiIdCheck" parameterType="String"
-		resultType="int">
-		select count(*) from member where login_id=#{loginId}
+		resultType="java.lang.Integer">
+		select member_id from member where login_id=#{loginId}
 	</select>
 	
 	<select id="apiMemberInfo" parameterType="String" resultType="member.bean.MemberDTO">

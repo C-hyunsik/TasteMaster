@@ -255,16 +255,20 @@ public class MemberController {
 		
 		System.out.println("디버전.");
 		
-		int id_check = memberService.apiIdCheck(email);
+		Integer id_check = memberService.apiIdCheck(email);
 		System.out.println("id_check = " + id_check);
 		
-		if(id_check != 1) { //0 =  아이디 없음
+		if(id_check == null) { //0 =  아이디 없음
 		    int naverResult = memberService.apiMemberJoin(memberDTO);
 		    System.out.println("naverResult="+naverResult);
-		    if (naverResult == 0) {
+		    if (naverResult == 1) {
 		    	httpSession.setAttribute("loginId", memberDTO.getLoginId());
 			    httpSession.setAttribute("role", memberDTO.getRole());
-			    httpSession.setAttribute("memberId", memberDTO.getMemberId());
+			    
+			    //PK 등록
+			    Integer id_check2 = memberService.apiIdCheck(email);
+			    
+			    httpSession.setAttribute("memberId", id_check2);
 
 			    response.setStatus(HttpServletResponse.SC_CREATED); // 201
 		    }
@@ -273,7 +277,7 @@ public class MemberController {
 		        // 응답 코드 설정: 201 Created
 		        httpSession.setAttribute("loginId", memberDTO.getLoginId());
 		        httpSession.setAttribute("role", memberDTO.getRole());
-		        httpSession.setAttribute("memberId", memberDTO.getMemberId());
+		        httpSession.setAttribute("memberId", (int)id_check);
 
 		        response.setStatus(HttpServletResponse.SC_CREATED); // 201
 		}

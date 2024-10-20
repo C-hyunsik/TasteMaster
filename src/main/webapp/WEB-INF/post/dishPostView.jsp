@@ -115,7 +115,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 0 10px;
+    margin: 10px 0;
 }
 
 button:hover {
@@ -132,10 +132,12 @@ textarea {
     height: 100px;
     margin: 10px auto; /* 댓글 입력란과 버튼 간 여백 */
     display: none; /* 기본적으로 숨김 */
+    resize: none;
 }
 
 .comments {
     margin-top: 20px; /* 댓글 목록과 작성란 간 여백 */
+    margin-bottom: 20px;
 }
 
 .comment {
@@ -280,12 +282,17 @@ textarea {
     </div>
 
     <div class="comment-section">
-        <h3>댓글 작성</h3>
+    	<div>
+        	<h3>댓글 작성</h3>
+        </div>
+        <hr/>
         <button id="toggleCommentInput">댓글 작성</button>
         <textarea id="commentInput" name = "content" placeholder="댓글을 작성하세요..."></textarea>
         <button id="submitComment" style="display: none;">댓글 작성</button>
+        <button id="cancelComment" style="display: none;">작성 취소</button>
         
         <h3>댓글 목록</h3>
+        <hr/>
         <div class="comments">
             <c:forEach var="comment" items="${commentList}">
                 <div class="comment">
@@ -304,9 +311,7 @@ textarea {
                 </div>
             </c:forEach>
         </div>
-      
     </div>
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../js/commentDelete.js"></script>
 <script type="text/javascript" src="../js/commentUpdate.js"></script>
@@ -324,13 +329,22 @@ document.addEventListener("DOMContentLoaded", function() {
     var toggleCommentInput = document.getElementById('toggleCommentInput');
     var commentInput = document.getElementById('commentInput');
     var submitComment = document.getElementById('submitComment');
+    var cancelComment = document.getElementById('cancelComment');
 
     toggleCommentInput.addEventListener('click', function() {
         commentInput.style.display = 'block'; // 댓글 입력란 표시
         submitComment.style.display = 'inline'; // 댓글 작성 버튼 표시
+        cancelComment.style.display = 'inline'; // 댓글 취소 버튼 표시
         toggleCommentInput.style.display = 'none'; // 댓글 작성 버튼 숨기기
     });
-
+	// 댓글 취소 버튼 클릭 시 처리
+	cancelComment.addEventListener('click', function() {
+		commentInput.style.display = 'none'; // 댓글 입력란 숨기기
+		submitComment.style.display = 'none'; // 댓글 작성 버튼 숨기기
+		cancelComment.style.display = 'none'; // 댓글 취소 버튼 숨기기
+		toggleCommentInput.style.display = 'inline'; // 댓글 작성 버튼 다시 표시
+		commentInput.value = ''; // 입력란 초기화
+	});
     // 댓글 작성 버튼 클릭 시 처리
     submitComment.addEventListener('click', function() {
         // 댓글 작성 로직 추가 (AJAX 등을 사용할 수 있음)
@@ -363,6 +377,7 @@ document.addEventListener("DOMContentLoaded", function() {
             error: function(e) {
                 console.log(e);
                 alert("로그인 후 다시 시도해주세요.");
+                location.href = '/TasteMasters/page/member/login';
             }
         }); //ajax
      
@@ -382,9 +397,9 @@ $(function(){
 	     const postId = urlParams.get('postId');
 	     const chefId = urlParams.get('chefId');
 	     
-	     var confirm = confirm('글을 삭제하시겠습니까?');
+	     var confirms = confirm('글을 삭제하시겠습니까?');
 	     
-	     if(confirm) {
+	     if(confirms) {
 	    	 $.ajax({
 	             type: 'get',
 	             url: '/TasteMasters/api/post/delete?postId='+postId,
