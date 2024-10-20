@@ -65,7 +65,13 @@
 	<update id="apiDishDeliciousCount" parameterType="Integer">
 		update dish set delicious_count = delicious_count + 1 where dish_id = #{dishId}
 	</update>
+	
 	<update id="apiDishEasyCount" parameterType="Integer">
 		update dish set makeEasy_count = makeEasy_count + 1 where dish_id = #{dishId}
 	</update>
+	
+	<delete id="apiDishDelete" parameterType="java.util.Map">
+	    delete from dish 
+	    where chef_id = #{chefId} and dish_id = #{dishId}
+	</delete>
 </mapper>

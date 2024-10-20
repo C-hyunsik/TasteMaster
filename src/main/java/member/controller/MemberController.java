@@ -251,7 +251,7 @@ public class MemberController {
 		memberDTO.setTel1(telParts[0]);
         memberDTO.setTel2(telParts[1]);
         memberDTO.setTel3(telParts[2]);
-		memberDTO.setRole("User");
+		memberDTO.setRole("USER");
 		
 		System.out.println("디버전.");
 		

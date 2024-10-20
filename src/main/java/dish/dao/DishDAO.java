@@ -2,6 +2,7 @@ package dish.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -33,6 +34,9 @@ public interface DishDAO {
 	public void apiDishDeliciousCount(int dishId);
 
 	public void apiDishEasyCount(int dishId);
+
+
+	public void apiDishDelete(Map map);
 
 	
 }

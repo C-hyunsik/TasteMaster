@@ -1,6 +1,7 @@
 package dish.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,11 @@ public class DishServiceImpl implements DishService {
 	@Override
 	public void apiDishEasyCount(int dishId) {
 		dishDAO.apiDishEasyCount(dishId);
+	}
+
+	@Override
+	public void apiDishDelete(Map map) {
+		dishDAO.apiDishDelete(map);
+		
 	}
 }

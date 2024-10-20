@@ -1,7 +1,9 @@
 package dish.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,5 +93,26 @@ public class DishController {
     @ResponseBody
     public void apiDishEasyCount(@RequestParam("dishId") int dishId) {
     	dishService.apiDishEasyCount(dishId);
+    }
+    
+    @RequestMapping(value="/api/dish/dishDelete")
+    public void apiDishDelete(@RequestParam("chefId") int chefId, @RequestParam("dishId") int dishId) {
+    	Map map = new HashMap();
+    	
+    	// 기존 요리 정보 가져오기
+        DishDTO existingDish = dishService.apiDishInfo(dishId);
+        
+        // 기존 이미지 파일 이름 가져오기
+        String existingImageFileName = existingDish.getImageFileName();
+
+        // Naver Cloud에서 기존 이미지 삭제
+        if (existingImageFileName != null) {
+            objectStorageService.deleteFile(bucketName, "storage/", existingImageFileName);
+        }
+    	
+    	map.put("chefId", chefId);
+    	map.put("dishId", dishId);
+    	
+    	dishService.apiDishDelete(map);
     }
 }
