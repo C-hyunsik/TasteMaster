@@ -117,7 +117,9 @@ button {
     cursor: pointer;
     margin: 10px 0;
 }
-
+#postBtnWrap button{
+	margin: 10px 10px;
+}
 button:hover {
     background-color: #333;
 }
@@ -266,7 +268,7 @@ textarea {
             	<pre>${postList[0].content}</pre>
             </div>
         </div>
-        <div class="button-group">
+        <div class="button-group" id="postBtnWrap">
 	        <c:choose>
 				<c:when test="${sessionScope.memberId == postList[0].memberId || sessionScope.role == 'ADMIN' }">
 					<button onclick="location.href='/TasteMasters/page/post/dishPostUpdate?chefId='+${chefId }+'&dishId='+${dishId}+'&postId=${postList[0].postId}'">글 수정</button>

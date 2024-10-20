@@ -332,6 +332,7 @@ $('#loginBtn').click(function(){
 				location.href = '/TasteMasters/page/index';
 			},
 			error:function(e){
+				alert('아이디 또는 비밀번호가 틀립니다.');
 				console.log(e);
 			}
 		});
