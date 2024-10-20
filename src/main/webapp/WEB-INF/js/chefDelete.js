@@ -1,5 +1,5 @@
 $(function(){
-	// chef 클래스 요소 내의 삭제 버튼 클릭 이벤트 설정
+	
     $(document).on('click', 'input[name="chefDelete"]', function() {
         var chefId = $(this).closest('.chef').find('.chefId').val();
 		

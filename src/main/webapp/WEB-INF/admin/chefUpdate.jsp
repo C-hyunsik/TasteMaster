@@ -373,6 +373,9 @@ nav.active {
 					            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
 					                <input type="button" class="dishUpdateBtn" data-dishid="${dish.dishId}" value="수정하기">
 					            </td>
+					            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
+					                <input type="button" class="dishDeleteBtn" name="dishDeleteBtn" data-dishid="${dish.dishId}" value="삭제하기">
+					            </td>
 					        </tr>
 					    </c:forEach>
 					    
@@ -391,6 +394,7 @@ nav.active {
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 <script type="text/javascript" src="../js/chefImgUpdate.js"></script>
 <script type="text/javascript" src="../js/dishUpdate.js"></script>
+<script type="text/javascript" src="../js/dishDelete.js"></script>
 <script type="text/javascript" src="../js/onlyDishUpload.js"></script>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {

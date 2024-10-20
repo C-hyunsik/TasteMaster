@@ -138,9 +138,9 @@ public class MemberController {
 	@ResponseBody
 	public void apiMemberIdCheck(@RequestParam String loginId, HttpServletResponse response) {
 		
-		int idcheck = memberService.apiIdCheck(loginId);
+		Integer idcheck = memberService.apiIdCheck(loginId);
 
-		if (idcheck == 1) { // 아이디가 중복
+		if (idcheck != null) { // 아이디가 중복
 			response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
 			return;
 		}

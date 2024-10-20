@@ -1,4 +1,4 @@
-spackage post.controller;
+package post.controller;
 
 
 import java.util.Date;

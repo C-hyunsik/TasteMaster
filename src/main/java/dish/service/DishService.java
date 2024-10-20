@@ -1,6 +1,7 @@
 package dish.service;
 
 import java.util.List;
+import java.util.Map;
 
 import chef.bean.ChefDTO;
 import dish.bean.DishDTO;
@@ -22,5 +23,7 @@ public interface DishService {
 	public void apiDishDeliciousCount(int dishId);
 
 	public void apiDishEasyCount(int dishId);
+
+	public void apiDishDelete(Map map);
 
 }
