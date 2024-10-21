@@ -197,7 +197,6 @@ nav.active {
     margin-top: 10px; /* 위쪽 여백 추가 */
 }
 
-
 @media (max-width: 768px) {
     .table-container {
         flex-direction: column; /* 모바일에서 세로 방향으로 정렬 */
@@ -339,10 +338,10 @@ nav.active {
 		        <table class="chef-list-table" style="width: 100%; border-collapse: collapse;">
 		            <thead>
 		                <tr style="background-color: #f0f0f0; text-align: left;">
-		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">사진</th>
-		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">이름</th>
-		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">설명</th>
-		                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">수정하기</th>
+		                    <th width="20%" style="padding: 10px; border-bottom: 1px solid #ccc;">사진</th>
+		                    <th width="20%" style="padding: 10px; border-bottom: 1px solid #ccc;">이름</th>
+		                    <th width="40%" style="padding: 10px; border-bottom: 1px solid #ccc;">설명</th>
+		                    <th width="20%" style="padding: 10px; border-bottom: 1px solid #ccc;">수정하기</th>
 		                </tr>
 		            </thead>
 		            <tbody>
@@ -372,8 +371,6 @@ nav.active {
 					            <!-- 수정하기 버튼 -->
 					            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
 					                <input type="button" class="dishUpdateBtn" data-dishid="${dish.dishId}" value="수정하기">
-					            </td>
-					            <td style="padding: 10px; border-bottom: 1px solid #ccc; text-align: center;">
 					                <input type="button" class="dishDeleteBtn" name="dishDeleteBtn" data-dishid="${dish.dishId}" value="삭제하기">
 					            </td>
 					        </tr>
